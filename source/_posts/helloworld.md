@@ -1,7 +1,8 @@
 ---
-title: Hello
+title: 念两句诗先
 date: 2017-09-09 00:48:51
 tags:
+    - 信仰
 ---
 
-笃笃笃
+<center><h3>苟利国家生死以，岂因祸福趋避之</h3></center>
