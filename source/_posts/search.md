@@ -143,7 +143,7 @@ while True:
 
 将A*算法用于下图的寻路问题
 
-![route finding](/images/search-8-puzzle-route-finding.png)
+![route finding](/images/search-A*-route-finding.png)
 
 
 g(x)数值即为从出发点到x的路径之和：$g(x)=\sum_{p=(n_0, n_1)}^{(n_m, x)}p$
@@ -151,4 +151,4 @@ h(x)数值为图右侧距离目标点的直线距离：$h(x)$
 
 搜索过程如下：
 
-![route finding](/images/search-8-puzzle-route-finding-tree.png)
+![route finding](/images/search-A*-route-finding-tree.png)
