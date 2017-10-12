@@ -1,5 +1,5 @@
 ---
-title: 搜索Search
+title: 总结总结搜索
 date: 2017-09-13 22:34:07
 tags: 
     - Artificial Intelligence
@@ -8,9 +8,9 @@ tags:
 
 # 开始
 
-这里的“搜索”不是《搜索》这部电影，是要说一说搜索算法。
+先放一张女神照。
 
-![高圆圆](/images/search-gyy.jpeg)
+![高圆圆](/images/search/gyy.jpeg)
 
 搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cost)，因此有不同方式到达目标点时，代价可能是不同的。
 
@@ -20,7 +20,7 @@ tags:
 * 该策略找到的路径是否为最优路径(Optimal)，即路径代价最小（Mnimal Path Cost）
 * 策略的时间复杂度(Time Complexity)与空间复杂度(Space Complexity)
 
-![8-puzzle-problem](/images/search-8-puzzle.png)
+![8-puzzle-problem](/images/search/8-puzzle.png)
 
 上图的8-puzzle problem便是一个搜索问题，每一次移动便对应着一次状态转移，当中间为空所有数字按大小呈顺时针从左上角排列时，就完成了目标
 
@@ -59,13 +59,13 @@ function GENERAL-SEARCH( problem, strategy)
 
 广度优先搜索在每一步会展开所有的叶子节点。下图为8-puzzle problem的广度优先搜索示意图
 
-![breadth-first for 8-puzzle problem](/images/search-8-puzzle-breadth.png)
+![breadth-first for 8-puzzle problem](/images/search/8-puzzle-breadth.png)
 
 ### 深度优先搜索
 
 深度优先搜索为按照一个节点开始进行状态转换，直到到达最大深度或者没有状态可以转换，再backtrace到前面。下图为8-puzzle problem的深度优先搜索示意图
 
-![depth-first for 8-puzzle problem](/images/search-8-puzzle-depth.png)
+![depth-first for 8-puzzle problem](/images/search/8-puzzle-depth.png)
 
 ### 对比广度与深度优先搜索
 
@@ -79,7 +79,7 @@ function GENERAL-SEARCH( problem, strategy)
 * 避免重复到达某个状态，即状态树中每个节点都是唯一
 * 深度优先搜索如何求得最优解：可以使用`Iterative Deepening`，逐步增加最大深度，如下图所示
 
-![Iterative Deepening](/images/search-iterative-deepen.png)
+![Iterative Deepening](/images/search/iterative-deepen.png)
 
 # 启发式搜索 Informed(Heuristic) Search
 
@@ -96,11 +96,11 @@ f(n) = number of tiles out of place compared with goal
 
 下图是每一个状态对应的`Heuristic Function`的值
 
-![Heuristic search for 8-puzzle](/images/search-8-puzzle-heuristic.png)
+![Heuristic search for 8-puzzle](/images/search/8-puzzle-heuristic.png)
 
 加上`Path Cost`之后的搜索过程如下图：
 
-![Heuristic search for 8-puzzle with path cost](/images/search-8-puzzle-heuristic-with-path-cost.png)
+![Heuristic search for 8-puzzle with path cost](/images/search/8-puzzle-heuristic-with-path-cost.png)
 
 ## A* Search
 
@@ -143,7 +143,7 @@ while True:
 
 将A*算法用于下图的寻路问题
 
-![route finding](/images/search-A*-route-finding.png)
+![route finding](/images/search/A*-route-finding.png)
 
 
 g(x)数值即为从出发点到x的路径之和：$g(x)=\sum_{p=(n_0, n_1)}^{(n_m, x)}p$
@@ -151,4 +151,12 @@ h(x)数值为图右侧距离目标点的直线距离：$h(x)$
 
 搜索过程如下：
 
-![route finding](/images/search-A*-route-finding-tree.png)
+![route finding](/images/search/A*-route-finding-tree.png)
+
+## Minimax Search For Games
+
+TBD
+
+## Monte-Carlo Tree Search
+
+TBD
