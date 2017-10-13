@@ -2,7 +2,7 @@
 title: bitmap有什么用
 date: 2017-09-10 14:02:51
 tags: 
-    - Algorithms
+    - Algorithm
 ---
 
 # 什么是bitmap

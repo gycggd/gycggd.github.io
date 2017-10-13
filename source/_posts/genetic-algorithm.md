@@ -2,8 +2,8 @@
 title: 遗传算法(Genetic Algorithm)是怎么一回事
 date: 2017-09-09 23:02:41
 tags: 
-    - MachineLearning
-    - Algorithms
+    - Machine Learning
+    - Algorithm
 ---
 
 # 开始
