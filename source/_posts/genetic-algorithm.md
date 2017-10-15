@@ -8,8 +8,6 @@ tags:
 
 # 开始
 
-今天在课上Prof Lin讲到了遗传算法，于是了解了一下这个算法是怎么一回事，确实非常“遗传”。
-
 # 生物上的遗传与进化
 
 > It is not the strongest of the species that survive, but the one most responsive to change. 
