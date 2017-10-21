@@ -4,6 +4,7 @@ date: 2017-09-13 22:34:07
 tags: 
     - Artificial Intelligence
     - Algorithm
+    - Search
 ---
 
 # 开始
@@ -152,11 +153,3 @@ h(x)数值为图右侧距离目标点的直线距离：$h(x)$
 搜索过程如下：
 
 ![route finding](/images/search/A*-route-finding-tree.png)
-
-## Minimax Search For Games
-
-TBD
-
-## Monte-Carlo Tree Search
-
-TBD

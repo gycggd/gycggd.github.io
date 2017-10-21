@@ -2,7 +2,7 @@
 title: Edge-detection边缘检测
 date: 2017-09-26 00:03:52
 tags:
-    - Recognition System
+    - Recognition
     - Edge Detection
 ---
 

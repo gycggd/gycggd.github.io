@@ -4,7 +4,6 @@ date: 2017-10-17 00:27:22
 tags:
     - Recognition
     - OpenCV
-    - Computer Vision
 ---
 
 今天看OpenCV的时候花了几个小时写了一个小程序根据一个数独的初始图片自动完成数独，如下是一张数独的图片。
