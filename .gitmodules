@@ -1,0 +1,6 @@
+[submodule "theme/temple"]
+	path = theme/temple
+	url = git@github.com:aos/temple.git
+[submodule "themes/temple"]
+	path = themes/temple
+	url = git@github.com:aos/temple.git

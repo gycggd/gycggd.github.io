@@ -1,0 +1,23 @@
+baseURL = "http://guoyc.com/"
+languageCode = "en-us"
+title = "Guoyc's blog"
+theme = "temple"
+
+[params]
+
+highlight = true
+hjslangs = ["go", "vim", "matlab"]
+topmenu = "categories"
+
+[taxonomies]
+
+tag = "tags"
+category = "categories"
+
+[author]
+name = "Guo, Yuchen"
+github = "gycggd"
+email = "gycggd@gmail.com"
+# gaid = "Your Google Analytics ID"
+# twitter = "twitterID"
+# medium = "mediumUsername"
