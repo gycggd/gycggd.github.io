@@ -1,5 +1,5 @@
 ---
-title: 总结总结搜索
+title: Uniform and Heuristic Search
 date: 2017-09-13 22:34:07
 tags: 
     - Artificial Intelligence
