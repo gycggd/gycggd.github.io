@@ -10,4 +10,5 @@ date: 2018-03-12T13:46:35+08:00
 
 Contact me @Wechat:
 
+<!-- <img src="/images/wechat_qr2.png" width="300px" height="300px" /> -->
 ![Wechat QRCode](/images/wechat_qr.jpg)
