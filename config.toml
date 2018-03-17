@@ -24,6 +24,7 @@ gaid = "UA-70463797-1"
 
 # language support # en / zh-cn / other...
 defaultContentLanguage = "en"
+
 [Languages.en]
 languageCode = "en"
 languageName = "English"
@@ -54,31 +55,37 @@ name = "Home"
 weight = 10
 identifier = "home"
 url = "/"
+
 [[menu.main]]
 name = "Archives"
 weight = 20
 identifier = "archives"
 url = "/post/"
+
 [[menu.main]]
 name = "Tags"
 weight = 30
 identifier = "tags"
 url = "/tags/"
+
 [[menu.main]]
 name = "Categories"
 weight = 40
 identifier = "categories"
 url = "/categories/"
+
 [[menu.main]]
 name = "About"
 weight = 50
 identifier = "about"
 url = "/about/"
+
 [[menu.main]]
 name = "English"
 weight = 60
 identifier = "en"
 url = "/"
+
 [[menu.main]]
 name = "中文"
 weight = 70
