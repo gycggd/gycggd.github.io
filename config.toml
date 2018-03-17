@@ -69,6 +69,21 @@ name = "Categories"
 weight = 40
 identifier = "categories"
 url = "/categories/"
+[[menu.main]]
+name = "About"
+weight = 50
+identifier = "about"
+url = "/about/"
+[[menu.main]]
+name = "English"
+weight = 60
+identifier = "en"
+url = "/"
+[[menu.main]]
+name = "中文"
+weight = 70
+identifier = "zh-cn"
+url = "/zh-cn/"
 
 [params]
 
