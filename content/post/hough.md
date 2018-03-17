@@ -1,5 +1,5 @@
 ---
-title: Hough Transform霍夫变换
+title: Using Hough Transform to detect lines and circles
 date: 2017-09-27 08:03:08
 tags:
     - Recognition

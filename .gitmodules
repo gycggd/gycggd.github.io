@@ -4,3 +4,9 @@
 [submodule "themes/temple"]
 	path = themes/temple
 	url = git@github.com:aos/temple.git
+[submodule "themes/pickles"]
+	path = themes/pickles
+	url = https://github.com/mismith0227/hugo_theme_pickles
+[submodule "themes/jane"]
+	path = themes/jane
+	url = https://github.com/xianmin/hugo-theme-jane.git

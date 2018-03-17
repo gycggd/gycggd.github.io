@@ -1,5 +1,5 @@
 ---
-title: 用OpenCV来做数独
+title: Solving Sudoku Using OpenCV and Numpy
 date: 2017-10-17 00:27:22
 tags:
     - Recognition

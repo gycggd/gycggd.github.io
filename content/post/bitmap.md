@@ -1,13 +1,11 @@
 ---
-title: bitmap有什么用
+title: What is bitmap
 date: 2017-09-10 14:02:51
 tags: 
     - Algorithm
 ---
 
 # 什么是bitmap
-
-首先说明下，这里要说的bitmap是作为一种数据结构，不是位图的文件格式。
 
 一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功能。
 
