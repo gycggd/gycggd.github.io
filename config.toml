@@ -80,13 +80,13 @@ weight = 50
 identifier = "about"
 url = "/about/"
 
-[[menu.main]]
+[[menu.language]]
 name = "English"
 weight = 60
 identifier = "en"
 url = "/"
 
-[[menu.main]]
+[[menu.language]]
 name = "中文"
 weight = 70
 identifier = "zh-cn"
