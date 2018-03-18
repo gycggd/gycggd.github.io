@@ -1,5 +1,5 @@
 ---
-title: "Leetcode_weekly_contest_76"
+title: "Leetcode Weekly Contest 76"
 date: 2018-03-18T12:53:17+08:00
 tags:
     - BFS
