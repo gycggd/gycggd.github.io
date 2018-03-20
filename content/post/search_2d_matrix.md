@@ -3,9 +3,14 @@ title: "Leetcode 240: Search a 2D matrix II"
 date: 2018-03-20T19:18:59+08:00
 tags:
     - Binary Search
+    - Sorted Matrix
 categories:
     - Leetcode
 ---
+
+Leetcode中有许多关于Sorted Matrix的题目，非常有意思，其中Search 2-D matrix算是最简单的了。
+后面还有[378. Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/)，以及很多可以转化成此类的题目，如[786. K-th Smallest Prime Fraction
+](https://leetcode.com/problems/k-th-smallest-prime-fraction/description/), [668. Kth Smallest Number in Multiplication Table](https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/) 等。
 
 # LeetCode 74: Search a 2-D matrix
 
