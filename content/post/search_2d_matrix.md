@@ -22,8 +22,8 @@ Leetcode中有许多关于Sorted Matrix的题目，非常有意思，其中Searc
 
 m, n = len(matrix), len(matrix[0])
 
-* A[i]=matrix[i/m][i%m]
-* matrix[i][j] = i\*m+j
+* A[i]=matrix[i/n][i%n]
+* matrix[i][j] = i\*n+j
 
 代码如下:
 ```
@@ -75,7 +75,7 @@ def searchMatrix(self, matrix, target):
 * matrix[i][j]>matrix[k][j] for all 0<=k<i
 * matrix[i][j]<matrix[i][k] for all i<k<n
 
-那么我们要在matrix[0:m+1][0:n+1]中寻找target，我们如果从左下角开始寻找，按照上面的公式，每一次对比我们就可以排除掉一行或一列。方法如下:
+那么我们要在matrix[0:m][0:n]中寻找target，我们如果从左下角开始寻找，按照上面的公式，每一次对比我们就可以排除掉一行或一列。方法如下:
 
 1. 初始化i=m-1, j=0
 2. 对比matrix[i][j]与target:
