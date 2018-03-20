@@ -144,6 +144,9 @@ google_verification = ""  # Google_Verification         # 谷歌
 customCSS = ['custom.css']            # if ['custom.css'], load '/static/css/custom.css' file
 customJS = []             # if ['custom.js'], load '/static/js/custom.js' file
 
+# Leetcode
+leetcode = "https://leetcode.com/luckypants/"
+
 [params.publicCDN]        # load these files from public cdn                          # 启用公共CDN，需自行定义
 enable = false
 jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>'
@@ -179,3 +182,4 @@ g-github = "http://github.com/gycggd"
 #k-pocket = "http://localhost:1313"
 #l-tumblr = "http://localhost:1313"
 #m-instagram = "http://localhost:1313"
+
