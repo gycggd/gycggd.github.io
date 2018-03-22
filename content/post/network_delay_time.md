@@ -59,5 +59,42 @@ class Solution:
         for k in visited:
             ret = max(ret, visited[k])
         return ret
-            
+
+```
+
+但是，只击败2%的Solution，可以优化成用heap每次扩展当前耗时最短的节点，这样可以省去很多不必要的扩展：
+
+```
+class Solution:
+    def networkDelayTime(self, times, N, K):
+        """
+        :type times: List[List[int]]
+        :type N: int
+        :type K: int
+        :rtype: int
+        """
+
+        cost = collections.defaultdict(dict)
+        for i, j, t in times:
+            cost[i][j] = t
+        
+        # path cost, idx, valid
+        nodes = {_:[sys.maxsize, _, True] for _ in range(1, N+1)}
+        nodes[K][0] = 0
+        
+        heap = [nodes[K]]
+        
+        while heap:
+            # 每次取当前路径最短的来expand
+            path, idx, valid = heapq.heappop(heap)
+            if not valid:
+                continue
+            for succ in cost[idx]:
+                # 如果优于当前路径，invalid之前的，更新新的短路径
+                if path+cost[idx][succ]<nodes[succ][0]:
+                    nodes[succ][2] = False
+                    nodes[succ] = [path+cost[idx][succ], succ, True]
+                    heapq.heappush(heap, nodes[succ])
+        print(nodes)
+        return max([nodes[_][0] for _ in nodes]) if max([nodes[_][0] for _ in nodes])!=sys.maxsize else -1
 ```
