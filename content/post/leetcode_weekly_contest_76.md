@@ -209,7 +209,14 @@ Here is the detailed solution:
 
 Using this method, we only do $O(n)+O(len(hits))$ dfs.
 
-Here is my Python code:
+Here is an example：
+![803 Description](/images/leetcode/803_2.png)
+![803 Description](/images/leetcode/803_3.png)
+![803 Description](/images/leetcode/803_4.png)
+![803 Description](/images/leetcode/803_5.png)
+![803 Description](/images/leetcode/803_6.png)
+
+Code here：
 
 ```
 class Solution:
@@ -228,28 +235,16 @@ class Solution:
                 return 0
             ret = 1
             grid[i][j] = 2
-            ret += dfs(i-1, j)
-            ret += dfs(i+1, j)
-            ret += dfs(i, j-1)
-            ret += dfs(i, j+1)
+            ret += sum(dfs(x, y) for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)])
             return ret
         
         # Check whether (i, j) is connected to Not Falling Bricks
         def is_connected(i, j):
-            ret = False
-            ret |= (h[0]-1>=0 and grid[h[0]-1][h[1]]==2)
-            ret |= (h[0]+1<m and grid[h[0]+1][h[1]]==2)
-            ret |= (h[1]-1>=0 and grid[h[0]][h[1]-1]==2)
-            ret |= (h[1]+1<n and grid[h[0]][h[1]+1]==2)
-            ret |= (h[0]==0)
-            return ret
+            return i==0 or any([0<=x<m and 0<=y<n and grid[x][y]==2 for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]])
         
         # Mark whether there is a brick at the each hit
-        for h in hits:
-            if grid[h[0]][h[1]]==1:
-                grid[h[0]][h[1]] = 0
-            else:
-                grid[h[0]][h[1]] = -1
+        for i, j in hits:
+            grid[i][j] -= 1
                 
         # Get grid after all hits
         for i in range(n):
@@ -257,14 +252,11 @@ class Solution:
         
         # Reversely add the block of each hits and get count of newly add bricks
         ret = [0]*len(hits)
-        for i in reversed(range(len(hits))):
-            h = hits[i]
-            if grid[h[0]][h[1]]==-1:
-                continue
-            grid[h[0]][h[1]] = 1
-            if not is_connected(h[0], h[1]):
-                continue
-            ret[i] = dfs(h[0], h[1])-1
+        for k in reversed(range(len(hits))):
+            i, j = hits[k]
+            grid[i][j] += 1
+            if grid[i][j]==1 and is_connected(i, j):
+                ret[k] = dfs(i, j)-1
             
         return ret
 ```
