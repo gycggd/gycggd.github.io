@@ -1,6 +1,6 @@
 ---
 title: "LeetCode 743. Network Delay Time"
-date: 2018-03-23T24:20:35+08:00
+date: 2018-03-23T00:20:35+08:00
 tags:
     - DFS
     - BFS
@@ -98,3 +98,5 @@ class Solution:
         print(nodes)
         return max([nodes[_][0] for _ in nodes]) if max([nodes[_][0] for _ in nodes])!=sys.maxsize else -1
 ```
+
+Beats 80%+
