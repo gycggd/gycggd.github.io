@@ -2,15 +2,15 @@
 title: "LeetCode 300. Longest Increasing Subsequence"
 date: 2018-03-23T22:09:18+08:00
 tags:
-	- Dynamic Programming
-	- Binary Search
+    - Dynamic Programming
+    - Binary Search
 categories:
-	- Leetcode
+    - Leetcode
 ---
 
 [674. Longest Continuous Increasing Subsequence](https://leetcode.com/problems/longest-continuous-increasing-subsequence/description/) 与 [LeetCode 300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/description/) 是两道递增子串的问题。
 
-# 674. Longest Continuous Increasing Subsequence
+# LeetCode 674. Longest Continuous Increasing Subsequence
 
 ![674](/images/leetcode/674_1.png)
 
