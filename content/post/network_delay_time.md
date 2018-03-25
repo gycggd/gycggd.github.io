@@ -13,7 +13,7 @@ categories:
 
 这题是一道用BFS或者DFS就可以解决的问题。
 
-直接上代码:
+直接上暴力DFS的代码代码:
 
 ```
 class Solution:
