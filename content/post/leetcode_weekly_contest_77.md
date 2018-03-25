@@ -1,262 +1,239 @@
 ---
-title: "Leetcode Weekly Contest 76"
-date: 2018-03-18T12:53:17+08:00
+title: "Leetcode Weekly Contest 77"
+date: 2018-03-25T12:53:17+08:00
 tags:
-    - BFS
     - Dynamic Programming
-    - Graph
+    - DFS
 categories:
     - Leetcode
 ---
 
-# 800. Similar RGB Color
+# 804. Unique Morse Code Words
 
-![800 Description](/images/leetcode/800_1.png)
+![804 Description](/images/leetcode/804_1.png)
 
-This is so easy, just split into 3 parts, and for each part find the closest 'XX' format value.
-
-For 'XY', the closes must be among 'XX', '(X-1)(X-1)', '(X+1)(X+1)', so check them all and choose cloest.
-
-My 5-line code here:
-```
-def similarRGB(self, color):
-    ret = '#'
-    for i in range(1, 6, 2):
-        c1, c2 = [int(_) if '0'<=_<='9' else 10+ord(_)-ord('a') for _ in color[i:i+2]]
-        c = c1+sorted(enumerate([abs((c1*16+c2)-(x*16+x)) for x in [c1-1, c1, c1+1]]), key=lambda _:_[1])[0][0]-1
-        ret += str(c)*2 if c<=9 else chr(c-10+ord('a'))*2
-    return ret
-```
-
-# 801. Minimum Swaps To Make Sequences Increasing
-
-![801 Description](/images/leetcode/801_1.png)
-
-Take `1, 2, 3, 8, 5`和`5, 6, 7, 4, 9` for example，we only need to swap `8` and `4`.
-
-This problem can be solved using dynamic programming, at each position, we can choose to swap or not. Since we want two sorted arrays, at each position, whether to swap or not depends on the choice at previous position, so we can form a recursive formula.
-
-```
-N = len(A)
-dp = [[maxint]\*2 for \_ in range(N)]
-```
-
-Let initialize a N\*2 array dp, 
-
-* dp[i][0] means the least swaps used to make A[:i+1] and B[:i+1] sorted having no swap at i-th position.
-* dp[i][1] means the least swaps used to make A[:i+1] and B[:i+1] sorted having swap at i-th position.
-
-Here is the recursive formula:
-
-For $i \in [1, N]$:
-
-If A[i]>A[i-1] and B[i]>B[i-1] (they are in order without swap):
-$$dp[i][0]=min(dp[i][0], dp[i-1][0])$$ (no swap at i-1 and no swap at i)
-$$dp[i][1]=min(dp[i][1], dp[i-1][1]+1)$$ (swap at i-1 so swap at i to make in order)
-
-If A[i]>B[i-1] and B[i]>A[i-1] (they are in order with a swap):
-$$dp[i][0]=min(dp[i][0], dp[i-1][1])$$ (swap at i-1, no need to swap at i)
-$$dp[i][1]=min(dp[i][1], dp[i-1][0]+1)$$ (no swap at i-1, so swap at i)
-
-The two cases don't conflict with each other, so we choose minimum of them when both holds.
-
-What we want to return is $min(dp[N-1][0], dp[N-1][1])$.
-
-At every recursion, we only need the last result, so we can use less space, from $O(N)$ to $O(1)$, time complexity $O(N)$.
-
-20-Line Python Solution：
+用一个set来保存转成摩斯码的结果然后返回set大小即可。
 
 ```
 class Solution:
-    def minSwap(self, A, B):
-        """
-        :type A: List[int]
-        :type B: List[int]
-        :rtype: int
-        """
+    def uniqueMorseRepresentations(self, words):
+        trans = set()
+        alp = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+        for w in words:
+            trans.add(''.join(alp[ord(c)-ord('a')] for c in w))
+        return len(trans)
+```
+
+# 807. Max Increase to Keep City Skyline
+
+![807 Description](/images/leetcode/807_1.png)
+
+计算每一列每一行的最大值col和row两个数组，然后保证这些值不变的情况下，对每一个building进行增高。所以对于每一个(i, j)来说，高度增加为min(row[i], col[j])
+
+```
+class Solution:
+    def maxIncreaseKeepingSkyline(self, grid):
+        row, col = map(max, grid), map(max, zip(*grid))
+        return sum(min(i, j) for i in row for j in col) - sum(map(sum, grid))
+```
+
+# 806. Number of Lines To Write String
+
+![806 Description](/images/leetcode/806_1.png)
+
+这题只需要两个计数器，一个记行数，一个记当前行字符数。如果超出100，行数加一，字符数清零后继续加。
+
+```
+class Solution:
+    def numberOfLines(self, widths, S):
+        w = 0
+        l = 1
+        for c in S:
+            i = ord(c)-ord('a')
+            if w+widths[i]>100:
+                l += 1
+                w = 0
+            w += widths[i]
+        return l, w
+```
+
+# 805. Split Array With Same Average
+
+![805 Description](/images/leetcode/805_1.png)
+
+这道题目第一反应是DFS和DP的题目，因为每一个数的大小在10000以内，数组长度30以内，所以和最多为300000。
+
+## DFS解法
+
+第一种，直接DFS，TLE了
+
+```
+class Solution:
+    def splitArraySameAverage(self, A):
+        s = 0
         n = len(A)
-        pre = [0, 1]
-        for i in range(1, n):
-            cur = [sys.maxsize, sys.maxsize]
-            if A[i]>A[i-1] and B[i]>B[i-1]:
-                cur[0] = min(cur[0], pre[0])
-                cur[1] = min(cur[1], pre[1]+1)
-            if A[i]>B[i-1] and B[i]>A[i-1]:
-                cur[0] = min(cur[0], pre[1])
-                cur[1] = min(cur[1], pre[0]+1)
-            pre = cur
-        return min(pre)
+        
+        target = sum(A)/n
+        
+        def dfs(A, i, cur, target, l):
+            if l>0 and l<len(A) and cur/l==target:
+                return True
+            if i==len(A):
+                return False
+            return dfs(A, i+1, cur+A[i], target, l+1) or dfs(A, i+1, cur, target, l)
+        
+        return dfs(A, 0, 0, target, 0)
 ```
 
-# 802. Find Eventual Safe States
-
-![802 Description](/images/leetcode/802_1.png)
-
-This is equal to find nodes which doesn't lead to a circle in any path.
-
-My AC soluction during contest finds all nodes in circles, and then remove nodes connected to circle nodes until no more nodes can be removed. Here is my 800ms verbose code:
-
-```
-def eventualSafeNodes(self, graph):
-    """
-    :type graph: List[List[int]]
-    :rtype: List[int]
-    """
-    n = len(graph)
-    ret = set(range(n))
-    visited = set()
-    path = set()
-    for i in range(n):
-        if i in visited:
-            continue
-        st = [(i, False)]
-        while st:
-            n, v = st.pop()
-            visited.add(n)
-            if v:
-                path.remove(n)
-                continue
-            st.append((n, True))
-            path.add(n)
-            for nn in graph[n]:
-                if nn in path:
-                    idx = len(st)-1
-                    while idx>=0:
-                        if st[idx][1] and st[idx][0] in ret:
-                            ret.remove(st[idx][0])
-                        idx -= 1
-                    continue
-                if nn not in ret:
-                    idx = len(st)-1
-                    while idx>=0:
-                        if st[idx][1] and st[idx][0] in ret:
-                            ret.remove(st[idx][0])
-                        idx -= 1
-                    continue
-                if nn in visited:
-                    continue
-                st.append((nn, False))
-    n = len(graph)
-    while True:
-        pre = len(ret)
-        for i in range(n):
-            if i not in ret:
-                continue
-            for j in graph[i]:
-                if j not in ret:
-                    ret.remove(i)
-                    break
-        if len(ret)==pre:
-            break
-    return list(ret)
-```
-
-After the contest, I found we can solve it by walk along the path reversely.
-
-1. Find nodes with out degree 0, they are terminal nodes, we remove them from graph and they are added to result
-2. For nodes who are connected terminal nodes, since terminal nodes are removed, we decrease in-nodes' out degree by 1 and if its out degree equals to 0, it become new terminal nodes
-3. Repeat 2 until no terminal nodes can be found.
-
-Here is my 300ms 20-line Python Code:
-
-```
-def eventualSafeNodes(self, graph):
-    """
-    :type graph: List[List[int]]
-    :rtype: List[int]
-    """
-    n = len(graph)
-    out_degree = collections.defaultdict(int)
-    in_nodes = collections.defaultdict(list) 
-    queue = []
-    ret = []
-    for i in range(n):
-        out_degree[i] = len(graph[i])
-        if out_degree[i]==0:
-            queue.append(i)
-        for j in graph[i]:
-            in_nodes[j].append(i)  
-    while queue:
-        term_node = queue.pop(0)
-        ret.append(term_node)
-        for in_node in in_nodes[term_node]:
-            out_degree[in_node] -= 1
-            if out_degree[in_node]==0:
-                queue.append(in_node)
-    return sorted(ret)
-```
-
-
-
-# 803. Bricks Falling When Hit
-
-![803 Description](/images/leetcode/803_1.png)
-
-A straight-forward solution is to count no-dropping bricks after each hit and return the difference.
-
-I did it during contest and of course got TLE because it does dfs from all bricks at the top for every hit.
-
-So how to decrease dfs processes? We can reverse the problem and count how many new no-dropping bricks are added when we add the bricks reversely. It's just the same of counting dropping bricks when erase one brick.
-
-Let m, n = len(grid), len(grid[0]).
-
-Here is the detailed solution:
-
-1. For each hit (i, j), if grid[i][j]==0, set grid[i][j]=-1 otherwise set grid[i][j]=0. Since a hit may happen at an empty position, we need to seperate emptys from bricks.
-2. For i in [0, n], do dfs at grid[i][0] and mark no-dropping bricks. Here we get the grid after all hits.
-3. Then for each hit (i,j) (reversely), first we check grid[i][j]==-1, if yes, it's empty, skip this hit. Then we check whether it's connected to any no-dropping bricks or it's at the top, if not, it can't add any no-dropping bricks, skip this hit. Otherwise we do dfs at grid[i][j], mark new added no-dropping bricks and record amount of them.
-4. Return the amounts of new added no-dropping bricks at each hits.
-
-Using this method, we only do $O(n)+O(len(hits))$ dfs.
-
-Here is an example：
-![803 Description](/images/leetcode/803_2.png)
-![803 Description](/images/leetcode/803_3.png)
-![803 Description](/images/leetcode/803_4.png)
-![803 Description](/images/leetcode/803_5.png)
-![803 Description](/images/leetcode/803_6.png)
-
-Code here：
+第二种，考虑根据当前平均值选择下一个加大一点的数还是小一点的并且加了Memory。还是TLE了
 
 ```
 class Solution:
-    def hitBricks(self, grid, hits):
-        """
-        :type grid: List[List[int]]
-        :type hits: List[List[int]]
-        :rtype: List[int]
-        """
+    def splitArraySameAverage(self, A):
+        s = 0
+        n = len(A)
+        
+        target = sum(A)/n
+        if target in A:
+            return True
+        A1 = list(sorted(filter(lambda x:x<target, A)))
+        A2 = list(sorted(filter(lambda x:x>target, A)))[::-1]
+        # print(A1, A2)
+        memo = {}
+        def dfs(A1, i1, A2, i2, cur, target, l):
+            # print(i1, i2, cur, l)
+            if l>0 and l<len(A) and cur/l==target:
+                return True
+            if i1==len(A1) and i2==len(A2):
+                return False
+            if (i1, i2, cur) in memo:
+                return memo[(i1, i2, cur)]
+            ret = False
+            if i1==len(A1):
+                ret |= (dfs(A1, i1, A2, i2+1, cur+A2[i2], target, l+1) or dfs(A1, i1, A2, i2+1, cur, target, l))
+                memo[(i1, i2, cur)] = ret
+                return ret
+            if i2==len(A2):
+                ret |= (dfs(A1, i1+1, A2, i2, cur+A1[i1], target, l+1) or dfs(A1, i1+1, A2, i2, cur, target, l))
+                memo[(i1, i2, cur)] = ret
+                return ret
+            if cur<l*target:
+                ret |= (dfs(A1, i1, A2, i2+1, cur+A2[i2], target, l+1) or dfs(A1, i1, A2, i2+1, cur, target, l))
+                memo[(i1, i2, cur)] = ret
+                return ret
+            else:
+                ret |= (dfs(A1, i1+1, A2, i2, cur+A1[i1], target, l+1) or dfs(A1, i1+1, A2, i2, cur, target, l))
+                memo[(i1, i2, cur)] = ret
+                return ret
 
-        m, n = len(grid), len(grid[0])
+        return dfs(A1, 0, A2, 0, 0, target, 0)
+```
+
+结束之后看到Pass的DFS都是根据数组长度来的，下面是代码：
+
+```
+class Solution:
+    def splitArraySameAverage(self, A):
+        A, avg = sorted(A), total/len(A)
+        # 考虑长度到一半即可，因为另一半是对应的
+        for l in range(1, len(A) // 2 + 1):
+            if not (l*avg).is_integer():
+                continue
+            if self.dfs(A, avg*l, l, 0, 0, 0): 
+                return True
+        return False
+    # target：长度为l时，需要的总和
+    # pos：当前位置
+    # i：当前已选元素长度
+    # cur：当前和
+    def dfs(self, A, target, l, pos, i, cur):
+        # 长度达到l，判断
+        if i==l:
+            return cur==target
+        # 剩下元素不够
+        if cur>target or len(A)-pos<l-i:
+            return False
+        return self.dfs(A, target, l, pos+1, i+1, cur+A[pos]) or self.dfs(A, target, l, pos+1, i, cur)
+```
+
+## DP解法
+
+DP解法是一个二维dp数组，`dp[i][j]=True`表示可以从A中取到n个元素，和可以为j，如果为False则表示取不到。计算完后只需要对每一个i验证`dp[i][i*avg]`即可。
+
+DP的Java和C++解法都可以轻松AC，如下面的Java版本：
+
+```
+class Solution {
+    public boolean splitArraySameAverage(int[] A) {
+        boolean dp[][] =  new boolean[30][300010];
+        dp[0][0] = true;
+        int s = 0;
+        for (int i=0; i<A.length; i++) {
+            for (int j=i; j>=0; j--) {
+                for (int k=s; k>=0; k--) {
+                    dp[j+1][k+A[i]] |= dp[j][k];
+                }
+            }
+            s += A[i];
+        }
+        for (int i=1; i<A.length/2+1; i++) {
+            if ((i*s)%A.length==0 && dp[i][i*s/A.length]) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
+Python版本在此，python自身的数组操作太过缓慢，果断TLE：
+
+```
+class Solution:
+    def splitArraySameAverage(self, A):
+        dp = [[False]*(30*10005) for _ in range(30)]
+        dp[0][0] = True
+        s = 0
+        for i in range(len(A)):
+            for j in range(i, -1, -1):
+                for k in range(s, -1, -1):
+                    dp[j+1][k+A[i]] |= dp[j][k]
+            s += A[i]
         
-        # Connect unconnected bricks and 
-        def dfs(i, j):
-            if not (0<=i<m and 0<=j<n) or grid[i][j]!=1:
-                return 0
-            ret = 1
-            grid[i][j] = 2
-            ret += sum(dfs(x, y) for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)])
-            return ret
-        
-        # Check whether (i, j) is connected to Not Falling Bricks
-        def is_connected(i, j):
-            return i==0 or any([0<=x<m and 0<=y<n and grid[x][y]==2 for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]])
-        
-        # Mark whether there is a brick at the each hit
-        for i, j in hits:
-            grid[i][j] -= 1
-                
-        # Get grid after all hits
-        for i in range(n):
-            dfs(0, i)
-        
-        # Reversely add the block of each hits and get count of newly add bricks
-        ret = [0]*len(hits)
-        for k in reversed(range(len(hits))):
-            i, j = hits[k]
-            grid[i][j] += 1
-            if grid[i][j]==1 and is_connected(i, j):
-                ret[k] = dfs(i, j)-1
-            
-        return ret
+        for i in range(1, len(A)):
+            if (i*s)%len(A)==0 and dp[i][i*s//len(A)]:
+                return True
+        return False
+```
+
+Python的解法需要借助numpy才能通过，208ms。代码如下：
+
+```
+import numpy as np
+class Solution:
+    def splitArraySameAverage(self, A):
+        N, S = len(A), sum(A)
+        dp = np.zeros((N, S), dtype=bool)
+        dp[0][0] = 1
+        for n in A:
+            dp[1:, n:] |= np.array(dp[:-1, :-n or None])
+        return any(i*S%N==0 and dp[i][i*S/N] for i in range(1, N//2+1))
+```
+
+这里或操作的时候每次都新建一个array，因为两个数组相互覆盖。
+
+但可以用reversed indexing的方法来避免新建array从而提高效率。用-1，-1表示0，0，依次类推。
+
+代码如下，144ms：
+
+```
+import numpy as np
+class Solution:
+    def splitArraySameAverage(self, A):
+        N, S = len(A), sum(A)
+        dp = np.zeros((N, S), dtype=bool)
+        dp[~0][~0] = 1
+        for n in A:
+            dp[:-1, :-n or None] |= dp[1:, n:]
+        return any(i*S%N==0 and dp[~i][~(i*S//N)] for i in range(1, N//2+1))
 ```
