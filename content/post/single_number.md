@@ -1,5 +1,5 @@
 ---
-title: "Leetcode 136. Single Number"
+title: "LeetCode 136. Single Number"
 date: 2018-03-19T11:51:49+08:00
 tags:
     - Bit Manipulation

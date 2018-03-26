@@ -1,5 +1,5 @@
 ---
-title: "Leetcode 126: Word Ladder II"
+title: "LeetCode 126: Word Ladder II"
 date: 2018-03-17T19:30:00+08:00
 tags:
     - BFS

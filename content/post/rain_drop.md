@@ -1,5 +1,5 @@
 ---
-title: "Leetcode 42: Trapping Rain Water I & II"
+title: "LeetCode 42: Trapping Rain Water I & II"
 date: 2018-03-14T19:41:00+08:00
 tags:
     - Dynamic Programming

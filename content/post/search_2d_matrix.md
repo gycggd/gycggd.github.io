@@ -1,5 +1,5 @@
 ---
-title: "Leetcode 240: Search a 2D matrix II"
+title: "LeetCode 240: Search a 2D matrix II"
 date: 2018-03-20T19:18:59+08:00
 tags:
     - Binary Search
