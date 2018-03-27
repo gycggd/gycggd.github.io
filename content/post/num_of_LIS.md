@@ -172,6 +172,6 @@ class Solution:
         return dp[l-1][-1][1]
 ```
 
-只花了92ms,击败100%。
+只花了92ms,击败100%。回顾一下，这里对于每一个元素进行了两次二分查找，第一次在dp数组中，第二次在dp[i]数组中，都是O(logN)，所以总复杂度为O(n logn)
 
 ![beats](/images/leetcode/673_2.png)
