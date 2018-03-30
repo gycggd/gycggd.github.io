@@ -9,7 +9,7 @@ categories:
 
 ![72](/images/leetcode/72_1.png)
 
-这一题是一道经典的动态规划题。搞一个dp数组`dp[i][j]`表示`w1[:i]`和`w2[:j]`的edit distance。然后初始状态为`dp[i][0]=i, dp[0][j]=j`。
+edit distance经常用来计算文档的相似度，这一题是一道经典的动态规划题。搞一个dp数组`dp[i][j]`表示`w1[:i]`和`w2[:j]`的edit distance。然后初始状态为`dp[i][0]=i, dp[0][j]=j`。
 
 递推如下：
 
