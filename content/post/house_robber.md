@@ -7,7 +7,7 @@ categories:
     - LeetCode
 ---
 
-[desc](/images/leetcode/198_1.png)
+![desc](/images/leetcode/198_1.png)
 
 这一题还是一道简单的动态规划题。搞一个dp数组，`dp[i]`表示抢劫前i个房子的最大收获。所以dp[i+1]有两种选择：
 
