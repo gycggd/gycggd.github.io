@@ -1,9 +1,12 @@
 baseURL = "http://guoyc.com/"
-languageCode = "en-us"
+# languageCode = "zh-cn"
 title = "Guoyc's blog"
 enableRobotsTXT = true
 enableEmoji = true
 theme = "jane"
+# language support # en / zh-cn / other...
+DefaultContentLanguage = "zh-cn"
+
 
 # googleAnalytics = "UA-70463797-1"
 # disqusShortname = "guoyc"
@@ -21,9 +24,6 @@ gaid = "UA-70463797-1"
 # twitter = "twitterID"
 # medium = "mediumUsername"
 
-
-# language support # en / zh-cn / other...
-defaultContentLanguage = "en"
 
 [Languages.en]
 title = "Guoyc's blog"
@@ -86,7 +86,7 @@ url = "/about/"
 name = "English"
 weight = 60
 identifier = "en"
-url = "/"
+url = "/en/"
 
 [[menu.language]]
 name = "中文"

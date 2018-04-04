@@ -1,5 +1,5 @@
 ---
-title: What is bitmap
+title: bitmap的用途
 date: 2017-09-10 14:02:51
 tags: 
     - Algorithm
