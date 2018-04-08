@@ -12,7 +12,7 @@ categories:
 
 ![desc](/images/leetcode/812_1.png)
 
-直接三层循环用欧拉公式计算即可
+直接三层循环用海伦公式计算即可
 
 ```
 from math import sqrt
