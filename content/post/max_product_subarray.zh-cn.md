@@ -8,7 +8,7 @@ categories:
     - LeetCode
 ---
 
-![desc](/images/leetcode/53_1.png)
+![desc](/images/leetcode/152_1.png)
 
 这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。
 
