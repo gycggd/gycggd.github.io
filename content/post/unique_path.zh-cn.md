@@ -7,9 +7,11 @@ categories:
     - LeetCode
 ---
 
+# 62. Unique Path
+
 ![desc](/images/leetcode/62_1.png)
 
-# 动态规划
+## 动态规划
 
 初始状态:
 
@@ -49,7 +51,7 @@ class Solution:
         return dp[-1]
 ```
 
-# 组合
+## 组合
 
 问题即为m+n-2次移动，在其中取m-1次向下移动，不需要考虑顺序。
 
@@ -62,4 +64,51 @@ class Solution:
                 ret *= i
             return ret
         return f(m+n-2)//(f(m-1)*f(n-1))
+```
+
+# 63. Unique Path II
+
+![desc](/images/leetcode/63_1.png)
+
+## 动态规划
+
+初始状态:
+
+`dp[i][j]=0 for all i, j`
+`dp[i][0] = 1` if `dp[i-1][0]==1 and grid[i][0]==0`
+`dp[0][i] = 1` if `dp[0][i-1]==1 and grid[0][i]==0`
+
+递推公式：
+
+If `dp[i][j]==0`, `dp[i][j]=dp[i-1][j]+dp[i][j-1]`
+
+返回：
+
+`dp[-1][-1]`
+
+代码：
+
+```
+class Solution:
+    def uniquePathsWithObstacles(self, grid):
+        m, n = len(grid), len(grid[0])
+        if grid[0][0]==1 or grid[-1][-1]==1: return 0
+        dp = [[0]*n for _ in range(m)]
+        for i in range(m):
+            if grid[i][0]==0:
+                dp[i][0] = 1 
+            else:
+                break
+        for j in range(n):
+            if grid[0][j]==0:
+                dp[0][j] = 1
+            else:
+                break
+        for i in range(1, m):
+            for j in range(1, n):
+                if grid[i][j]==1:
+                    continue
+                else:
+                    dp[i][j] = dp[i-1][j]+dp[i][j-1]
+        return dp[-1][-1]
 ```
