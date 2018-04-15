@@ -75,7 +75,9 @@ class Solution:
 初始状态:
 
 `dp[i][j]=0 for all i, j`
+
 `dp[i][0] = 1` if `dp[i-1][0]==1 and grid[i][0]==0`
+
 `dp[0][i] = 1` if `dp[0][i-1]==1 and grid[0][i]==0`
 
 递推公式：
