@@ -1,5 +1,5 @@
 ---
-title: "Leetcode Weekly Contest 79"
+title: "Leetcode Weekly Contest 80"
 date: 2018-04-15T10:43:24+08:00
 Categories:
     - LeetCode 
