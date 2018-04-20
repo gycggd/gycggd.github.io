@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>LeetCode 673. Number of Longest Increasing Subsequence - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="这一题跟之前的LeetCode 300. Longest Increasing Subsequence和LeetCode 674. Longest Continuous Increasing Subsequence是一系列的题目，这两题的解法在之前" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/num_of_lis/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="LeetCode 673. Number of Longest Increasing Subsequence" />
+<meta property="og:description" content="这一题跟之前的LeetCode 300. Longest Increasing Subsequence和LeetCode 674. Longest Continuous Increasing Subsequence是一系列的题目，这两题的解法在之前" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/num_of_lis/" />
+
+
+
+<meta property="article:published_time" content="2018-03-26T18:42:05&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-26T18:42:05&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="LeetCode 673. Number of Longest Increasing Subsequence">
+<meta itemprop="description" content="这一题跟之前的LeetCode 300. Longest Increasing Subsequence和LeetCode 674. Longest Continuous Increasing Subsequence是一系列的题目，这两题的解法在之前">
+
+
+<meta itemprop="datePublished" content="2018-03-26T18:42:05&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-26T18:42:05&#43;08:00" />
+<meta itemprop="wordCount" content="1902">
+
+
+
+<meta itemprop="keywords" content="Dynamic Programming," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LeetCode 673. Number of Longest Increasing Subsequence"/>
+<meta name="twitter:description" content="这一题跟之前的LeetCode 300. Longest Increasing Subsequence和LeetCode 674. Longest Continuous Increasing Subsequence是一系列的题目，这两题的解法在之前"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">LeetCode 673. Number of Longest Increasing Subsequence</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-26 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> Leetcode </a>
+            
+          </div>
+        <span class="more-meta"> 约 1902 字 </span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#o-n-2-动态规划解法">O(n^2)动态规划解法</a></li>
+<li><a href="#o-n-logn-动态规划解法">O(n logn)动态规划解法</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p><img src="/images/leetcode/673_1.png" alt="desc" /></p>
+
+<p>这一题跟之前的LeetCode 300. Longest Increasing Subsequence和LeetCode 674. Longest Continuous Increasing Subsequence是一系列的题目，这两题的解法在之前发过<a href="/post/lis">Longest Increasing Subsequence</a>。</p>
+
+<p>回忆一下，674比较简单，300用了dp来记录长度为i的LIS(Longest Increasing Subsequence)最后一个元素的最小值。</p>
+
+<p>这里我们要求的是LIS的个数，比如：</p>
+
+<p>[1,3,5,4,7] 中最长递增子序列长度为4，总共有两个：[1,3,5,7]和[1,3,4,7]。</p>
+
+<p>这里有两种动态规划解法：</p>
+
+<h1 id="o-n-2-动态规划解法">O(n^2)动态规划解法</h1>
+
+<p>我们用两个数组length和count来记录在每一个位置，LIS的长度与个数。如：nums[:i+1]中LIS的长度与个数分别为length[i]和count[i]</p>
+
+<p>那么递推的公式就是：</p>
+
+<p>i处LIS的长度取决于i之前比i小的元素的length
+<code>length[i] = max(length[j]+1) for j in range(0, i) if nums[j]&lt;nums[i]</code></p>
+
+<p>i处LIS的个数取决于i之前比i小的元素的长度为length[i]-1的LIS的个数
+<code>count[i] = sum(count[j]) for j in range(0, i) if lenght[j]==length[i]-1</code></p>
+
+<p>代码如下：</p>
+
+<pre><code>class Solution:
+def findNumberOfLIS(self, nums):
+    N = len(nums)
+    l, cnt = [0]*N, [0]*N
+    max_l, ret = 0, 0
+    
+    for i in range(N):
+        l[i], cnt[i] = 1, 1
+        for j in range(i):
+            if nums[j]&lt;nums[i]:
+                l[i] = max(l[j]+1, l[i])
+                cnt[i] = 0
+        for j in range(i):
+            if nums[j]&lt;nums[i] and l[j]==l[i]-1:
+                cnt[i] += cnt[j]
+        if l[i]==max_l:
+            ret += cnt[i]
+        if l[i]&gt;max_l:
+            max_l = l[i]
+            ret = cnt[i]
+    return ret
+</code></pre>
+
+<p>1400+ms，只击败了17%的Solution，那么在这个解法的基础上，其实还是可以改进的，我们对[0:i]进行了两次循环可以改成一次：</p>
+
+<pre><code>class Solution:
+def findNumberOfLIS(self, nums):
+    N = len(nums)
+    l, cnt = [0]*N, [0]*N
+    max_l, ret = 0, 0
+    for i in range(N):
+        l[i], cnt[i] = 1, 1
+        # 改成一次循环，同时更新count和length：
+        # 如果发现当前length[i]&lt;length[j]+1，更新成大的即length[j]+1，count[i]初始化为count[j]
+        # 如果发现length[j]+1==length[i]，发现新的构成length[i]的方式，count[i]+=count[j]
+        for j in range(i):
+            if nums[j]&gt;=nums[i]:
+                continue
+            if l[i]==l[j]+1:
+                cnt[i] += cnt[j]
+            if l[i]&lt;l[j]+1:
+                l[i] = l[j]+1
+                cnt[i] = cnt[j]
+        if l[i]==max_l:
+            ret += cnt[i]
+        if l[i]&gt;max_l:
+            max_l = l[i]
+            ret = cnt[i]
+    return ret
+</code></pre>
+
+<p>700+ms, 击败70ms的Solution。</p>
+
+<h1 id="o-n-logn-动态规划解法">O(n logn)动态规划解法</h1>
+
+<p>那么现在来看最快的解法。</p>
+
+<p>从上面的O(n^2)的解法来看，也是可以计算出LIS的长度的，而在LeetCode 300. Longest Increasing Subsequence我们用另一个动态规划的方式，再加上二分查找，可以在O(n logn)的时间复杂度内得到LIS的长度。现在就是对这个解法进行扩充，让它能够同时保存LIS的个数。</p>
+
+<p>LeetCode 300中，我们每一个dp[i]保存的是长度为i的LIS结尾元素的最小值。也就是说，之前的LIS结尾元素信息都被覆盖了，而统计LIS个数是需要这些信息的，那么就不能直接覆盖最小值，可以把dp[i]变成一个数组，发生更新时在数组末尾加上新值。那么每一个dp[i]中保存着一些nums中的数字，并且这些数字呈递减。现在我们在dp[i]为每一个数字再加上一个值，是这个数字作为长度为i的递增子序列最后一个元素的LIS的个数，所以dp[i]是一个数组，数组中每一个元素是[num, count(num)]。</p>
+
+<p>有了这样的数据结构，对于nums中每一个num，我们先用二分查找找到它的位置idx，然后把idx-1中所有小于它的元素的count加到一起作为num的count值。那么这样做的复杂度是O(len(dp[i]))，即最坏情况是N，每一个元素进行O(N)的操作会导致复杂度还是O(N^2)。这里可以使用累积的方式来避免重复求和，即每一个[num, count]对中的count是它以及前面每个数的LIS数目之和。这样要计算idx-1中小于它元素的count之和只需要二分查找到小于num的元素x，用总count减去[x, count_x]中的count_x即得到num作为最后一个元素的LIS数目。</p>
+
+<p>代码如下：</p>
+
+<pre><code>class Solution:
+    def findNumberOfLIS(self, nums):
+        &quot;&quot;&quot;
+        :type nums: List[int]
+        :rtype: int
+        &quot;&quot;&quot;
+        if not nums: return 0
+        N = len(nums)
+        l, dp = 0, [[] for _ in range(N)]
+        for n in nums:
+            idx1 = bisect.bisect_left([_[-1][0] if _ else sys.maxsize for _ in dp], n)
+            if idx1==l:
+                l += 1
+            if idx1==0:
+                dp[0].append([n, (dp[0][-1][1] if dp[0] else 0)+1])
+            else:
+                idx2 = bisect.bisect([-_[0] for _ in dp[idx1-1]], -n)
+                dp[idx1].append([n, (dp[idx1][-1][1] if dp[idx1] else 0)+(dp[idx1-1][-1][1] if idx2==0 else (dp[idx1-1][-1][1]-dp[idx1-1][idx2-1][1]))])
+        return dp[l-1][-1][1]
+</code></pre>
+
+<p>时间花了1100+ms，不符合复杂度，原因是用bisect来进行二分搜索的时候，每一次都新建了一个数组，而这个复杂度是O(N)的，所以时间并没有减少。而bisect的查找并不支持自定义key。所以只能自己写了：</p>
+
+<pre><code>def bs(arr, val, key=lambda x:x):
+    l, r = 0, len(arr)-1
+    if key(arr[l])&gt;val:
+        return l
+    if key(arr[r])&lt;=val:
+        return r+1
+    while l+1&lt;r:
+        m = (l+r)&gt;&gt;1
+        v = key(arr[m])
+        if v&lt;=val:
+            l = m
+        else:
+            r = m
+    return r
+
+def bs_left(arr, val, key=lambda x:x):
+    l, r = 0, len(arr)-1
+    if key(arr[l])&gt;=val:
+        return l
+    if key(arr[r])&lt;val:
+        return r+1
+    while l+1&lt;r:
+        m = (l+r)&gt;&gt;1
+        v = key(arr[m])
+        if v&lt;val:
+            l = m
+        else:
+            r = m
+    return r
+            
+
+class Solution:
+    def findNumberOfLIS(self, nums):
+        if not nums: return 0
+        N = len(nums)
+        l, dp = 0, [[] for _ in range(N)]
+        for n in nums:
+            idx1 = bs_left(dp, n, lambda _:_[-1][0] if _ else sys.maxsize)
+            if idx1==l:
+                l += 1
+            if idx1==0:
+                dp[0].append([n, (dp[0][-1][1] if dp[0] else 0)+1])
+            else:
+                idx2 = bs(dp[idx1-1], -n, lambda _:-_[0])
+                dp[idx1].append([n, (dp[idx1][-1][1] if dp[idx1] else 0)+(dp[idx1-1][-1][1] if idx2==0 else (dp[idx1-1][-1][1]-dp[idx1-1][idx2-1][1]))])
+        return dp[l-1][-1][1]
+</code></pre>
+
+<p>只花了92ms,击败100%。回顾一下，这里对于每一个元素进行了两次二分查找，第一次在dp数组中，第二次在dp[i]数组中，都是O(logN)，所以总复杂度为O(n logn)</p>
+
+<p><img src="/images/leetcode/673_2.png" alt="beats" /></p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/dynamic-programming/">Dynamic Programming</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/sum_of_two_int/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 371. Sum of Two Integers</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/leetcode_weekly_contest_77/">
+            <span class="next-text nav-default">Leetcode Weekly Contest 77</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

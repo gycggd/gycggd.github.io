@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Binary Search on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/binary-search/</link>
+    <description>Recent content in Binary Search on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Wed, 18 Apr 2018 15:58:51 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/binary-search/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LeetCode 718. Maximum Length of Repeated Subarray</title>
+      <link>http://guoyc.com/post/max_len_of_rep_subarray/</link>
+      <pubDate>Wed, 18 Apr 2018 15:58:51 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_len_of_rep_subarray/</guid>
+      <description>Description Given two integer arrays A and B, return the maximum length of an subarray that appears in both arrays. Example 1: Input: A: [1,2,3,2,1] B: [3,2,1,4,7] Output: 3 Explanation: The repeated subarray with maximum length is [3, 2, 1]. Note: 1 &amp;lt;= len(A), len(B) &amp;lt;= 1000 0 &amp;lt;= A[i], B[i] &amp;lt; 100 Solutions 动态规划 问题定义： dp[i][j</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 378. Kth Smallest Element in a Sorted Matrix</title>
+      <link>http://guoyc.com/post/k_smallest_in_sorted_matrix/</link>
+      <pubDate>Wed, 28 Mar 2018 16:44:36 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/k_smallest_in_sorted_matrix/</guid>
+      <description>之前写过LeetCode 74: Search a 2-D matrix和LeetCode 240: Search a 2-D matrix II这两题，当时提到了这一题。这里要说的这一题的两种解法分别是klo</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 300. Longest Increasing Subsequence</title>
+      <link>http://guoyc.com/post/lis/</link>
+      <pubDate>Fri, 23 Mar 2018 22:09:18 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/lis/</guid>
+      <description>674. Longest Continuous Increasing Subsequence 与 LeetCode 300. Longest Increasing Subsequence 是两道递增子串的问题。 LeetCode 674. Longest Continuous Increasing Subsequence 这一题是一题简单题，只需要在每一个位置判断是否破坏了递增，破坏了则从长度为1开始重来</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 240: Search a 2D matrix II</title>
+      <link>http://guoyc.com/post/search_2d_matrix/</link>
+      <pubDate>Tue, 20 Mar 2018 19:18:59 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/search_2d_matrix/</guid>
+      <description>Leetcode中有许多关于Sorted Matrix的题目，非常有意思，其中Search 2-D matrix算是最简单的了。 后面还有378. Kth Smallest Element</description>
+    </item>
+    
+  </channel>
+</rss>

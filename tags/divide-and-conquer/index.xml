@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Divide and Conquer on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/divide-and-conquer/</link>
+    <description>Recent content in Divide and Conquer on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Mon, 09 Apr 2018 16:21:15 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/divide-and-conquer/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LeetCode 152. Maximum Product Subarray</title>
+      <link>http://guoyc.com/post/max_product_subarray/</link>
+      <pubDate>Mon, 09 Apr 2018 16:21:15 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_product_subarray/</guid>
+      <description>这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。 动态规划 maximum[i]表示以i结尾的subarr</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 53. Maximum Subarray</title>
+      <link>http://guoyc.com/post/max_subarray/</link>
+      <pubDate>Thu, 05 Apr 2018 13:58:51 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_subarray/</guid>
+      <description>这一题有O(N)的DP解法和O(NlogN)的DC解法 动态规划 dp[i]表示以i结尾的asubarray的最大和。 初始状态： dp[0]=nums[0] 递推公式： If dp[i-1]&amp;lt;0,</description>
+    </item>
+    
+  </channel>
+</rss>

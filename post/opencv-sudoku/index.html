@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Solving Sudoku Using OpenCV and Numpy - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="今天看OpenCV的时候花了几个小时写了一个小程序根据一个数独的初始图片自动完成数独，如下是一张数独的图片。 下面所有的代码可以在我的Gith" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/opencv-sudoku/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Solving Sudoku Using OpenCV and Numpy" />
+<meta property="og:description" content="今天看OpenCV的时候花了几个小时写了一个小程序根据一个数独的初始图片自动完成数独，如下是一张数独的图片。 下面所有的代码可以在我的Gith" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/opencv-sudoku/" />
+
+
+
+<meta property="article:published_time" content="2017-10-17T00:27:22&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-17T00:27:22&#43;00:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Solving Sudoku Using OpenCV and Numpy">
+<meta itemprop="description" content="今天看OpenCV的时候花了几个小时写了一个小程序根据一个数独的初始图片自动完成数独，如下是一张数独的图片。 下面所有的代码可以在我的Gith">
+
+
+<meta itemprop="datePublished" content="2017-10-17T00:27:22&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-17T00:27:22&#43;00:00" />
+<meta itemprop="wordCount" content="713">
+
+
+
+<meta itemprop="keywords" content="Recognition,OpenCV," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Solving Sudoku Using OpenCV and Numpy"/>
+<meta name="twitter:description" content="今天看OpenCV的时候花了几个小时写了一个小程序根据一个数独的初始图片自动完成数独，如下是一张数独的图片。 下面所有的代码可以在我的Gith"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Solving Sudoku Using OpenCV and Numpy</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-10-17 </span>
+        
+        <span class="more-meta"> 约 713 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#preprocessing">Preprocessing</a></li>
+<li><a href="#extract-prefilled-numbers">Extract Prefilled Numbers</a></li>
+<li><a href="#identify-numbers-using-k-nn">Identify numbers using k-NN</a></li>
+<li><a href="#solve-sudoku">Solve Sudoku</a></li>
+<li><a href="#fill-in-the-pic-with-our-solution">Fill in the pic with our solution</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>今天看OpenCV的时候花了几个小时写了一个小程序根据一个数独的初始图片自动完成数独，如下是一张数独的图片。</p>
+
+<p><img src="/images/opencv-sudoku/sudoku.png" alt="" /></p>
+
+<p>下面所有的代码可以在我的Github上找到: <a href="https://github.com/gycggd/sudoku">Sudoku</a></p>
+
+<p>这里使用了OpenCV，pillow，numpy这几个库：</p>
+
+<pre><code class="language-py">import numpy as np
+import cv2
+import os
+import shutil
+from PIL import Image
+</code></pre>
+
+<h1 id="preprocessing">Preprocessing</h1>
+
+<pre><code class="language-py">if board_origin.ndim == 3:
+    board_origin = cv2.cvtColor(board_origin, cv2.COLOR_BGR2RGB)
+    board_gray = cv2.cvtColor(board_origin, cv2.COLOR_RGB2GRAY)
+else:
+    board_gray = board_origin
+
+board_gray = cv2.GaussianBlur(board_gray, (5, 5), 0)
+board_thresh = cv2.adaptiveThreshold(board_gray, 255, 1, 1, 5, 2)
+cv2.imshow('board_thresh', board_thresh)
+</code></pre>
+
+<ol>
+<li>如果不是灰度图像，转成灰度图像</li>
+<li>做高斯模糊，去除Noise</li>
+<li>二值化，转成黑白图像</li>
+</ol>
+
+<p>效果如图：
+<img src="/images/opencv-sudoku/pped.png" alt="" /></p>
+
+<h1 id="extract-prefilled-numbers">Extract Prefilled Numbers</h1>
+
+<pre><code class="language-py">_, contours, hierarchy = cv2.findContours(board_thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+max_contour = contours[0]
+max_rect = cv2.boundingRect(contours[0])
+max_idx = 0
+
+for idx, contour in enumerate(contours):
+    [x, y, w, h] = cv2.boundingRect(contour)
+    if w * h &gt; max_rect[2] * max_rect[3]:
+        max_contour = contour
+        max_rect = [x, y, w, h]
+        max_idx = idx
+
+cv2.drawContours(board_origin, [max_contour], 0, (0, 255, 0), 3)
+
+number_contours = []
+candidates = []
+for i in range(len(hierarchy[0])):
+    if hierarchy[0][i][3] == max_idx:
+        candidates.append(i)
+
+while len(candidates) &gt; 0:
+    c = candidates[0]
+    candidates.pop(0)
+    rect = cv2.boundingRect(contours[c])
+
+    if rect[2] &gt; max_rect[2] / 10 or rect[3] &gt; max_rect[3] / 10:
+        for j in range(len(hierarchy[0])):
+            if hierarchy[0][j][3] == c:
+                candidates.append(j)
+    elif (rect[3] &gt; max_rect[2] / 20 or rect[3] &gt; max_rect[3] / 18) and \
+            (rect[3] &lt; max_rect[2] / 9 or rect[3] &lt; max_rect[3] / 9):
+        cv2.drawContours(board_origin, contours, c, (0, 0, 255), 3)
+        number_contours.append(contours[c])
+
+print '# of grid already filled: ' + str(len(number_contours))
+</code></pre>
+
+<ol>
+<li>Get contour tree</li>
+<li>Find the biggest contour</li>
+<li>Find num contours using breadth-first search of the tree</li>
+</ol>
+
+<p>效果如图：
+<img src="/images/opencv-sudoku/extracted_contours.png" alt="" /></p>
+
+<h1 id="identify-numbers-using-k-nn">Identify numbers using k-NN</h1>
+
+<ol>
+<li>Get training sets from Mac Fontbook (Screenshot the numbers in the fonts)
+<img src="/images/opencv-sudoku/train_sets.png" alt="" /></li>
+
+<li><p>Preprocess the images</p>
+
+<pre><code class="language-py">for f in os.listdir(path_all_numbers):
+img_pil = Image.open(os.path.join(path_all_numbers, f))
+img_origin = np.array(img_pil)
+img = img_origin.copy()
+if img.ndim == 3:
+    img_gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+else:
+    img_gray = img
+
+img_blur = cv2.GaussianBlur(img_gray, (5, 5), 0)
+img_thresh = cv2.adaptiveThreshold(img_blur, 255, 1, 1, 11, 2)
+
+image, contours, _ = cv2.findContours(img_thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+cv2.drawContours(img, contours, -1, (0, 0, 255), 3)
+
+height, width = img.shape[:2]
+
+list = []
+for cnt in contours:
+    [x, y, w, h] = cv2.boundingRect(cnt)
+
+    if h &gt; (height / 4):
+        list.append([x, y, w, h])
+        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+cv2.imwrite(os.path.join(path_contour, 'contour_' + f), img)
+
+list_sorted = sorted(list, cmp=lambda p1, p2: p1[1] - p2[1] if abs(p1[1] - p2[1]) &gt; height / 4 else p1[0] - p2[0])
+list_sorted = list_sorted[-1:] + list_sorted[:-1]
+
+for idx, (x, y, w, h) in enumerate(list_sorted):
+    cv2.imwrite(os.path.join(path_number, str(idx) + '_' + f.split('.')[0] + '.jpg'),
+                img_origin[y:y + h, x:x + w])
+    # cv2.imshow(f.split('.')[0] + '_' + str(idx), img[y:y + h, x:x + w])
+</code></pre></li>
+
+<li><p>Train the model using OpenCV
+``` py
+images = []
+labels = []</p></li>
+</ol>
+
+<p>for f in os.listdir(path_number):
+    img_pil = Image.open(os.path.join(path_number, f))
+    img = np.array(img_pil)
+    if img.ndim == 3:
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    img = cv2.resize(img, (20, 40))
+    img = cv2.adaptiveThreshold(img, 255, 1, 1, 11, 2)
+    cv2.imwrite(os.path.join(path_resized_number, f), img)
+    normalized_img = img / 255
+    images.append(normalized_img.flatten())
+    labels.append(int(f[0]))</p>
+
+<p>images = np.array(images, np.float32)
+labels = np.array(labels, np.float32)</p>
+
+<p>model = cv2.ml.KNearest_create()
+model.train(images, cv2.ml.ROW_SAMPLE, labels)</p>
+
+<pre><code>1. Get the number using the model
+``` py
+_, results, neigh_resp, dists = model.findNearest(sample1, 1)
+number = int(results.ravel()[0])
+</code></pre>
+
+<p>Now we can mark the result on the picture so that we can check with our eyes:</p>
+
+<p><img src="/images/opencv-sudoku/numbers_marked.png" alt="" /></p>
+
+<h1 id="solve-sudoku">Solve Sudoku</h1>
+
+<p>Here I find a solution online (from <a href="http://norvig.com/sudoku.html">here</a>), it works well but fails in some cases.</p>
+
+<p>The code is <a href="https://github.com/gycggd/sudoku/blob/master/sudoku_algorithm.py">https://github.com/gycggd/sudoku/blob/master/sudoku_algorithm.py</a></p>
+
+<h1 id="fill-in-the-pic-with-our-solution">Fill in the pic with our solution</h1>
+
+<pre><code class="language-py">for i in range(9):
+    for j in range(9):
+        if (j, i) in prefilled:
+            continue
+        x = int((i + 0.25) * box_w)
+        y = int((j + 0.75) * box_h)
+        cv2.putText(board_origin, str(sudoku[j][i]), (max_rect[0] + x, max_rect[1] + y), 3, 2, (0, 0, 0), 2,
+                    cv2.LINE_AA)
+</code></pre>
+
+<p><img src="/images/opencv-sudoku/solution.png" alt="" /></p>
+
+<p>EOF</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/recognition/">Recognition</a>
+          
+          <a href="/tags/opencv/">OpenCV</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/rain_drop/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 42: Trapping Rain Water I &amp; II</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/search/">
+            <span class="next-text nav-default">Uniform and Heuristic Search</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

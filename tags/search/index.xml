@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Search on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/search/</link>
+    <description>Recent content in Search on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Wed, 13 Sep 2017 22:34:07 +0000</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/search/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Uniform and Heuristic Search</title>
+      <link>http://guoyc.com/post/search/</link>
+      <pubDate>Wed, 13 Sep 2017 22:34:07 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/search/</guid>
+      <description>开始 搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cos</description>
+    </item>
+    
+  </channel>
+</rss>

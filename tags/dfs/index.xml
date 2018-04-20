@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dfs on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/dfs/</link>
+    <description>Recent content in Dfs on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Mon, 16 Apr 2018 14:55:46 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/dfs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LeetCode 464. Can I Win</title>
+      <link>http://guoyc.com/post/can_i_win/</link>
+      <pubDate>Mon, 16 Apr 2018 14:55:46 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/can_i_win/</guid>
+      <description>Description In the &#34;100 game,&#34; two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. What if we change the game so that players cannot re-use integers? For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &amp;gt;= 100. Given</description>
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 79</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_79/</link>
+      <pubDate>Sun, 08 Apr 2018 13:03:16 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_79/</guid>
+      <description>812. Largest Triangle Area 直接三层循环用海伦公式计算即可 from math import sqrt class Solution: def largestTriangleArea(self, points): dist = {} def d(p1, p2): return sqrt((p1[0]-p2[0])**2+(p1[1]-p2[1])**2) N = len(points) for i in range(N): for j in range(i+1, N): if i not in dist: dist[i] = {} dist[i][j] = d(points[i], points[j]) ret = 0 for i in range(N): for j in</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 322. Coin Change</title>
+      <link>http://guoyc.com/post/coin_change1/</link>
+      <pubDate>Sat, 07 Apr 2018 14:22:08 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/coin_change1/</guid>
+      <description>动态规划 dp[i]为构成i的最少硬币数目 初始状态： dp[0] = 0 dp[i] = sys.maxsize for i!=0 递推公式： dp[i+c] = min(dp[i+c], dp[i]+1) for c in coins 返回： dp[amount] if dp[amount]!=sys.maxsize else -1 代码： class Solution: def coinChange(self, coins, amount): dp = [sys.maxsize]*(amount+1) dp[0] = 0 for</description>
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 77</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_77/</link>
+      <pubDate>Sun, 25 Mar 2018 12:53:17 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_77/</guid>
+      <description>804. Unique Morse Code Words 用一个set来保存转成摩斯码的结果然后返回set大小即可。 class Solution: def uniqueMorseRepresentations(self, words): trans = set() alp = [&amp;quot;.-&amp;quot;,&amp;quot;-...&amp;quot;,&amp;quot;-.-.&amp;quot;,&amp;quot;-..&amp;quot;,&amp;quot;.&amp;quot;,&amp;quot;..-.&amp;quot;,&amp;quot;--.&amp;quot;,&amp;quot;....&amp;quot;,&amp;quot;..&amp;quot;,&amp;quot;.---&amp;quot;,&amp;quot;-.-&amp;quot;,&amp;quot;.-..&amp;quot;,&amp;quot;--&amp;quot;,&amp;quot;-.&amp;quot;,&amp;quot;---&amp;quot;,&amp;quot;.--.&amp;quot;,&amp;quot;--.-&amp;quot;,&amp;quot;.-.&amp;quot;,&amp;quot;...&amp;quot;,&amp;quot;-&amp;quot;,&amp;quot;..-&amp;quot;,&amp;quot;...-&amp;quot;,&amp;quot;.--&amp;quot;,&amp;quot;-..-&amp;quot;,&amp;quot;-.--&amp;quot;,&amp;quot;--..&amp;quot;] for w in words: trans.add(&#39;&#39;.join(alp[ord(c)-ord(&#39;a&#39;)] for c in w)) return len(trans) 807. Max Increase to Keep City Skyline 计算每一列每一</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 743. Network Delay Time</title>
+      <link>http://guoyc.com/post/network_delay_time/</link>
+      <pubDate>Fri, 23 Mar 2018 00:20:35 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/network_delay_time/</guid>
+      <description>这题是一道用BFS或者DFS就可以解决的问题。 直接上暴力DFS的代码代码: class Solution: def networkDelayTime(self, times, N, K): &amp;quot;&amp;quot;&amp;quot; :type times: List[List[int]] :type N: int :type K: int :rtype: int &amp;quot;&amp;quot;&amp;quot; visited = {} l = [(K, 0)] # dic[i</description>
+    </item>
+    
+  </channel>
+</rss>

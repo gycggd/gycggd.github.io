@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Leetcode Weekly Contest 76 - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="800. Similar RGB Color 这题很容易，只需要将其分为3个部分，对每个部分找个最相近的 &amp;lsquo;XX&amp;rsquo; 格式的值即可。 对，每一个 &amp;lsquo;XY&amp;rsquo; 值，最近的一定在 &amp;lsquo;XX&amp;rsquo;, &amp;lsquo;(X-1)(X-1)&amp;rsquo;, &amp;lsquo;(X&#43;1)(X&#43;1)&amp;rsquo; 之中，所以我们计算出这三" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/leetcode_weekly_contest_76/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Leetcode Weekly Contest 76" />
+<meta property="og:description" content="800. Similar RGB Color 这题很容易，只需要将其分为3个部分，对每个部分找个最相近的 &lsquo;XX&rsquo; 格式的值即可。 对，每一个 &lsquo;XY&rsquo; 值，最近的一定在 &lsquo;XX&rsquo;, &lsquo;(X-1)(X-1)&rsquo;, &lsquo;(X&#43;1)(X&#43;1)&rsquo; 之中，所以我们计算出这三" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/leetcode_weekly_contest_76/" />
+
+
+
+<meta property="article:published_time" content="2018-03-18T12:53:17&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-18T12:53:17&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Leetcode Weekly Contest 76">
+<meta itemprop="description" content="800. Similar RGB Color 这题很容易，只需要将其分为3个部分，对每个部分找个最相近的 &lsquo;XX&rsquo; 格式的值即可。 对，每一个 &lsquo;XY&rsquo; 值，最近的一定在 &lsquo;XX&rsquo;, &lsquo;(X-1)(X-1)&rsquo;, &lsquo;(X&#43;1)(X&#43;1)&rsquo; 之中，所以我们计算出这三">
+
+
+<meta itemprop="datePublished" content="2018-03-18T12:53:17&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-18T12:53:17&#43;08:00" />
+<meta itemprop="wordCount" content="1698">
+
+
+
+<meta itemprop="keywords" content="BFS,Dynamic Programming," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Leetcode Weekly Contest 76"/>
+<meta name="twitter:description" content="800. Similar RGB Color 这题很容易，只需要将其分为3个部分，对每个部分找个最相近的 &lsquo;XX&rsquo; 格式的值即可。 对，每一个 &lsquo;XY&rsquo; 值，最近的一定在 &lsquo;XX&rsquo;, &lsquo;(X-1)(X-1)&rsquo;, &lsquo;(X&#43;1)(X&#43;1)&rsquo; 之中，所以我们计算出这三"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Leetcode Weekly Contest 76</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-18 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> Leetcode </a>
+            
+          </div>
+        <span class="more-meta"> 约 1698 字 </span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#800-similar-rgb-color">800. Similar RGB Color</a></li>
+<li><a href="#801-minimum-swaps-to-make-sequences-increasing">801. Minimum Swaps To Make Sequences Increasing</a></li>
+<li><a href="#802-find-eventual-safe-states">802. Find Eventual Safe States</a></li>
+<li><a href="#803-bricks-falling-when-hit">803. Bricks Falling When Hit</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="800-similar-rgb-color">800. Similar RGB Color</h1>
+
+<p><img src="/images/leetcode/800_1.png" alt="800 Description" /></p>
+
+<p>这题很容易，只需要将其分为3个部分，对每个部分找个最相近的 &lsquo;XX&rsquo; 格式的值即可。</p>
+
+<p>对，每一个 &lsquo;XY&rsquo; 值，最近的一定在 &lsquo;XX&rsquo;, &lsquo;(X-1)(X-1)&rsquo;, &lsquo;(X+1)(X+1)&rsquo; 之中，所以我们计算出这三个值去最近的即可。</p>
+
+<p>这是我5行的Python代码：</p>
+
+<pre><code>def similarRGB(self, color):
+    ret = '#'
+    for i in range(1, 6, 2):
+        c1, c2 = [int(_) if '0'&lt;=_&lt;='9' else 10+ord(_)-ord('a') for _ in color[i:i+2]]
+        c = c1+sorted(enumerate([abs((c1*16+c2)-(x*16+x)) for x in [c1-1, c1, c1+1]]), key=lambda _:_[1])[0][0]-1
+        ret += str(c)*2 if c&lt;=9 else chr(c-10+ord('a'))*2
+    return ret
+</code></pre>
+
+<h1 id="801-minimum-swaps-to-make-sequences-increasing">801. Minimum Swaps To Make Sequences Increasing</h1>
+
+<p><img src="/images/leetcode/801_1.png" alt="801 Description" /></p>
+
+<p>以<code>1, 2, 3, 8, 5</code>和<code>5, 6, 7, 4, 9</code>为例，只需要交换<code>8</code>和<code>4</code>即可。</p>
+
+<p>这个问题可以用动态规划来解决，在每一个位置可以有两种选择，交换和不交换，但是由于要产生两个排好序的数组，在确定之前的交换情况后，我们并不能自由选择交换与否。所以可以形成一个递推的公式：</p>
+
+<p>初始化用来递推的数组dp，dp[i][0]和dp[i][1]表示在A[:i+1]与B[:i+1]上交换至有序需要的最少操作，其中dp[i][0]表示在i处不进行交换的情况，dp[i][1]表示在i处进行交换的情况。为什么要分成两个？因为在对下一个位置进行推导的时候，需要知道上一个位置的交换情况。</p>
+
+<pre><code>N = len(A)
+dp = [[maxint]\*2 for \_ in range(N)]
+</code></pre>
+
+<p>推导公式如下：</p>
+
+<p>For $i \in [1, N]$:</p>
+
+<p>If A[i]&gt;A[i-1] and B[i]&gt;B[i-1]（不交换就有序）:
+$$dp[i][0]=min(dp[i][0], dp[i-1][0])$$（i处不交换即可）
+$$dp[i][1]=min(dp[i][1], dp[i-1][1]+1)$$（i-1处进行了交换，i处交换才可以保持有序）</p>
+
+<p>If A[i]&gt;B[i-1] and B[i]&gt;A[i-1]（交换后有序）:
+$$dp[i][0]=min(dp[i][0], dp[i-1][1])$$（由于i-1处已交换，不交换即有序）
+$$dp[i][1]=min(dp[i][1], dp[i-1][0]+1)$$（i-1处未交换，i处交换可以有序）</p>
+
+<p>上面两种情况并不冲突，所以取较小者</p>
+
+<p>最后的结果是$min(dp[N-1][0], dp[N-1][1])$.</p>
+
+<p>因为每次递推只需要用到前一次的结果，所以需要的空间是$O(1)$，时间是$O(N)$。</p>
+
+<p>20行Python版Solution：</p>
+
+<pre><code>class Solution:
+    def minSwap(self, A, B):
+        &quot;&quot;&quot;
+        :type A: List[int]
+        :type B: List[int]
+        :rtype: int
+        &quot;&quot;&quot;
+        n = len(A)
+        pre = [0, 1]
+        for i in range(1, n):
+            cur = [sys.maxsize, sys.maxsize]
+            if A[i]&gt;A[i-1] and B[i]&gt;B[i-1]:
+                cur[0] = min(cur[0], pre[0])
+                cur[1] = min(cur[1], pre[1]+1)
+            if A[i]&gt;B[i-1] and B[i]&gt;A[i-1]:
+                cur[0] = min(cur[0], pre[1])
+                cur[1] = min(cur[1], pre[0]+1)
+            pre = cur
+        return min(pre)
+</code></pre>
+
+<h1 id="802-find-eventual-safe-states">802. Find Eventual Safe States</h1>
+
+<p><img src="/images/leetcode/802_1.png" alt="802 Description" /></p>
+
+<p>这一题其实就是找出所有有任何路径进入循环的节点。</p>
+
+<p>我在contest的时候的做法是找出所有循环中的所有节点，然后再找出所有有路径通往这些节点的节点即可。虽然复杂但也Accept了。</p>
+
+<p>800ms的解法：</p>
+
+<pre><code>def eventualSafeNodes(self, graph):
+    &quot;&quot;&quot;
+    :type graph: List[List[int]]
+    :rtype: List[int]
+    &quot;&quot;&quot;
+    n = len(graph)
+    ret = set(range(n))
+    visited = set()
+    path = set()
+    for i in range(n):
+        if i in visited:
+            continue
+        st = [(i, False)]
+        while st:
+            n, v = st.pop()
+            visited.add(n)
+            if v:
+                path.remove(n)
+                continue
+            st.append((n, True))
+            path.add(n)
+            for nn in graph[n]:
+                if nn in path:
+                    idx = len(st)-1
+                    while idx&gt;=0:
+                        if st[idx][1] and st[idx][0] in ret:
+                            ret.remove(st[idx][0])
+                        idx -= 1
+                    continue
+                if nn not in ret:
+                    idx = len(st)-1
+                    while idx&gt;=0:
+                        if st[idx][1] and st[idx][0] in ret:
+                            ret.remove(st[idx][0])
+                        idx -= 1
+                    continue
+                if nn in visited:
+                    continue
+                st.append((nn, False))
+    n = len(graph)
+    while True:
+        pre = len(ret)
+        for i in range(n):
+            if i not in ret:
+                continue
+            for j in graph[i]:
+                if j not in ret:
+                    ret.remove(i)
+                    break
+        if len(ret)==pre:
+            break
+    return list(ret)
+</code></pre>
+
+<p>其实我们可以从出度为0的节点开始，每次都删除出度为0的节点，删除掉的节点即是结果。</p>
+
+<ol>
+<li>找到所有出度为0的节点，从图中删除并加入到结果</li>
+<li>由于1中删除了一些节点，会有一些新的节点出度为0，把这些节点删除并加入结果</li>
+<li>重复2直到没有节点可以删除</li>
+</ol>
+
+<p>300ms Solution：</p>
+
+<pre><code>def eventualSafeNodes(self, graph):
+    &quot;&quot;&quot;
+    :type graph: List[List[int]]
+    :rtype: List[int]
+    &quot;&quot;&quot;
+    n = len(graph)
+    out_degree = collections.defaultdict(int)
+    in_nodes = collections.defaultdict(list) 
+    queue = []
+    ret = []
+    for i in range(n):
+        out_degree[i] = len(graph[i])
+        if out_degree[i]==0:
+            queue.append(i)
+        for j in graph[i]:
+            in_nodes[j].append(i)  
+    while queue:
+        term_node = queue.pop(0)
+        ret.append(term_node)
+        for in_node in in_nodes[term_node]:
+            out_degree[in_node] -= 1
+            if out_degree[in_node]==0:
+                queue.append(in_node)
+    return sorted(ret)
+</code></pre>
+
+<h1 id="803-bricks-falling-when-hit">803. Bricks Falling When Hit</h1>
+
+<p><img src="/images/leetcode/803_1.png" alt="803 Description" /></p>
+
+<p>直接的做法是对每一次hit计算有多少不会掉落的砖块然后返回每次的差值。但我尝试之后发现会TLE，因为每次hit都对所有顶层的砖块进行一遍DFS耗时太多，只能采取效率更高的解法。</p>
+
+<p>反过来看这个问题的话，其实是从所有hits之后的状态，从最后一个hit开始，往墙上贴砖块，那么每次增加的不会掉落的砖块也就是这个hit之后掉落的砖块数目。</p>
+
+<p>Let m, n = len(grid), len(grid[0]).</p>
+
+<ol>
+<li>For each hit (i, j), if grid[i][j]==0, set grid[i][j]=-1 otherwise set grid[i][j]=0. Since a hit may happen at an empty position, we need to seperate emptys from bricks.</li>
+<li>For i in [0, n], do dfs at grid[i][0] and mark no-dropping bricks. Here we get the grid after all hits.</li>
+<li>Then for each hit (i,j) (reversely), first we check grid[i][j]==-1, if yes, it&rsquo;s empty, skip this hit. Then we check whether it&rsquo;s connected to any no-dropping bricks or it&rsquo;s at the top, if not, it can&rsquo;t add any no-dropping bricks, skip this hit. Otherwise we do dfs at grid[i][j], mark new added no-dropping bricks and record amount of them.</li>
+<li>Return the amounts of new added no-dropping bricks at each hits.</li>
+</ol>
+
+<p>用这种方法，只需要进行$O(n)+O(len(hits))$次DFS.</p>
+
+<p>这里是一组例子：</p>
+
+<p><img src="/images/leetcode/803_2.png" alt="803 Description" />
+<img src="/images/leetcode/803_3.png" alt="803 Description" />
+<img src="/images/leetcode/803_4.png" alt="803 Description" />
+<img src="/images/leetcode/803_5.png" alt="803 Description" />
+<img src="/images/leetcode/803_6.png" alt="803 Description" /></p>
+
+<p>代码如下：</p>
+
+<pre><code>class Solution:
+    def hitBricks(self, grid, hits):
+        &quot;&quot;&quot;
+        :type grid: List[List[int]]
+        :type hits: List[List[int]]
+        :rtype: List[int]
+        &quot;&quot;&quot;
+
+        m, n = len(grid), len(grid[0])
+        
+        # Connect unconnected bricks and 
+        def dfs(i, j):
+            if not (0&lt;=i&lt;m and 0&lt;=j&lt;n) or grid[i][j]!=1:
+                return 0
+            ret = 1
+            grid[i][j] = 2
+            ret += sum(dfs(x, y) for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)])
+            return ret
+        
+        # Check whether (i, j) is connected to Not Falling Bricks
+        def is_connected(i, j):
+            return i==0 or any([0&lt;=x&lt;m and 0&lt;=y&lt;n and grid[x][y]==2 for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]])
+        
+        # Mark whether there is a brick at the each hit
+        for i, j in hits:
+            grid[i][j] -= 1
+                
+        # Get grid after all hits
+        for i in range(n):
+            dfs(0, i)
+        
+        # Reversely add the block of each hits and get count of newly add bricks
+        ret = [0]*len(hits)
+        for k in reversed(range(len(hits))):
+            i, j = hits[k]
+            grid[i][j] += 1
+            if grid[i][j]==1 and is_connected(i, j):
+                ret[k] = dfs(i, j)-1
+            
+        return ret
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/bfs/">BFS</a>
+          
+          <a href="/tags/dynamic-programming/">Dynamic Programming</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/single_number/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 136. Single Number</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/rain_drop/">
+            <span class="next-text nav-default">LeetCode 42: Trapping Rain Water I &amp; II</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

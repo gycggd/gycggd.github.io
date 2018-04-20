@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Divide and Conquer on Guoyc&#39;s blog</title>
+    <link>http://guoyc.com/en/tags/divide-and-conquer/</link>
+    <description>Recent content in Divide and Conquer on Guoyc&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Thu, 15 Mar 2018 13:15:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/en/tags/divide-and-conquer/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode 327: Count of Range Sum</title>
+      <link>http://guoyc.com/en/post/count_of_range_sum/</link>
+      <pubDate>Thu, 15 Mar 2018 13:15:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/count_of_range_sum/</guid>
+      <description>This problem ask us to find the count of all range sums between lower, upper for an array. Numbers in the array can be either negative or positive, so we can&amp;rsquo;t use two pointers to solve this problem.
+An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you must do better than O($N^2$).</description>
+    </item>
+    
+  </channel>
+</rss>

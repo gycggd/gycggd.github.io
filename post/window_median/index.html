@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>LeetCode 295. Find Median from Data Stream - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="此题295. Find Median from Data Stream 与480. Sliding Window Median 类似。都是在一个变化的序列中多次求中位数，而我们知道中位数与大小相关，所以很容易想到用堆来维护。 但对于" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/window_median/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="LeetCode 295. Find Median from Data Stream" />
+<meta property="og:description" content="此题295. Find Median from Data Stream 与480. Sliding Window Median 类似。都是在一个变化的序列中多次求中位数，而我们知道中位数与大小相关，所以很容易想到用堆来维护。 但对于" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/window_median/" />
+
+
+
+<meta property="article:published_time" content="2018-03-22T23:00:35&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-22T23:00:35&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="LeetCode 295. Find Median from Data Stream">
+<meta itemprop="description" content="此题295. Find Median from Data Stream 与480. Sliding Window Median 类似。都是在一个变化的序列中多次求中位数，而我们知道中位数与大小相关，所以很容易想到用堆来维护。 但对于">
+
+
+<meta itemprop="datePublished" content="2018-03-22T23:00:35&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-22T23:00:35&#43;08:00" />
+<meta itemprop="wordCount" content="619">
+
+
+
+<meta itemprop="keywords" content="Heap," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LeetCode 295. Find Median from Data Stream"/>
+<meta name="twitter:description" content="此题295. Find Median from Data Stream 与480. Sliding Window Median 类似。都是在一个变化的序列中多次求中位数，而我们知道中位数与大小相关，所以很容易想到用堆来维护。 但对于"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">LeetCode 295. Find Median from Data Stream</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-22 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> Leetcode </a>
+            
+          </div>
+        <span class="more-meta"> 约 619 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p><img src="/images/leetcode/295_1.png" alt="295" /></p>
+
+<p>此题<a href="https://leetcode.com/problems/find-median-from-data-stream/description/">295. Find Median from Data Stream
+</a> 与<a href="https://leetcode.com/problems/sliding-window-median/">480. Sliding Window Median
+</a> 类似。都是在一个变化的序列中多次求中位数，而我们知道中位数与大小相关，所以很容易想到用堆来维护。</p>
+
+<p>但对于堆来说，我们只能方便的取最大或最小，在这个问题中，我们可以用一个最小堆和一个最大堆来维护有序性，并且维持两个堆内元素个数之差始终在1以内。那么每次取中位数就只需要O(1)的时间，每次插入元素只需要O(n)的时间。具体如下：</p>
+
+<ul>
+<li>初始化max_heap=[]用来保存小于中位数的数, min_heap=[]用来保存大于或等于中位数的数</li>
+<li>插入一个元素时
+
+<ul>
+<li>根据大小判断应该插入到max_heap还是min_heap中</li>
+<li>通过heappop和heappush保证len(max_heap)&lt;=len(min_heap)&lt;=len(max_heap)+1</li>
+</ul></li>
+<li>取中位数时
+
+<ul>
+<li>如果len(min_heap)==len(max_heap)+1, 取min_heap堆顶元素</li>
+<li>如果len(min_heap)==len(max_heap), 取两堆堆顶元素平均数</li>
+</ul></li>
+</ul>
+
+<p>代码如下：</p>
+
+<pre><code>from heapq import *
+
+class MedianFinder:
+
+    def __init__(self):
+        self.heaps = [], []
+
+    def addNum(self, num):
+        small, large = self.heaps
+        heappush(small, -heappushpop(large, num))
+        if len(large) &lt; len(small):
+            heappush(large, -heappop(small))
+
+    def findMedian(self):
+        small, large = self.heaps
+        if len(large) &gt; len(small):
+            return float(large[0])
+        return (large[0] - small[0]) / 2.0
+</code></pre>
+
+<p><img src="/images/leetcode/480_1.png" alt="480" /></p>
+
+<p>如果是<a href="https://leetcode.com/problems/sliding-window-median/">480. Sliding Window Median
+</a> ，只需要在addNum时增加判断是否超出窗口大小，如果超过，就invalid离开窗口的元素，否则直接加入。</p>
+
+<p>代码如下（有点啰嗦，没来得及优化）：</p>
+
+<pre><code>class Solution(object):
+    def medianSlidingWindow(self, nums, k):
+        &quot;&quot;&quot;
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[float]
+        &quot;&quot;&quot;
+        if k==1:
+            return list(map(float, nums))
+ 
+        def pop(heap):
+            clean(heap)
+            return heapq.heappop(heap)
+        
+        def top(heap):
+            clean(heap)
+            return heap[0]
+        
+        def clean(heap):
+            while heap and not heap[0][1]:
+                heapq.heappop(heap)
+
+        def med(heap1, heap2):
+            clean(heap1)
+            clean(heap2)
+            if k&amp;1:
+                return heap2[0][0]
+            else:
+                return (heap2[0][0]-heap1[0][0])/2
+
+        N = len(nums)
+        nums = [[nums[i], True, 1] for i in range(len(nums))]
+        heap1 = []
+        heap2 = []
+        
+        for i in range(k):
+            nums[i][0] = -nums[i][0]
+            heapq.heappush(heap1, nums[i])
+            
+        for i in range((k+1)//2):
+            n = pop(heap1)
+            n[0] = -n[0]
+            n[2] = 2
+            heapq.heappush(heap2, n)
+
+        ret = [med(heap1, heap2)]
+        for i in range(N-k):
+            nums[i][1] = False
+            if nums[i][2]==1:
+                if nums[i+k][0]&lt;=top(heap2)[0]:
+                    nums[i+k][0] = -nums[i+k][0]
+                    heapq.heappush(heap1, nums[i+k])
+                    ret.append(med(heap1, heap2))
+                else:
+                    nums[i+k][2] = 2
+                    heapq.heappush(heap2, nums[i+k])
+                    n = pop(heap2)
+                    n[2] = 1
+                    n[0] = -n[0]
+                    heapq.heappush(heap1, n)
+                    ret.append(med(heap1, heap2))
+            else:
+                if nums[i+k][0]&gt;=-top(heap1)[0]:
+                    nums[i+k][2] = 2
+                    heapq.heappush(heap2, nums[i+k])
+                    ret.append(med(heap1, heap2))
+                else:
+                    nums[i+k][0] = -nums[i+k][0]
+                    heapq.heappush(heap1, nums[i+k])
+                    n = pop(heap1)
+                    n[2] = 2
+                    n[0] = -n[0]
+                    heapq.heappush(heap2, n)
+                    ret.append(med(heap1, heap2))
+        
+        return list(map(float, ret))
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/heap/">Heap</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/network_delay_time/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 743. Network Delay Time</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/search_2d_matrix/">
+            <span class="next-text nav-default">LeetCode 240: Search a 2D matrix II</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

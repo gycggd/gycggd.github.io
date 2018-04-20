@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Using Hough Transform to detect lines and circles - Guoyc&#39;s blog</title>
+  <link rel="alternate" hreflang="en" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content=" Hough-Line function [H, theta, r] = myhough(BW) [h, w] = size(BW); theta_low = -pi/2; theta_high = pi/2; r_low = -sqrt(h^2&#43;w^2); r_high = sqrt(h^2&#43;w^2); num_theta = 180; num_r = round(r_high*2); H = zeros(num_theta, num_r); for x = 1:h for y = 1:w if BW(x, y)==1 for i = 1:num_theta theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = x*cos(theta) &#43; y*sin(theta); j = round(1 &#43; (num_r-1) * (r-r_low)/(r_high-r_low)); H(i, j) = H(i, j) &#43; 1; end end end end [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = r_low &#43; (j-1)/num_r*(r_high-r_low); while (abs(theta)&amp;lt;=pi/90 &amp;amp;&amp;amp; (abs(r)&amp;lt;=2 || abs(abs(r)-h)&amp;lt;=2)) || (abs(pi/2-abs(theta))&amp;lt;=pi/90 &amp;amp;&amp;amp; (abs(r)&amp;lt;=2 || abs(abs(r)-w)&amp;lt;=2)) H(i, j) = 0; [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = r_low &#43; (j-1)/num_r*(r_high-r_low); end end  Hough-Circle function [x, y, R] = myhoughcircle(BW, max_r, k, gap) [h, w] = size(BW); num_x = h; num_y = w; if nargin &amp;lt; 2 || isempty(max_r) max_r = min(h/2, w/2); end if nargin &amp;lt; 3 k = 1; end if nargin &amp;lt; 4 gap = 20; end H = zeros(num_x, num_y, max_r); for i = 1:h for j = 1:w if BW(i, j)==1 for a = 1:num_x for b = 1:num_y r = round(sqrt((a-i)^2&#43;(b-j)^2)); if r&amp;gt;0 &amp;amp;&amp;amp; r&amp;lt;=max_r H(a, b, r) = H(a, b, r) &#43; 1; end end end end end end img = cat(3, BW, BW, BW)*255; hh = H(:); prex = 0; prey = 0; preR = 0; idx = 1; while idx&amp;lt;=k [~, I] = max(hh); [x, y, R] = ind2sub(size(H), I); hh(I) = 0; if (x-prex)&amp;lt;=gap &amp;amp;&amp;amp; (y-prey)&amp;lt;=gap &amp;amp;&amp;amp; (R-preR)&amp;lt;=gap continue end for i = 1:h for j = 1:w computed_r = sqrt((i-x)^2&#43;(j-y)^2); if abs(computed_r-R)&amp;lt;=1 img(i, j, :) = [255, 0, 0]; end end end prex = x; prey = y; preR = R; idx = idx&#43;1; end end  " />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/en/post/hough/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Using Hough Transform to detect lines and circles" />
+<meta property="og:description" content=" Hough-Line function [H, theta, r] = myhough(BW) [h, w] = size(BW); theta_low = -pi/2; theta_high = pi/2; r_low = -sqrt(h^2&#43;w^2); r_high = sqrt(h^2&#43;w^2); num_theta = 180; num_r = round(r_high*2); H = zeros(num_theta, num_r); for x = 1:h for y = 1:w if BW(x, y)==1 for i = 1:num_theta theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = x*cos(theta) &#43; y*sin(theta); j = round(1 &#43; (num_r-1) * (r-r_low)/(r_high-r_low)); H(i, j) = H(i, j) &#43; 1; end end end end [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = r_low &#43; (j-1)/num_r*(r_high-r_low); while (abs(theta)&lt;=pi/90 &amp;&amp; (abs(r)&lt;=2 || abs(abs(r)-h)&lt;=2)) || (abs(pi/2-abs(theta))&lt;=pi/90 &amp;&amp; (abs(r)&lt;=2 || abs(abs(r)-w)&lt;=2)) H(i, j) = 0; [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = r_low &#43; (j-1)/num_r*(r_high-r_low); end end  Hough-Circle function [x, y, R] = myhoughcircle(BW, max_r, k, gap) [h, w] = size(BW); num_x = h; num_y = w; if nargin &lt; 2 || isempty(max_r) max_r = min(h/2, w/2); end if nargin &lt; 3 k = 1; end if nargin &lt; 4 gap = 20; end H = zeros(num_x, num_y, max_r); for i = 1:h for j = 1:w if BW(i, j)==1 for a = 1:num_x for b = 1:num_y r = round(sqrt((a-i)^2&#43;(b-j)^2)); if r&gt;0 &amp;&amp; r&lt;=max_r H(a, b, r) = H(a, b, r) &#43; 1; end end end end end end img = cat(3, BW, BW, BW)*255; hh = H(:); prex = 0; prey = 0; preR = 0; idx = 1; while idx&lt;=k [~, I] = max(hh); [x, y, R] = ind2sub(size(H), I); hh(I) = 0; if (x-prex)&lt;=gap &amp;&amp; (y-prey)&lt;=gap &amp;&amp; (R-preR)&lt;=gap continue end for i = 1:h for j = 1:w computed_r = sqrt((i-x)^2&#43;(j-y)^2); if abs(computed_r-R)&lt;=1 img(i, j, :) = [255, 0, 0]; end end end prex = x; prey = y; preR = R; idx = idx&#43;1; end end  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/en/post/hough/" />
+
+
+
+<meta property="article:published_time" content="2017-09-27T08:03:08&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-09-27T08:03:08&#43;00:00"/>
+
+<meta property="og:site_name" content="Guoyc&#39;s blog" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Using Hough Transform to detect lines and circles">
+<meta itemprop="description" content=" Hough-Line function [H, theta, r] = myhough(BW) [h, w] = size(BW); theta_low = -pi/2; theta_high = pi/2; r_low = -sqrt(h^2&#43;w^2); r_high = sqrt(h^2&#43;w^2); num_theta = 180; num_r = round(r_high*2); H = zeros(num_theta, num_r); for x = 1:h for y = 1:w if BW(x, y)==1 for i = 1:num_theta theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = x*cos(theta) &#43; y*sin(theta); j = round(1 &#43; (num_r-1) * (r-r_low)/(r_high-r_low)); H(i, j) = H(i, j) &#43; 1; end end end end [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = r_low &#43; (j-1)/num_r*(r_high-r_low); while (abs(theta)&lt;=pi/90 &amp;&amp; (abs(r)&lt;=2 || abs(abs(r)-h)&lt;=2)) || (abs(pi/2-abs(theta))&lt;=pi/90 &amp;&amp; (abs(r)&lt;=2 || abs(abs(r)-w)&lt;=2)) H(i, j) = 0; [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = r_low &#43; (j-1)/num_r*(r_high-r_low); end end  Hough-Circle function [x, y, R] = myhoughcircle(BW, max_r, k, gap) [h, w] = size(BW); num_x = h; num_y = w; if nargin &lt; 2 || isempty(max_r) max_r = min(h/2, w/2); end if nargin &lt; 3 k = 1; end if nargin &lt; 4 gap = 20; end H = zeros(num_x, num_y, max_r); for i = 1:h for j = 1:w if BW(i, j)==1 for a = 1:num_x for b = 1:num_y r = round(sqrt((a-i)^2&#43;(b-j)^2)); if r&gt;0 &amp;&amp; r&lt;=max_r H(a, b, r) = H(a, b, r) &#43; 1; end end end end end end img = cat(3, BW, BW, BW)*255; hh = H(:); prex = 0; prey = 0; preR = 0; idx = 1; while idx&lt;=k [~, I] = max(hh); [x, y, R] = ind2sub(size(H), I); hh(I) = 0; if (x-prex)&lt;=gap &amp;&amp; (y-prey)&lt;=gap &amp;&amp; (R-preR)&lt;=gap continue end for i = 1:h for j = 1:w computed_r = sqrt((i-x)^2&#43;(j-y)^2); if abs(computed_r-R)&lt;=1 img(i, j, :) = [255, 0, 0]; end end end prex = x; prey = y; preR = R; idx = idx&#43;1; end end  ">
+
+
+<meta itemprop="datePublished" content="2017-09-27T08:03:08&#43;00:00" />
+<meta itemprop="dateModified" content="2017-09-27T08:03:08&#43;00:00" />
+<meta itemprop="wordCount" content="306">
+
+
+
+<meta itemprop="keywords" content="Recognition," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Using Hough Transform to detect lines and circles"/>
+<meta name="twitter:description" content=" Hough-Line function [H, theta, r] = myhough(BW) [h, w] = size(BW); theta_low = -pi/2; theta_high = pi/2; r_low = -sqrt(h^2&#43;w^2); r_high = sqrt(h^2&#43;w^2); num_theta = 180; num_r = round(r_high*2); H = zeros(num_theta, num_r); for x = 1:h for y = 1:w if BW(x, y)==1 for i = 1:num_theta theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = x*cos(theta) &#43; y*sin(theta); j = round(1 &#43; (num_r-1) * (r-r_low)/(r_high-r_low)); H(i, j) = H(i, j) &#43; 1; end end end end [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = r_low &#43; (j-1)/num_r*(r_high-r_low); while (abs(theta)&lt;=pi/90 &amp;&amp; (abs(r)&lt;=2 || abs(abs(r)-h)&lt;=2)) || (abs(pi/2-abs(theta))&lt;=pi/90 &amp;&amp; (abs(r)&lt;=2 || abs(abs(r)-w)&lt;=2)) H(i, j) = 0; [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low &#43; (i-1)/num_theta*(theta_high-theta_low); r = r_low &#43; (j-1)/num_r*(r_high-r_low); end end  Hough-Circle function [x, y, R] = myhoughcircle(BW, max_r, k, gap) [h, w] = size(BW); num_x = h; num_y = w; if nargin &lt; 2 || isempty(max_r) max_r = min(h/2, w/2); end if nargin &lt; 3 k = 1; end if nargin &lt; 4 gap = 20; end H = zeros(num_x, num_y, max_r); for i = 1:h for j = 1:w if BW(i, j)==1 for a = 1:num_x for b = 1:num_y r = round(sqrt((a-i)^2&#43;(b-j)^2)); if r&gt;0 &amp;&amp; r&lt;=max_r H(a, b, r) = H(a, b, r) &#43; 1; end end end end end end img = cat(3, BW, BW, BW)*255; hh = H(:); prex = 0; prey = 0; preR = 0; idx = 1; while idx&lt;=k [~, I] = max(hh); [x, y, R] = ind2sub(size(H), I); hh(I) = 0; if (x-prex)&lt;=gap &amp;&amp; (y-prey)&lt;=gap &amp;&amp; (R-preR)&lt;=gap continue end for i = 1:h for j = 1:w computed_r = sqrt((i-x)^2&#43;(j-y)^2); if abs(computed_r-R)&lt;=1 img(i, j, :) = [255, 0, 0]; end end end prex = x; prey = y; preR = R; idx = idx&#43;1; end end  "/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Guoyc&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/en/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/en/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/en/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/en/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/en/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">Guoyc&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Using Hough Transform to detect lines and circles</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-09-27 </span>
+        
+        <span class="more-meta"> 306 words </span>
+        <span class="more-meta"> 2 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#hough-line">Hough-Line</a></li>
+<li><a href="#hough-circle">Hough-Circle</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="hough-line">Hough-Line</h1>
+
+<pre><code class="language-matlab">function [H, theta, r] = myhough(BW)
+    [h, w] = size(BW);
+
+    theta_low = -pi/2;
+    theta_high = pi/2;
+
+    r_low = -sqrt(h^2+w^2);
+    r_high = sqrt(h^2+w^2);
+
+    num_theta = 180;
+    num_r = round(r_high*2);
+    H = zeros(num_theta, num_r);
+
+    for x = 1:h
+        for y = 1:w
+            if BW(x, y)==1
+                for i = 1:num_theta
+                    theta = theta_low + (i-1)/num_theta*(theta_high-theta_low);
+                    r = x*cos(theta) + y*sin(theta);
+                    j = round(1 + (num_r-1) * (r-r_low)/(r_high-r_low));
+                    H(i, j) = H(i, j) + 1;
+                end
+            end
+        end
+    end
+    
+    [m, I] = max(H(:));
+    [i, j] = ind2sub(size(H), I);
+
+    theta = theta_low + (i-1)/num_theta*(theta_high-theta_low);
+    r = r_low + (j-1)/num_r*(r_high-r_low);
+    
+    while (abs(theta)&lt;=pi/90 &amp;&amp; (abs(r)&lt;=2 || abs(abs(r)-h)&lt;=2)) || (abs(pi/2-abs(theta))&lt;=pi/90 &amp;&amp; (abs(r)&lt;=2 || abs(abs(r)-w)&lt;=2)) 
+        H(i, j) = 0;
+        [m, I] = max(H(:));
+        [i, j] = ind2sub(size(H), I);
+
+        theta = theta_low + (i-1)/num_theta*(theta_high-theta_low);
+        r = r_low + (j-1)/num_r*(r_high-r_low);
+    end
+end
+</code></pre>
+
+<h1 id="hough-circle">Hough-Circle</h1>
+
+<pre><code class="language-matlab">function [x, y, R] = myhoughcircle(BW, max_r, k, gap)
+
+    [h, w] = size(BW);
+
+    num_x = h;
+    num_y = w;
+    
+    if nargin &lt; 2 || isempty(max_r)
+        max_r = min(h/2, w/2);
+    end
+    if nargin &lt; 3
+        k = 1;
+    end
+    if nargin &lt; 4
+        gap = 20;
+    end
+    
+    H = zeros(num_x, num_y, max_r);
+
+    for i = 1:h
+        for j = 1:w 
+            if BW(i, j)==1
+                for a = 1:num_x
+                    for b = 1:num_y
+                        r = round(sqrt((a-i)^2+(b-j)^2));
+                        if r&gt;0 &amp;&amp; r&lt;=max_r
+                            H(a, b, r) = H(a, b, r) + 1;
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    
+    img = cat(3, BW, BW, BW)*255;
+    
+    hh = H(:);
+    
+    prex = 0;
+    prey = 0;
+    preR = 0;
+    
+    idx = 1;
+    
+    while idx&lt;=k
+        
+        [~, I] = max(hh);
+        [x, y, R] = ind2sub(size(H), I);
+        hh(I) = 0;
+        
+        if (x-prex)&lt;=gap &amp;&amp; (y-prey)&lt;=gap &amp;&amp; (R-preR)&lt;=gap
+           continue 
+        end
+                        
+        for i = 1:h
+            for j = 1:w
+                computed_r = sqrt((i-x)^2+(j-y)^2);
+                if abs(computed_r-R)&lt;=1
+                    img(i, j, :) = [255, 0, 0];
+                end
+            end
+        end
+        prex = x;
+        prey = y;
+        preR = R;
+        idx = idx+1;
+        
+    end
+        
+end
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/recognition/">Recognition</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/en/post/face-recognition/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Face Detection &amp; Recognition</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      Show Disqus Comments
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

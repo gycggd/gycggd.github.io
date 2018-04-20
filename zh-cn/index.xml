@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>郭玉晨的博客</title>
+    <link>http://guoyc.com/zh-cn/</link>
+    <description>Recent content on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Sun, 18 Mar 2018 12:53:17 +0800</lastBuildDate>
+    
+        <atom:link href="http://guoyc.com/zh-cn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode Weekly Contest 76</title>
+      <link>http://guoyc.com/zh-cn/post/leetcode_weekly_contest_76/</link>
+      <pubDate>Sun, 18 Mar 2018 12:53:17 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/zh-cn/post/leetcode_weekly_contest_76/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;800-similar-rgb-color&#34;&gt;800. Similar RGB Color&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/800_1.png&#34; alt=&#34;800 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这题很容易，只需要将其分为3个部分，对每个部分找个最相近的 &amp;lsquo;XX&amp;rsquo; 格式的值即可。&lt;/p&gt;
+
+&lt;p&gt;对，每一个 &amp;lsquo;XY&amp;rsquo; 值，最近的一定在 &amp;lsquo;XX&amp;rsquo;, &amp;lsquo;(X-1)(X-1)&amp;rsquo;, &amp;lsquo;(X+1)(X+1)&amp;rsquo; 之中，所以我们计算出这三个值去最近的即可。&lt;/p&gt;
+
+&lt;p&gt;这是我5行的Python代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def similarRGB(self, color):
+    ret = &#39;#&#39;
+    for i in range(1, 6, 2):
+        c1, c2 = [int(_) if &#39;0&#39;&amp;lt;=_&amp;lt;=&#39;9&#39; else 10+ord(_)-ord(&#39;a&#39;) for _ in color[i:i+2]]
+        c = c1+sorted(enumerate([abs((c1*16+c2)-(x*16+x)) for x in [c1-1, c1, c1+1]]), key=lambda _:_[1])[0][0]-1
+        ret += str(c)*2 if c&amp;lt;=9 else chr(c-10+ord(&#39;a&#39;))*2
+    return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;801-minimum-swaps-to-make-sequences-increasing&#34;&gt;801. Minimum Swaps To Make Sequences Increasing&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/801_1.png&#34; alt=&#34;801 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;以&lt;code&gt;1, 2, 3, 8, 5&lt;/code&gt;和&lt;code&gt;5, 6, 7, 4, 9&lt;/code&gt;为例，只需要交换&lt;code&gt;8&lt;/code&gt;和&lt;code&gt;4&lt;/code&gt;即可。&lt;/p&gt;
+
+&lt;p&gt;这个问题可以用动态规划来解决，在每一个位置可以有两种选择，交换和不交换，但是由于要产生两个排好序的数组，在确定之前的交换情况后，我们并不能自由选择交换与否。所以可以形成一个递推的公式：&lt;/p&gt;
+
+&lt;p&gt;初始化用来递推的数组dp，dp[i][0]和dp[i][1]表示在A[:i+1]与B[:i+1]上交换至有序需要的最少操作，其中dp[i][0]表示在i处不进行交换的情况，dp[i][1]表示在i处进行交换的情况。为什么要分成两个？因为在对下一个位置进行推导的时候，需要知道上一个位置的交换情况。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;N = len(A)
+dp = [[maxint]\*2 for \_ in range(N)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;推导公式如下：&lt;/p&gt;
+
+&lt;p&gt;For $i \in [1, N]$:&lt;/p&gt;
+
+&lt;p&gt;If A[i]&amp;gt;A[i-1] and B[i]&amp;gt;B[i-1]（不交换就有序）:
+$$dp[i][0]=min(dp[i][0], dp[i-1][0])$$（i处不交换即可）
+$$dp[i][1]=min(dp[i][1], dp[i-1][1]+1)$$（i-1处进行了交换，i处交换才可以保持有序）&lt;/p&gt;
+
+&lt;p&gt;If A[i]&amp;gt;B[i-1] and B[i]&amp;gt;A[i-1]（交换后有序）:
+$$dp[i][0]=min(dp[i][0], dp[i-1][1])$$（由于i-1处已交换，不交换即有序）
+$$dp[i][1]=min(dp[i][1], dp[i-1][0]+1)$$（i-1处未交换，i处交换可以有序）&lt;/p&gt;
+
+&lt;p&gt;上面两种情况并不冲突，所以取较小者&lt;/p&gt;
+
+&lt;p&gt;最后的结果是$min(dp[N-1][0], dp[N-1][1])$.&lt;/p&gt;
+
+&lt;p&gt;因为每次递推只需要用到前一次的结果，所以需要的空间是$O(1)$，时间是$O(N)$。&lt;/p&gt;
+
+&lt;p&gt;20行Python版Solution：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def minSwap(self, A, B):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type A: List[int]
+        :type B: List[int]
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        n = len(A)
+        pre = [0, 1]
+        for i in range(1, n):
+            cur = [sys.maxsize, sys.maxsize]
+            if A[i]&amp;gt;A[i-1] and B[i]&amp;gt;B[i-1]:
+                cur[0] = min(cur[0], pre[0])
+                cur[1] = min(cur[1], pre[1]+1)
+            if A[i]&amp;gt;B[i-1] and B[i]&amp;gt;A[i-1]:
+                cur[0] = min(cur[0], pre[1])
+                cur[1] = min(cur[1], pre[0]+1)
+            pre = cur
+        return min(pre)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;802-find-eventual-safe-states&#34;&gt;802. Find Eventual Safe States&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/802_1.png&#34; alt=&#34;802 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题其实就是找出所有有任何路径进入循环的节点。&lt;/p&gt;
+
+&lt;p&gt;我在contest的时候的做法是找出所有循环中的所有节点，然后再找出所有有路径通往这些节点的节点即可。虽然复杂但也Accept了。&lt;/p&gt;
+
+&lt;p&gt;800ms的解法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def eventualSafeNodes(self, graph):
+    &amp;quot;&amp;quot;&amp;quot;
+    :type graph: List[List[int]]
+    :rtype: List[int]
+    &amp;quot;&amp;quot;&amp;quot;
+    n = len(graph)
+    ret = set(range(n))
+    visited = set()
+    path = set()
+    for i in range(n):
+        if i in visited:
+            continue
+        st = [(i, False)]
+        while st:
+            n, v = st.pop()
+            visited.add(n)
+            if v:
+                path.remove(n)
+                continue
+            st.append((n, True))
+            path.add(n)
+            for nn in graph[n]:
+                if nn in path:
+                    idx = len(st)-1
+                    while idx&amp;gt;=0:
+                        if st[idx][1] and st[idx][0] in ret:
+                            ret.remove(st[idx][0])
+                        idx -= 1
+                    continue
+                if nn not in ret:
+                    idx = len(st)-1
+                    while idx&amp;gt;=0:
+                        if st[idx][1] and st[idx][0] in ret:
+                            ret.remove(st[idx][0])
+                        idx -= 1
+                    continue
+                if nn in visited:
+                    continue
+                st.append((nn, False))
+    n = len(graph)
+    while True:
+        pre = len(ret)
+        for i in range(n):
+            if i not in ret:
+                continue
+            for j in graph[i]:
+                if j not in ret:
+                    ret.remove(i)
+                    break
+        if len(ret)==pre:
+            break
+    return list(ret)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其实我们可以从出度为0的节点开始，每次都删除出度为0的节点，删除掉的节点即是结果。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;找到所有出度为0的节点，从图中删除并加入到结果&lt;/li&gt;
+&lt;li&gt;由于1中删除了一些节点，会有一些新的节点出度为0，把这些节点删除并加入结果&lt;/li&gt;
+&lt;li&gt;重复2直到没有节点可以删除&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;300ms Solution：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def eventualSafeNodes(self, graph):
+    &amp;quot;&amp;quot;&amp;quot;
+    :type graph: List[List[int]]
+    :rtype: List[int]
+    &amp;quot;&amp;quot;&amp;quot;
+    n = len(graph)
+    out_degree = collections.defaultdict(int)
+    in_nodes = collections.defaultdict(list) 
+    queue = []
+    ret = []
+    for i in range(n):
+        out_degree[i] = len(graph[i])
+        if out_degree[i]==0:
+            queue.append(i)
+        for j in graph[i]:
+            in_nodes[j].append(i)  
+    while queue:
+        term_node = queue.pop(0)
+        ret.append(term_node)
+        for in_node in in_nodes[term_node]:
+            out_degree[in_node] -= 1
+            if out_degree[in_node]==0:
+                queue.append(in_node)
+    return sorted(ret)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;803-bricks-falling-when-hit&#34;&gt;803. Bricks Falling When Hit&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/803_1.png&#34; alt=&#34;803 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;直接的做法是对每一次hit计算有多少不会掉落的砖块然后返回每次的差值。但我尝试之后发现会TLE，因为每次hit都对所有顶层的砖块进行一遍DFS耗时太多，只能采取效率更高的解法。&lt;/p&gt;
+
+&lt;p&gt;反过来看这个问题的话，其实是从所有hits之后的状态，从最后一个hit开始，往墙上贴砖块，那么每次增加的不会掉落的砖块也就是这个hit之后掉落的砖块数目。&lt;/p&gt;
+
+&lt;p&gt;Let m, n = len(grid), len(grid[0]).&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;For each hit (i, j), if grid[i][j]==0, set grid[i][j]=-1 otherwise set grid[i][j]=0. Since a hit may happen at an empty position, we need to seperate emptys from bricks.&lt;/li&gt;
+&lt;li&gt;For i in [0, n], do dfs at grid[i][0] and mark no-dropping bricks. Here we get the grid after all hits.&lt;/li&gt;
+&lt;li&gt;Then for each hit (i,j) (reversely), first we check grid[i][j]==-1, if yes, it&amp;rsquo;s empty, skip this hit. Then we check whether it&amp;rsquo;s connected to any no-dropping bricks or it&amp;rsquo;s at the top, if not, it can&amp;rsquo;t add any no-dropping bricks, skip this hit. Otherwise we do dfs at grid[i][j], mark new added no-dropping bricks and record amount of them.&lt;/li&gt;
+&lt;li&gt;Return the amounts of new added no-dropping bricks at each hits.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;用这种方法，只需要进行$O(n)+O(len(hits))$次DFS.&lt;/p&gt;
+
+&lt;p&gt;这里是一组例子：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/803_2.png&#34; alt=&#34;803 Description&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_3.png&#34; alt=&#34;803 Description&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_4.png&#34; alt=&#34;803 Description&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_5.png&#34; alt=&#34;803 Description&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_6.png&#34; alt=&#34;803 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def hitBricks(self, grid, hits):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type grid: List[List[int]]
+        :type hits: List[List[int]]
+        :rtype: List[int]
+        &amp;quot;&amp;quot;&amp;quot;
+
+        m, n = len(grid), len(grid[0])
+        
+        # Connect unconnected bricks and 
+        def dfs(i, j):
+            if not (0&amp;lt;=i&amp;lt;m and 0&amp;lt;=j&amp;lt;n) or grid[i][j]!=1:
+                return 0
+            ret = 1
+            grid[i][j] = 2
+            ret += sum(dfs(x, y) for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)])
+            return ret
+        
+        # Check whether (i, j) is connected to Not Falling Bricks
+        def is_connected(i, j):
+            return i==0 or any([0&amp;lt;=x&amp;lt;m and 0&amp;lt;=y&amp;lt;n and grid[x][y]==2 for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]])
+        
+        # Mark whether there is a brick at the each hit
+        for i, j in hits:
+            grid[i][j] -= 1
+                
+        # Get grid after all hits
+        for i in range(n):
+            dfs(0, i)
+        
+        # Reversely add the block of each hits and get count of newly add bricks
+        ret = [0]*len(hits)
+        for k in reversed(range(len(hits))):
+            i, j = hits[k]
+            grid[i][j] += 1
+            if grid[i][j]==1 and is_connected(i, j):
+                ret[k] = dfs(i, j)-1
+            
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 42: Trapping Rain Water I &amp; II</title>
+      <link>http://guoyc.com/zh-cn/post/rain_drop/</link>
+      <pubDate>Wed, 14 Mar 2018 19:41:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/zh-cn/post/rain_drop/</guid>
+      
+        <description>
+
+&lt;p&gt;本篇包括&lt;a href=&#34;https://leetcode.com/problems/trapping-rain-water/description/&#34;&gt;42.Trapping Rain Water&lt;/a&gt; and &lt;a href=&#34;https://leetcode.com/problems/trapping-rain-water-ii/description/&#34;&gt;407.Trapping Rain Water II&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;trapping-rain-water&#34;&gt;Trapping Rain Water&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/42_1.png&#34; alt=&#34;Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This problem is taged with &amp;ldquo;Two Pointers&amp;rdquo; and &amp;ldquo;Stack&amp;rdquo;, they corresponds to two different solutions.&lt;/p&gt;
+
+&lt;p&gt;这道题目带有“双指针”和“栈”这两个标签，对应这道题的两种解法。&lt;/p&gt;
+
+&lt;h2 id=&#34;双指针解法&#34;&gt;双指针解法&lt;/h2&gt;
+
+&lt;p&gt;初始化 hl=height[0] and rl=height[len(height)-1] 为左边界和右边界的高度，left=1, right=len(height)-2 为左右两边的指针。&lt;/p&gt;
+
+&lt;p&gt;因为这个池子是1维的，所以它“漏水”只有从左右两边出去，所以只要记录左右两边的边界高度，中间每一格就可以存储 min(hl, hr) 高度的水。&lt;/p&gt;
+
+&lt;p&gt;假设 hl&amp;lt;hr,&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If A[left]&amp;lt;=hl, left 处可以存储 (hl-A[left]) 的水.&lt;/li&gt;
+&lt;li&gt;If A[left]&amp;gt;hl, left 处无法存水, just update hl=left[l].&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;hl&amp;gt;hr 的情况是对称的，另外，当hl==hr的时候，任意挑选左边或者右边往内逼近。&lt;/p&gt;
+
+&lt;p&gt;当left和right指针相遇后并且left&amp;gt;right时，退出循环，返回所有位置存储水的总量。&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def trap(self, height):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type height: List[int]
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        if not height:
+            return 0
+        l, r = 0, len(height)-1
+        hl, hr = height[l], height[r]
+        l, r = l+1, r-1
+        total = 0
+        while l&amp;lt;=r:
+            if hl&amp;lt;=hr:
+                if height[l]&amp;lt;=hl:
+                    total += (hl-height[l])
+                else:
+                    hl = height[l]
+                l += 1
+            else:
+                if height[r]&amp;lt;=hr:
+                    total += (hr-height[r])
+                else:
+                    hr = height[r]
+                r -= 1
+        return total
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;栈解法&#34;&gt;栈解法&lt;/h2&gt;
+
+&lt;p&gt;使用栈的解法维护一个这样的栈，把heights数组中的元素依次入栈，并且保证栈里的每一个元素都可能是右边的元素的左边界。当遇到一个元素比栈顶的大时，当前元素与栈顶下面的一个元素构成了一个长度、边界可以计算出来的的局部储水池。栈顶出栈，重复构成局部储水池，直到当前元素小于栈顶元素。局部储水池之和即是储水量。&lt;/p&gt;
+
+&lt;p&gt;如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/42_2.png&#34; alt=&#34;pic&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;代码如下:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def trap(self, height):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type height: List[int]
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        if not height:
+            return 0
+        st = []
+        total = 0
+        for i in range(len(height)):
+            if not st or height[i]&amp;lt;height[st[-1]]:
+                st.append(i)
+            else:
+                while st and height[st[-1]]&amp;lt;height[i]:
+                    idx = st.pop(-1)
+                    if st:
+                        total += (min(height[st[-1]], height[i])-height[idx])*(i-st[-1]-1)
+                st.append(i)
+        return total
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;trapping-rain-water-ii&#34;&gt;Trapping Rain Water II&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/407_1.png&#34; alt=&#34;Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;上一个问题中我们说过，1维的水池只有左右两个边界，而一个二维的水池则有四面八方，所以第一个问题中我们是2个指针往内逼近，在这个问题中我们最开始有(2m+2n-4)个指针（池子尺寸为&lt;code&gt;m*n&lt;/code&gt;），并且在往内计算的过程中，数量还会发生变化。&lt;/p&gt;
+
+&lt;p&gt;双指针问题中我们只需要比较两个边界的大小就可以判断从哪一侧往内延伸，现在我们有更多的方向，每次想从最小的边界往内延伸，并且每次还会加入新的边界，所以很显然可以用一个最小堆来维持顺序。&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def trapRainWater(self, grid):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type heightMap: List[List[int]]
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        if not grid or not grid[0]:
+            return 0
+        
+        m, n = len(grid), len(grid[0])
+        
+        heap = []
+        
+        visited = set()
+        # 初始化，将所有边界加入堆中
+        for i in range(m):
+            heapq.heappush(heap, (grid[i][0], i, 0))
+            heapq.heappush(heap, (grid[i][n-1], i, n-1))
+            visited.add((i, 0))
+            visited.add((i, n-1))
+        for i in range(n):
+            heapq.heappush(heap, (grid[0][i], 0, i))
+            heapq.heappush(heap, (grid[m-1][i], m-1, i))
+            visited.add((0, i))
+            visited.add((m-1, i))
+            
+        ret = 0
+        while heap:
+            # 每次取最低点向内延伸
+            h, i, j = heapq.heappop(heap)
+            for (x, y) in [(i+1, j), (i-1, j), (i, j-1), (i, j+1)]:
+                if 0&amp;lt;=x&amp;lt;m and 0&amp;lt;=y&amp;lt;n and (x, y) not in visited:
+                    # 如果内部点更高，则无法存水，如果内部点低，可以存差值的水
+                    ret += 0 if grid[x][y]&amp;gt;=h else (h-grid[x][y])
+                    # 如果内部点更高，边界更新为内部点高度，如果内部点低，用水填满到外部点高度
+                    # 因为外部点是最低边界，所以填满池子这里肯定可以填到外部点高度
+                    heapq.heappush(heap, (max(grid[x][y], h), x, y))
+                    visited.add((x, y))
+        
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>关于我</title>
+      <link>http://guoyc.com/zh-cn/about/</link>
+      <pubDate>Mon, 12 Mar 2018 13:46:35 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/zh-cn/about/</guid>
+      
+        <description>&lt;ul&gt;
+&lt;li&gt;2017.08 至今, 就读于@&lt;a href=&#34;http://www.ust.hk/&#34;&gt;香港科技大学&lt;/a&gt;计算机科学与工程学院&lt;a href=&#34;https://www.sengpp.ust.hk/programs/it/en/&#34;&gt;信息技术&lt;/a&gt;专业.&lt;/li&gt;
+&lt;li&gt;2016.11 至 2017.06, 在@&lt;a href=&#34;http://mooctest.net&#34;&gt;慕测&lt;/a&gt;工作&lt;/li&gt;
+&lt;li&gt;2015.08 至 2016.04, 在@&lt;a href=&#34;http://yuanfudao.com&#34;&gt;猿辅导&lt;/a&gt;担任后端软件工程师&lt;/li&gt;
+&lt;li&gt;2011.09 至 2015.06, 就读于@&lt;a href=&#34;https://www.nju.edu.cn/&#34;&gt;南京大学&lt;/a&gt;软件学院&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;微信:&lt;/p&gt;
+
+&lt;!-- &lt;img src=&#34;http://guoyc.com/images/wechat_qr2.png&#34; width=&#34;300px&#34; height=&#34;300px&#34; /&gt; --&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/wechat_qr.jpg&#34; alt=&#34;Wechat QRCode&#34; /&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>What is bitmap</title>
+      <link>http://guoyc.com/zh-cn/post/bitmap/</link>
+      <pubDate>Sun, 10 Sep 2017 14:02:51 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/zh-cn/post/bitmap/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;什么是bitmap&#34;&gt;什么是bitmap&lt;/h1&gt;
+
+&lt;p&gt;一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功能。&lt;/p&gt;
+
+&lt;h1 id=&#34;bitmap的用途&#34;&gt;bitmap的用途&lt;/h1&gt;
+
+&lt;h2 id=&#34;查找&#34;&gt;查找&lt;/h2&gt;
+
+&lt;p&gt;设想一个场景，系统有很多很多的用户，同时系统有用户画像的功能，即给用户打上标签，如&lt;code&gt;IT狗&lt;/code&gt;，&lt;code&gt;学生党&lt;/code&gt;，&lt;code&gt;技术宅&lt;/code&gt;等，如果用关系型数据库来存储这些信息的话，面对稀奇古怪的根据标签过滤的需求时，会产生非常丑陋的SQL语句。用bitmap的话则可以通过位运算符轻松的解决这些问题。&lt;/p&gt;
+
+&lt;h3 id=&#34;构建&#34;&gt;构建&lt;/h3&gt;
+
+&lt;p&gt;可以把bitmap看成一个数组,数组的下标是用户的id。比如上面的&lt;code&gt;IT狗&lt;/code&gt;，&lt;code&gt;学生&lt;/code&gt;，&lt;code&gt;美女&lt;/code&gt;三个标签，我们可以用三个bitmap来表示。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;itdog = bitmap[max]             
+student = bitmap[max]           
+beauty = bitmap[max]              
+
+user = bitmap[max]  # user[id] = 1 iff 编号为id的用户存在 (后面需要用到这个信息)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;例子&#34;&gt;例子&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;为id=xx的用户加上&lt;code&gt;IT狗&lt;/code&gt;标签：&lt;code&gt;itdog[xx] = 1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查找所有带有&lt;code&gt;学生&lt;/code&gt;标签的的用户ID：&lt;code&gt;filter(range(max), lambda id:student[id]==1)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查找所有的&lt;code&gt;美女学生&lt;/code&gt;ID：与运算即可，&lt;code&gt;filter(range(max), lambda id:(student &amp;amp; beauty)[id]==1)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查找所有的&lt;code&gt;学生&lt;/code&gt;或&lt;code&gt;IT狗&lt;/code&gt;：或运算即可，&lt;code&gt;filter(range(max), lambda id:(student | itdog)[id]==1)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查找所有&lt;code&gt;非学生&lt;/code&gt;用户：要用user，因为值为0的id也可能不存在。&lt;code&gt;filter(range(max), lambda id:(student ^ user)[id]==1)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;过滤&#34;&gt;过滤&lt;/h2&gt;
+
+&lt;p&gt;很多爬虫由于要爬取海量的数据，如何避免爬取重复的url是一个很重要的问题，如果用，著名的布隆过滤器(Bloom Filter)便是用了bitmap来实现的一个过滤算法。&lt;/p&gt;
+
+&lt;h3 id=&#34;利用bitmap做简单的过滤&#34;&gt;利用bitmap做简单的过滤&lt;/h3&gt;
+
+&lt;p&gt;首先对url进行hash得到一个数值，然后查看bitmap中这个数值的位置是否为1，为1则说明已经抓取过这个url，不再重复抓取。&lt;/p&gt;
+
+&lt;p&gt;这种情况容易出现的问题是即使把hashCode的范围设置的非常大，也会有较高的误判率，不同的url出现相同的hashCode导致一些url没能被抓取&lt;/p&gt;
+
+&lt;h3 id=&#34;bloom-filter&#34;&gt;Bloom Filter&lt;/h3&gt;
+
+&lt;p&gt;Bloom Filter是引进多个hash函数，对每一个url计算出hashCode1，hashCode2，hashCode3，然后仅当这三个位置的bit都为1的时候才判断为重复，这样可以大大的降低重复率。&lt;/p&gt;
+
+&lt;h4 id=&#34;存储系统中的bloom-filter&#34;&gt;存储系统中的Bloom Filter&lt;/h4&gt;
+
+&lt;p&gt;Bloom Filter还可以用于数据存储系统中，在查找数据之前，现在位图中判断数据是否存在，如果存在再去读取数据的值，可以大大减少查询的时间。&lt;/p&gt;
+
+&lt;h5 id=&#34;插入数据&#34;&gt;插入数据&lt;/h5&gt;
+
+&lt;p&gt;插入数据时将计算出来的hashCode位置的bit设为1即可&lt;/p&gt;
+
+&lt;h5 id=&#34;查找数据&#34;&gt;查找数据&lt;/h5&gt;
+
+&lt;p&gt;如果计算出来的hashCode位置的bit都为1，才进入查找流程，（即使因为重复的hashCode导致最终发现数据不存在，也是极少数情况）&lt;/p&gt;
+
+&lt;h5 id=&#34;删除数据&#34;&gt;删除数据&lt;/h5&gt;
+
+&lt;p&gt;删除数据时，会导致bitmap结构被破坏，因为不能因为有一条数据被删除就把其hashCode对应位数都置为0（可能还有其他数据有相同hashCode）。如果要避免破坏数据，需要将一个bit增加到多个bit，这样才能有计数功能。&lt;/p&gt;
+</description>
+      
+    </item>
+    
+  </channel>
+</rss>

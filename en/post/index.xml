@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Guoyc&#39;s blog</title>
+    <link>http://guoyc.com/en/post/</link>
+    <description>Recent content in Posts on Guoyc&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Sun, 18 Mar 2018 12:53:17 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/en/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode Weekly Contest 76</title>
+      <link>http://guoyc.com/en/post/leetcode_weekly_contest_76/</link>
+      <pubDate>Sun, 18 Mar 2018 12:53:17 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/leetcode_weekly_contest_76/</guid>
+      <description>800. Similar RGB Color This is so easy, just split into 3 parts, and for each part find the closest &amp;lsquo;XX&amp;rsquo; format value. For &amp;lsquo;XY&amp;rsquo;, the closes must be among &amp;lsquo;XX&amp;rsquo;, &amp;lsquo;(X-1)(X-1)&amp;rsquo;, &amp;lsquo;(X+1)(X+1)&amp;rsquo;, so check them all and choose cloest. My 5-line code here: def similarRGB(self, color): ret = &#39;#&#39; for i in range(1, 6, 2): c1, c2 = [int(_) if &#39;0&#39;&amp;lt;=_&amp;lt;=&#39;9&#39; else 10+ord(_)-ord(&#39;a&#39;) for _ in color[i:i+2]] c =</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 126: Word Ladder II</title>
+      <link>http://guoyc.com/en/post/word_ladder2/</link>
+      <pubDate>Sat, 17 Mar 2018 19:30:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/word_ladder2/</guid>
+      <description>Leetcode 127. Word Ladder and Leetcode 126. Word Ladder II are Breadth-First Search problems of strings.
+At each step, we can change one letter of a given string into another letter, but the step is valid only when the new string is in the given list wordList.
+Simpliest BFS (TLE) My first solution starts BFS at the beginWord, at each step, check every word in the list, if it only got only one position different, add it to next level.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 327: Count of Range Sum</title>
+      <link>http://guoyc.com/en/post/count_of_range_sum/</link>
+      <pubDate>Thu, 15 Mar 2018 13:15:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/count_of_range_sum/</guid>
+      <description>This problem ask us to find the count of all range sums between lower, upper for an array. Numbers in the array can be either negative or positive, so we can&amp;rsquo;t use two pointers to solve this problem.
+An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you must do better than O($N^2$).</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 42: Trapping Rain Water I &amp; II</title>
+      <link>http://guoyc.com/en/post/rain_drop/</link>
+      <pubDate>Wed, 14 Mar 2018 19:41:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/rain_drop/</guid>
+      <description>42.Trapping Rain Water and 407.Trapping Rain Water II are very interesting problems.
+Trapping Rain Water This problem is taged with &amp;ldquo;Two Pointers&amp;rdquo; and &amp;ldquo;Stack&amp;rdquo;, they corresponds to two different solutions.
+Two Pointers Solution Let hl=height[0] and rl=height[len(height)-1] be height of left border and height of right border, and left=1, right=len(height)-2.
+This is a 1-D pool, so there are only two borders left and right, and space between them can trap min(hl, hr) water.</description>
+    </item>
+    
+    <item>
+      <title>Face Detection &amp; Recognition</title>
+      <link>http://guoyc.com/en/post/face-recognition/</link>
+      <pubDate>Sat, 14 Oct 2017 00:14:02 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/face-recognition/</guid>
+      <description>Preprocessing Histogram Equalization Use cdf to transform intensity.
+function eqimg = histogramequalization(img) maximum = round(max(img(:))); minimum = round(min(img(:))); counts = zeros(maximum-minimum+1, 1); [h, w] = size(img); for i = 1:h for j = 1:w counts(round(img(i, j)-minimum+1)) = counts((img(i, j)-minimum)+1) + 1; end end for i = 2:length(counts) counts(i) = counts(i) + counts(i-1); end eqimg = img; for i = 1:h for j = 1:w eqimg(i, j) = (counts(round(img(i, j)-minimum)+1)/(h*w)) * (maximum-minimum) + minimum; end end end  Face Detection Image Pyramid and Neural Network Integral Image and AdaBoost Use Viola-Jones&amp;rsquo;s method to get features and use AdaBoost to combine many weak classifiers into a strong classifier</description>
+    </item>
+    
+    <item>
+      <title>Using Hough Transform to detect lines and circles</title>
+      <link>http://guoyc.com/en/post/hough/</link>
+      <pubDate>Wed, 27 Sep 2017 08:03:08 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/hough/</guid>
+      <description> Hough-Line function [H, theta, r] = myhough(BW) [h, w] = size(BW); theta_low = -pi/2; theta_high = pi/2; r_low = -sqrt(h^2+w^2); r_high = sqrt(h^2+w^2); num_theta = 180; num_r = round(r_high*2); H = zeros(num_theta, num_r); for x = 1:h for y = 1:w if BW(x, y)==1 for i = 1:num_theta theta = theta_low + (i-1)/num_theta*(theta_high-theta_low); r = x*cos(theta) + y*sin(theta); j = round(1 + (num_r-1) * (r-r_low)/(r_high-r_low)); H(i, j) = H(i, j) + 1; end end end end [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low + (i-1)/num_theta*(theta_high-theta_low); r = r_low + (j-1)/num_r*(r_high-r_low); while (abs(theta)&amp;lt;=pi/90 &amp;amp;&amp;amp; (abs(r)&amp;lt;=2 || abs(abs(r)-h)&amp;lt;=2)) || (abs(pi/2-abs(theta))&amp;lt;=pi/90 &amp;amp;&amp;amp; (abs(r)&amp;lt;=2 || abs(abs(r)-w)&amp;lt;=2)) H(i, j) = 0; [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low + (i-1)/num_theta*(theta_high-theta_low); r = r_low + (j-1)/num_r*(r_high-r_low); end end  Hough-Circle function [x, y, R] = myhoughcircle(BW, max_r, k, gap) [h, w] = size(BW); num_x = h; num_y = w; if nargin &amp;lt; 2 || isempty(max_r) max_r = min(h/2, w/2); end if nargin &amp;lt; 3 k = 1; end if nargin &amp;lt; 4 gap = 20; end H = zeros(num_x, num_y, max_r); for i = 1:h for j = 1:w if BW(i, j)==1 for a = 1:num_x for b = 1:num_y r = round(sqrt((a-i)^2+(b-j)^2)); if r&amp;gt;0 &amp;amp;&amp;amp; r&amp;lt;=max_r H(a, b, r) = H(a, b, r) + 1; end end end end end end img = cat(3, BW, BW, BW)*255; hh = H(:); prex = 0; prey = 0; preR = 0; idx = 1; while idx&amp;lt;=k [~, I] = max(hh); [x, y, R] = ind2sub(size(H), I); hh(I) = 0; if (x-prex)&amp;lt;=gap &amp;amp;&amp;amp; (y-prey)&amp;lt;=gap &amp;amp;&amp;amp; (R-preR)&amp;lt;=gap continue end for i = 1:h for j = 1:w computed_r = sqrt((i-x)^2+(j-y)^2); if abs(computed_r-R)&amp;lt;=1 img(i, j, :) = [255, 0, 0]; end end end prex = x; prey = y; preR = R; idx = idx+1; end end  </description>
+    </item>
+    
+  </channel>
+</rss>

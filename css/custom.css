@@ -1,0 +1,17 @@
+.header .logo-wrapper .logo {
+	font-family: 'verdana,arial,helvetica,sans-serif'
+}
+.mobile-navbar .mobile-header-logo .logo {
+	font-family: 'verdana,arial,helvetica,sans-serif'	
+}
+
+.icon-leetcode:before {
+    content: 'L';
+    position: relative;
+    font-weight: bold;
+}
+
+
+/*body {
+	font-family: 'proxima-nova,"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif'
+}*/

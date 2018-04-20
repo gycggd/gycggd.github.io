@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bfs on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/bfs/</link>
+    <description>Recent content in Bfs on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Sat, 07 Apr 2018 14:22:08 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/bfs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LeetCode 322. Coin Change</title>
+      <link>http://guoyc.com/post/coin_change1/</link>
+      <pubDate>Sat, 07 Apr 2018 14:22:08 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/coin_change1/</guid>
+      <description>动态规划 dp[i]为构成i的最少硬币数目 初始状态： dp[0] = 0 dp[i] = sys.maxsize for i!=0 递推公式： dp[i+c] = min(dp[i+c], dp[i]+1) for c in coins 返回： dp[amount] if dp[amount]!=sys.maxsize else -1 代码： class Solution: def coinChange(self, coins, amount): dp = [sys.maxsize]*(amount+1) dp[0] = 0 for</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 743. Network Delay Time</title>
+      <link>http://guoyc.com/post/network_delay_time/</link>
+      <pubDate>Fri, 23 Mar 2018 00:20:35 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/network_delay_time/</guid>
+      <description>这题是一道用BFS或者DFS就可以解决的问题。 直接上暴力DFS的代码代码: class Solution: def networkDelayTime(self, times, N, K): &amp;quot;&amp;quot;&amp;quot; :type times: List[List[int]] :type N: int :type K: int :rtype: int &amp;quot;&amp;quot;&amp;quot; visited = {} l = [(K, 0)] # dic[i</description>
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 76</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_76/</link>
+      <pubDate>Sun, 18 Mar 2018 12:53:17 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_76/</guid>
+      <description>800. Similar RGB Color 这题很容易，只需要将其分为3个部分，对每个部分找个最相近的 &amp;lsquo;XX&amp;rsquo; 格式的值即可。 对，每一个 &amp;lsquo;XY&amp;rsquo; 值，最近的一定在 &amp;lsquo;XX&amp;rsquo;, &amp;lsquo;(X-1)(X-1)&amp;rsquo;, &amp;lsquo;(X+1)(X+1)&amp;rsquo; 之中，所以我们计算出这三</description>
+    </item>
+    
+  </channel>
+</rss>

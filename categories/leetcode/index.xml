@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Leetcode on 郭玉晨的博客</title>
+    <link>http://guoyc.com/categories/leetcode/</link>
+    <description>Recent content in Leetcode on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Fri, 20 Apr 2018 11:57:25 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/categories/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LeetCode 87. Scramble String</title>
+      <link>http://guoyc.com/post/scramble_string/</link>
+      <pubDate>Fri, 20 Apr 2018 11:57:25 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/scramble_string/</guid>
+      <description>Description Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively. Below is one possible representation of s1 = &#34;great&#34;: great / \ gr eat / \ / \ g r e at / \ a t To scramble the string, we may choose any non-leaf node and swap its two children. For example, if we choose the node &#34;gr&#34;</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 91. Decode Ways</title>
+      <link>http://guoyc.com/post/decode_ways/</link>
+      <pubDate>Thu, 19 Apr 2018 17:06:01 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/decode_ways/</guid>
+      <description>Description A message containing letters from A-Z is being encoded to numbers using the following mapping: &#39;A&#39; -&amp;gt; 1 &#39;B&#39; -&amp;gt; 2 ... &#39;Z&#39; -&amp;gt; 26 Given a non-empty string containing only digits, determine the total number of ways to decode it. Example 1: Input: &#34;12&#34; Output: 2 Explanation:&amp;nbsp;It could be decoded as &#34;AB&#34; (1 2) or &#34;L&#34; (12). Example 2: Input: &#34;226&#34; Output: 3 Explanation:&amp;nbsp;It could be decoded as</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 718. Maximum Length of Repeated Subarray</title>
+      <link>http://guoyc.com/post/max_len_of_rep_subarray/</link>
+      <pubDate>Wed, 18 Apr 2018 15:58:51 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_len_of_rep_subarray/</guid>
+      <description>Description Given two integer arrays A and B, return the maximum length of an subarray that appears in both arrays. Example 1: Input: A: [1,2,3,2,1] B: [3,2,1,4,7] Output: 3 Explanation: The repeated subarray with maximum length is [3, 2, 1]. Note: 1 &amp;lt;= len(A), len(B) &amp;lt;= 1000 0 &amp;lt;= A[i], B[i] &amp;lt; 100 Solutions 动态规划 问题定义： dp[i][j</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 494. Target Sum</title>
+      <link>http://guoyc.com/post/target_sum/</link>
+      <pubDate>Tue, 17 Apr 2018 14:36:05 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/target_sum/</guid>
+      <description>Description You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol. Find out how many ways to assign symbols to make sum of integers equal to target S. Example 1: Input: nums is [1, 1, 1, 1, 1], S is 3.</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 464. Can I Win</title>
+      <link>http://guoyc.com/post/can_i_win/</link>
+      <pubDate>Mon, 16 Apr 2018 14:55:46 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/can_i_win/</guid>
+      <description>Description In the &#34;100 game,&#34; two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. What if we change the game so that players cannot re-use integers? For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &amp;gt;= 100. Given</description>
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 80</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_80/</link>
+      <pubDate>Sun, 15 Apr 2018 10:43:24 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_80/</guid>
+      <description>819. Most Common Word Description 
+Given a paragraph&amp;nbsp;and a list of banned words, return the most frequent word that is not in the list of banned words.&amp;nbsp; It is guaranteed there is at least one word that isn&#39;t banned, and that the answer is unique.
+Words in the list of banned words are given in lowercase, and free of punctuation.&amp;nbsp; Words in the paragraph are not case sensitive.&amp;nbsp; The answer is in lowercase.</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 62. Unique Paths</title>
+      <link>http://guoyc.com/post/unique_path/</link>
+      <pubDate>Tue, 10 Apr 2018 01:38:55 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/unique_path/</guid>
+      <description>62. Unique Path 动态规划 初始状态: dp[i][0] = 1 dp[0][i] = 1 递推公式： dp[i][j]=dp[i-1][j]+dp[i][j-1] 返回： dp[-1][-1] 代码： class Solution: def uniquePaths(self, m, n): dp = [[0]*n for _ in range(m)] for i in range(m): dp[i][0] = 1 for j in range(n): dp[0][j] = 1 for i in range(1, m): for j in range(1, n): dp[i][j] =</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 152. Maximum Product Subarray</title>
+      <link>http://guoyc.com/post/max_product_subarray/</link>
+      <pubDate>Mon, 09 Apr 2018 16:21:15 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_product_subarray/</guid>
+      <description>这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。 动态规划 maximum[i]表示以i结尾的subarr</description>
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 79</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_79/</link>
+      <pubDate>Sun, 08 Apr 2018 13:03:16 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_79/</guid>
+      <description>812. Largest Triangle Area 直接三层循环用海伦公式计算即可 from math import sqrt class Solution: def largestTriangleArea(self, points): dist = {} def d(p1, p2): return sqrt((p1[0]-p2[0])**2+(p1[1]-p2[1])**2) N = len(points) for i in range(N): for j in range(i+1, N): if i not in dist: dist[i] = {} dist[i][j] = d(points[i], points[j]) ret = 0 for i in range(N): for j in</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 322. Coin Change</title>
+      <link>http://guoyc.com/post/coin_change1/</link>
+      <pubDate>Sat, 07 Apr 2018 14:22:08 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/coin_change1/</guid>
+      <description>动态规划 dp[i]为构成i的最少硬币数目 初始状态： dp[0] = 0 dp[i] = sys.maxsize for i!=0 递推公式： dp[i+c] = min(dp[i+c], dp[i]+1) for c in coins 返回： dp[amount] if dp[amount]!=sys.maxsize else -1 代码： class Solution: def coinChange(self, coins, amount): dp = [sys.maxsize]*(amount+1) dp[0] = 0 for</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 97. Interleaving String</title>
+      <link>http://guoyc.com/post/interleave_string/</link>
+      <pubDate>Fri, 06 Apr 2018 14:12:41 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/interleave_string/</guid>
+      <description>O(MN) Space dp[i][j]表示isInterleave(self, s1[:i], s2[:j], s3[:i+j]). 初始状态： dp[i][0]=True if dp[i-1][0]==True and s1[i-1]==s3[i-1] dp[0][i]=True if dp[0][i-1]==True and s2[i-1]==s3[i-1] 递推公式： dp[i][j]=(s1[i-1]==s3[i+j-1] and dp[i-1][j]) or (s2[j-1]==s3[i+j-1] and dp[i][j-1]) 分别是从s1取下一个</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 53. Maximum Subarray</title>
+      <link>http://guoyc.com/post/max_subarray/</link>
+      <pubDate>Thu, 05 Apr 2018 13:58:51 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_subarray/</guid>
+      <description>这一题有O(N)的DP解法和O(NlogN)的DC解法 动态规划 dp[i]表示以i结尾的asubarray的最大和。 初始状态： dp[0]=nums[0] 递推公式： If dp[i-1]&amp;lt;0,</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 64. Minimum Path Sum</title>
+      <link>http://guoyc.com/post/min_path_sum/</link>
+      <pubDate>Wed, 04 Apr 2018 13:06:45 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/min_path_sum/</guid>
+      <description>这一题是一道简单的动态规划题，dp[i][j]表示从(0, 0)到(i, j)的min path sum。 初始状态： dp[i][0]和dp[0][j]是第</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 32. Longest Valid Parentheses</title>
+      <link>http://guoyc.com/post/longest_valid_p/</link>
+      <pubDate>Tue, 03 Apr 2018 18:59:41 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/longest_valid_p/</guid>
+      <description>三个解法 动态规划解法 代码如下： class Solution: def longestValidParentheses(self, s): length = [0]*len(s) for i in range(len(s)): if s[i]==&#39;(&#39;: length[i] = 0 elif i-1&amp;gt;=0: if s[i-1]==&#39;(&#39;: length[i] = (length[i-2] if i-2&amp;gt;=0 else 0)+2 elif i-1-length[i-1]&amp;gt;=0 and s[i-1-length[i-1]]==&#39;(&#39;: length[i] = 2+length[i-1]+(length[i-2-length[i-1]] if i-2-length[i-1]&amp;gt;=0 else 0) return max(length) if len(s)&amp;gt;0 else 0 栈解法 栈解法，遇到匹</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 486. Predict the Winner</title>
+      <link>http://guoyc.com/post/predict_the_winner/</link>
+      <pubDate>Mon, 02 Apr 2018 18:43:03 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/predict_the_winner/</guid>
+      <description>非递归方式 这一题可以通过定义一个矩阵dp，dp[i][j]表示当原来的nums数组只剩下nums[i:j]时，选手可以获得的最多的分数。 那么</description>
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 78</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_78/</link>
+      <pubDate>Sun, 01 Apr 2018 12:15:33 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_78/</guid>
+      <description>808. Soup Servings 这一题最重要的一点就是Notes里的一行提示：Answers within 10^-6 of the true value will be accepted as correct.。所以说审题很重要啊= =。 因为这行提示</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 198. House Robber</title>
+      <link>http://guoyc.com/post/house_robber/</link>
+      <pubDate>Sat, 31 Mar 2018 22:04:55 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/house_robber/</guid>
+      <description>这一题还是一道简单的动态规划题。搞一个dp数组，dp[i]表示抢劫前i个房子的最大收获。所以dp[i+1]有两种选择： 不抢劫第i个房子，所以</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 72. Edit Distance</title>
+      <link>http://guoyc.com/post/edit_dist/</link>
+      <pubDate>Fri, 30 Mar 2018 19:39:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/edit_dist/</guid>
+      <description>edit distance经常用来计算文档的相似度，这一题是一道经典的动态规划题。搞一个dp数组dp[i][j]表示w1[:i]和w2[:j]的ed</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 435. Non-overlapping Intervals</title>
+      <link>http://guoyc.com/post/non_overlap_interval/</link>
+      <pubDate>Thu, 29 Mar 2018 18:39:49 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/non_overlap_interval/</guid>
+      <description>这一题是很常见的一道区间的问题，其他的外壳如task schedule。 只需要把区间按结束点排序，然后尽量从左往右遍历一次即可。代码如下： class Solution:</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 378. Kth Smallest Element in a Sorted Matrix</title>
+      <link>http://guoyc.com/post/k_smallest_in_sorted_matrix/</link>
+      <pubDate>Wed, 28 Mar 2018 16:44:36 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/k_smallest_in_sorted_matrix/</guid>
+      <description>之前写过LeetCode 74: Search a 2-D matrix和LeetCode 240: Search a 2-D matrix II这两题，当时提到了这一题。这里要说的这一题的两种解法分别是klo</description>
+    </item>
+    
+  </channel>
+</rss>

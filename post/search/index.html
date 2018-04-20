@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Uniform and Heuristic Search - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="开始 搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cos" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/search/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Uniform and Heuristic Search" />
+<meta property="og:description" content="开始 搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cos" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/search/" />
+
+
+
+<meta property="article:published_time" content="2017-09-13T22:34:07&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-09-13T22:34:07&#43;00:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Uniform and Heuristic Search">
+<meta itemprop="description" content="开始 搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cos">
+
+
+<meta itemprop="datePublished" content="2017-09-13T22:34:07&#43;00:00" />
+<meta itemprop="dateModified" content="2017-09-13T22:34:07&#43;00:00" />
+<meta itemprop="wordCount" content="1391">
+
+
+
+<meta itemprop="keywords" content="Artificial Intelligence,Algorithm,Search," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Uniform and Heuristic Search"/>
+<meta name="twitter:description" content="开始 搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cos"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Uniform and Heuristic Search</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-09-13 </span>
+        
+        <span class="more-meta"> 约 1391 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#开始">开始</a>
+<ul>
+<li><a href="#搜索类型">搜索类型</a></li>
+</ul></li>
+<li><a href="#盲目搜索-uninformed-blind-search">盲目搜索 Uninformed(Blind) Search</a>
+<ul>
+<li><a href="#8-puzzle-problem">8 Puzzle Problem</a>
+<ul>
+<li><a href="#广度优先搜索">广度优先搜索</a></li>
+<li><a href="#深度优先搜索">深度优先搜索</a></li>
+<li><a href="#对比广度与深度优先搜索">对比广度与深度优先搜索</a></li>
+</ul></li>
+<li><a href="#问题">问题</a></li>
+</ul></li>
+<li><a href="#启发式搜索-informed-heuristic-search">启发式搜索 Informed(Heuristic) Search</a>
+<ul>
+<li><a href="#a-search">A* Search</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="开始">开始</h1>
+
+<p>搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cost)，因此有不同方式到达目标点时，代价可能是不同的。</p>
+
+<p>对于一个搜索策略来说，我们会关心以下几个问题：</p>
+
+<ul>
+<li>如果存在路径能够到达目标点，该策略是否一定能找到(Completeness)</li>
+<li>该策略找到的路径是否为最优路径(Optimal)，即路径代价最小（Mnimal Path Cost）</li>
+<li>策略的时间复杂度(Time Complexity)与空间复杂度(Space Complexity)</li>
+</ul>
+
+<p><img src="/images/search/8-puzzle.png" alt="8-puzzle-problem" /></p>
+
+<p>上图的8-puzzle problem便是一个搜索问题，每一次移动便对应着一次状态转移，当中间为空所有数字按大小呈顺时针从左上角排列时，就完成了目标</p>
+
+<h2 id="搜索类型">搜索类型</h2>
+
+<p>根据搜索过程中是否利用到未遇到的节点的信息，可以分成以下两类</p>
+
+<ul>
+<li>盲目搜索 Uninformed(Blind) Search</li>
+<li>启发式搜索 Informed(Heuristic) Search</li>
+</ul>
+
+<h1 id="盲目搜索-uninformed-blind-search">盲目搜索 Uninformed(Blind) Search</h1>
+
+<p>盲目搜索即搜索过程中对于每一个状态与目标状态的距离没有任何评估，盲目地进行状态转换。</p>
+
+<p>搜索的过程可以看做是所有可达状态的一个树状结构：</p>
+
+<ol>
+<li>根节点为初始状态</li>
+<li>每一步搜索从一个节点开始，做一个状态转换，生成一条边连接到新的状态节点</li>
+</ol>
+
+<pre><code>function GENERAL-SEARCH( problem, strategy) 
+# returns a solution, or failure initialize the search tree using the initial state of problem
+    loop do
+        if there are no candidates for expansion then return failure
+            choose a leaf node for expansion according to strategy
+            if the node contains a goal state 
+                return the corresponding solution 
+            else 
+                expand the node and add the resulting nodes to the search tree
+    end
+</code></pre>
+
+<h2 id="8-puzzle-problem">8 Puzzle Problem</h2>
+
+<h3 id="广度优先搜索">广度优先搜索</h3>
+
+<p>广度优先搜索在每一步会展开所有的叶子节点。下图为8-puzzle problem的广度优先搜索示意图</p>
+
+<p><img src="/images/search/8-puzzle-breadth.png" alt="breadth-first for 8-puzzle problem" /></p>
+
+<h3 id="深度优先搜索">深度优先搜索</h3>
+
+<p>深度优先搜索为按照一个节点开始进行状态转换，直到到达最大深度或者没有状态可以转换，再backtrace到前面。下图为8-puzzle problem的深度优先搜索示意图</p>
+
+<p><img src="/images/search/8-puzzle-depth.png" alt="depth-first for 8-puzzle problem" /></p>
+
+<h3 id="对比广度与深度优先搜索">对比广度与深度优先搜索</h3>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>时间复杂度</th>
+<th>空间复杂度</th>
+<th>是否最优</th>
+<th>是否完整</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>广度优先</td>
+<td>$b^d$</td>
+<td>$b^d$</td>
+<td>是</td>
+<td>是</td>
+</tr>
+
+<tr>
+<td>深度优先</td>
+<td>$b^m$</td>
+<td>$bm$</td>
+<td>否</td>
+<td>$b&gt;=d$</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="问题">问题</h2>
+
+<ul>
+<li>避免重复到达某个状态，即状态树中每个节点都是唯一</li>
+<li>深度优先搜索如何求得最优解：可以使用<code>Iterative Deepening</code>，逐步增加最大深度，如下图所示</li>
+</ul>
+
+<p><img src="/images/search/iterative-deepen.png" alt="Iterative Deepening" /></p>
+
+<h1 id="启发式搜索-informed-heuristic-search">启发式搜索 Informed(Heuristic) Search</h1>
+
+<p>启发式搜索可以用在机器学习的一些优化问题当中，比如说神经网络的调参。</p>
+
+<p>启发式搜索在选择路径时会考虑下面的节点距离目标点还有多少的距离，用<code>Heuristic Function</code>来衡量。下面还是以8-puzzle problem为例：</p>
+
+<pre><code># Heuristic Function of 8 Puzzle Problem
+f(n) = number of tiles out of place compared with goal
+</code></pre>
+
+<p>这里的<code>Heuristic Function</code>用不在正确位置的方块的数目来衡量当前状态与目标点之间的距离</p>
+
+<p>下图是每一个状态对应的<code>Heuristic Function</code>的值</p>
+
+<p><img src="/images/search/8-puzzle-heuristic.png" alt="Heuristic search for 8-puzzle" /></p>
+
+<p>加上<code>Path Cost</code>之后的搜索过程如下图：</p>
+
+<p><img src="/images/search/8-puzzle-heuristic-with-path-cost.png" alt="Heuristic search for 8-puzzle with path cost" /></p>
+
+<h2 id="a-search">A* Search</h2>
+
+<p>A* Search是经典的启发式搜索算法，常被用在寻路问题当中，涉及到的Cost Function有如下两个：</p>
+
+<ol>
+<li>Path Cost，已经经过的路径的值，<code>g(x)</code></li>
+<li>Estimated Cost，当前节点距离目标点的估计值，<code>h(x)</code></li>
+</ol>
+
+<p>所以节点与目标点的距离就可以用两者之和<code>f(x)=g(x)+h(x)</code>来衡量了。</p>
+
+<p>A* Search的流程如下：</p>
+
+<pre><code class="language-python">OPEN = [$n_0$]      # initialize OPEN, $n_0$ is root/start node
+CLOSED = []
+
+while True:
+
+    if isEmpty(OPEN):
+        return False    # There is no path from start to goal
+
+    n = OPEN.pop(0)     # Get the node with lowest cost
+    CLOSED.add(n)            # Add n to explored nodes
+    if isGoal(n):       # Return the path if reach the goal
+        return path     
+
+    succs = succ(n).filter(lambda x:x not in ancestor(n))    # Get successors of node n
+    for m in succs:
+        OPEN.append(m)  # Add new nodes to OPEN
+        if (not m.prev) or (g(m)&gt;g(n)+distance(m, n)):
+            m.prev = n
+            g(m) = g(n) + distance(m, n)
+        # This part is often not implemented because of its high expense
+        # if m in CLOSED:
+        #     redirect m's descendants
+    
+    # Sort nodes in open from lower cost to higher cost
+    OPEN = sorted(OPEN, cmp=lambda x, y:f(x)-f(y))  
+</code></pre>
+
+<p>将A*算法用于下图的寻路问题</p>
+
+<p><img src="/images/search/A*-route-finding.png" alt="route finding" /></p>
+
+<p>g(x)数值即为从出发点到x的路径之和：$g(x)=\sum_{p=(n_0, n_1)}^{(n_m, x)}p$
+h(x)数值为图右侧距离目标点的直线距离：$h(x)$</p>
+
+<p>搜索过程如下：</p>
+
+<p><img src="/images/search/A*-route-finding-tree.png" alt="route finding" /></p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/artificial-intelligence/">Artificial Intelligence</a>
+          
+          <a href="/tags/algorithm/">Algorithm</a>
+          
+          <a href="/tags/search/">Search</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/opencv-sudoku/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Solving Sudoku Using OpenCV and Numpy</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/bitmap/">
+            <span class="next-text nav-default">bitmap的用途</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

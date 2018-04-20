@@ -1,0 +1,1117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Guoyc&#39;s blog</title>
+    <link>http://guoyc.com/en/</link>
+    <description>Recent content on Guoyc&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Sun, 18 Mar 2018 12:53:17 +0800</lastBuildDate>
+    
+        <atom:link href="http://guoyc.com/en/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode Weekly Contest 76</title>
+      <link>http://guoyc.com/en/post/leetcode_weekly_contest_76/</link>
+      <pubDate>Sun, 18 Mar 2018 12:53:17 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/leetcode_weekly_contest_76/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;800-similar-rgb-color&#34;&gt;800. Similar RGB Color&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/800_1.png&#34; alt=&#34;800 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is so easy, just split into 3 parts, and for each part find the closest &amp;lsquo;XX&amp;rsquo; format value.&lt;/p&gt;
+
+&lt;p&gt;For &amp;lsquo;XY&amp;rsquo;, the closes must be among &amp;lsquo;XX&amp;rsquo;, &amp;lsquo;(X-1)(X-1)&amp;rsquo;, &amp;lsquo;(X+1)(X+1)&amp;rsquo;, so check them all and choose cloest.&lt;/p&gt;
+
+&lt;p&gt;My 5-line code here:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def similarRGB(self, color):
+    ret = &#39;#&#39;
+    for i in range(1, 6, 2):
+        c1, c2 = [int(_) if &#39;0&#39;&amp;lt;=_&amp;lt;=&#39;9&#39; else 10+ord(_)-ord(&#39;a&#39;) for _ in color[i:i+2]]
+        c = c1+sorted(enumerate([abs((c1*16+c2)-(x*16+x)) for x in [c1-1, c1, c1+1]]), key=lambda _:_[1])[0][0]-1
+        ret += str(c)*2 if c&amp;lt;=9 else chr(c-10+ord(&#39;a&#39;))*2
+    return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;801-minimum-swaps-to-make-sequences-increasing&#34;&gt;801. Minimum Swaps To Make Sequences Increasing&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/801_1.png&#34; alt=&#34;801 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Take &lt;code&gt;1, 2, 3, 8, 5&lt;/code&gt;和&lt;code&gt;5, 6, 7, 4, 9&lt;/code&gt; for example，we only need to swap &lt;code&gt;8&lt;/code&gt; and &lt;code&gt;4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This problem can be solved using dynamic programming, at each position, we can choose to swap or not. Since we want two sorted arrays, at each position, whether to swap or not depends on the choice at previous position, so we can form a recursive formula.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;N = len(A)
+dp = [[maxint]\*2 for \_ in range(N)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let initialize a N*2 array dp,&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;dp[i][0] means the least swaps used to make A[:i+1] and B[:i+1] sorted having no swap at i-th position.&lt;/li&gt;
+&lt;li&gt;dp[i][1] means the least swaps used to make A[:i+1] and B[:i+1] sorted having swap at i-th position.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here is the recursive formula:&lt;/p&gt;
+
+&lt;p&gt;For $i \in [1, N]$:&lt;/p&gt;
+
+&lt;p&gt;If A[i]&amp;gt;A[i-1] and B[i]&amp;gt;B&lt;a href=&#34;they are in order without swap&#34;&gt;i-1&lt;/a&gt;:
+$$dp[i][0]=min(dp[i][0], dp[i-1][0])$$ (no swap at i-1 and no swap at i)
+$$dp[i][1]=min(dp[i][1], dp[i-1][1]+1)$$ (swap at i-1 so swap at i to make in order)&lt;/p&gt;
+
+&lt;p&gt;If A[i]&amp;gt;B[i-1] and B[i]&amp;gt;A&lt;a href=&#34;they are in order with a swap&#34;&gt;i-1&lt;/a&gt;:
+$$dp[i][0]=min(dp[i][0], dp[i-1][1])$$ (swap at i-1, no need to swap at i)
+$$dp[i][1]=min(dp[i][1], dp[i-1][0]+1)$$ (no swap at i-1, so swap at i)&lt;/p&gt;
+
+&lt;p&gt;The two cases don&amp;rsquo;t conflict with each other, so we choose minimum of them when both holds.&lt;/p&gt;
+
+&lt;p&gt;What we want to return is $min(dp[N-1][0], dp[N-1][1])$.&lt;/p&gt;
+
+&lt;p&gt;At every recursion, we only need the last result, so we can use less space, from $O(N)$ to $O(1)$, time complexity $O(N)$.&lt;/p&gt;
+
+&lt;p&gt;20-Line Python Solution：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def minSwap(self, A, B):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type A: List[int]
+        :type B: List[int]
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        n = len(A)
+        pre = [0, 1]
+        for i in range(1, n):
+            cur = [sys.maxsize, sys.maxsize]
+            if A[i]&amp;gt;A[i-1] and B[i]&amp;gt;B[i-1]:
+                cur[0] = min(cur[0], pre[0])
+                cur[1] = min(cur[1], pre[1]+1)
+            if A[i]&amp;gt;B[i-1] and B[i]&amp;gt;A[i-1]:
+                cur[0] = min(cur[0], pre[1])
+                cur[1] = min(cur[1], pre[0]+1)
+            pre = cur
+        return min(pre)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;802-find-eventual-safe-states&#34;&gt;802. Find Eventual Safe States&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/802_1.png&#34; alt=&#34;802 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is equal to find nodes which doesn&amp;rsquo;t lead to a circle in any path.&lt;/p&gt;
+
+&lt;p&gt;My AC soluction during contest finds all nodes in circles, and then remove nodes connected to circle nodes until no more nodes can be removed. Here is my 800ms verbose code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def eventualSafeNodes(self, graph):
+    &amp;quot;&amp;quot;&amp;quot;
+    :type graph: List[List[int]]
+    :rtype: List[int]
+    &amp;quot;&amp;quot;&amp;quot;
+    n = len(graph)
+    ret = set(range(n))
+    visited = set()
+    path = set()
+    for i in range(n):
+        if i in visited:
+            continue
+        st = [(i, False)]
+        while st:
+            n, v = st.pop()
+            visited.add(n)
+            if v:
+                path.remove(n)
+                continue
+            st.append((n, True))
+            path.add(n)
+            for nn in graph[n]:
+                if nn in path:
+                    idx = len(st)-1
+                    while idx&amp;gt;=0:
+                        if st[idx][1] and st[idx][0] in ret:
+                            ret.remove(st[idx][0])
+                        idx -= 1
+                    continue
+                if nn not in ret:
+                    idx = len(st)-1
+                    while idx&amp;gt;=0:
+                        if st[idx][1] and st[idx][0] in ret:
+                            ret.remove(st[idx][0])
+                        idx -= 1
+                    continue
+                if nn in visited:
+                    continue
+                st.append((nn, False))
+    n = len(graph)
+    while True:
+        pre = len(ret)
+        for i in range(n):
+            if i not in ret:
+                continue
+            for j in graph[i]:
+                if j not in ret:
+                    ret.remove(i)
+                    break
+        if len(ret)==pre:
+            break
+    return list(ret)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After the contest, I found we can solve it by walk along the path reversely.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Find nodes with out degree 0, they are terminal nodes, we remove them from graph and they are added to result&lt;/li&gt;
+&lt;li&gt;For nodes who are connected terminal nodes, since terminal nodes are removed, we decrease in-nodes&amp;rsquo; out degree by 1 and if its out degree equals to 0, it become new terminal nodes&lt;/li&gt;
+&lt;li&gt;Repeat 2 until no terminal nodes can be found.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here is my 300ms 20-line Python Code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def eventualSafeNodes(self, graph):
+    &amp;quot;&amp;quot;&amp;quot;
+    :type graph: List[List[int]]
+    :rtype: List[int]
+    &amp;quot;&amp;quot;&amp;quot;
+    n = len(graph)
+    out_degree = collections.defaultdict(int)
+    in_nodes = collections.defaultdict(list) 
+    queue = []
+    ret = []
+    for i in range(n):
+        out_degree[i] = len(graph[i])
+        if out_degree[i]==0:
+            queue.append(i)
+        for j in graph[i]:
+            in_nodes[j].append(i)  
+    while queue:
+        term_node = queue.pop(0)
+        ret.append(term_node)
+        for in_node in in_nodes[term_node]:
+            out_degree[in_node] -= 1
+            if out_degree[in_node]==0:
+                queue.append(in_node)
+    return sorted(ret)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;803-bricks-falling-when-hit&#34;&gt;803. Bricks Falling When Hit&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/803_1.png&#34; alt=&#34;803 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A straight-forward solution is to count no-dropping bricks after each hit and return the difference.&lt;/p&gt;
+
+&lt;p&gt;I did it during contest and of course got TLE because it does dfs from all bricks at the top for every hit.&lt;/p&gt;
+
+&lt;p&gt;So how to decrease dfs processes? We can reverse the problem and count how many new no-dropping bricks are added when we add the bricks reversely. It&amp;rsquo;s just the same of counting dropping bricks when erase one brick.&lt;/p&gt;
+
+&lt;p&gt;Let m, n = len(grid), len(grid[0]).&lt;/p&gt;
+
+&lt;p&gt;Here is the detailed solution:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;For each hit (i, j), if grid[i][j]==0, set grid[i][j]=-1 otherwise set grid[i][j]=0. Since a hit may happen at an empty position, we need to seperate emptys from bricks.&lt;/li&gt;
+&lt;li&gt;For i in [0, n], do dfs at grid[i][0] and mark no-dropping bricks. Here we get the grid after all hits.&lt;/li&gt;
+&lt;li&gt;Then for each hit (i,j) (reversely), first we check grid[i][j]==-1, if yes, it&amp;rsquo;s empty, skip this hit. Then we check whether it&amp;rsquo;s connected to any no-dropping bricks or it&amp;rsquo;s at the top, if not, it can&amp;rsquo;t add any no-dropping bricks, skip this hit. Otherwise we do dfs at grid[i][j], mark new added no-dropping bricks and record amount of them.&lt;/li&gt;
+&lt;li&gt;Return the amounts of new added no-dropping bricks at each hits.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Using this method, we only do $O(n)+O(len(hits))$ dfs.&lt;/p&gt;
+
+&lt;p&gt;Here is an example：
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_2.png&#34; alt=&#34;803 Description&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_3.png&#34; alt=&#34;803 Description&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_4.png&#34; alt=&#34;803 Description&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_5.png&#34; alt=&#34;803 Description&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/leetcode/803_6.png&#34; alt=&#34;803 Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Code here：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def hitBricks(self, grid, hits):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type grid: List[List[int]]
+        :type hits: List[List[int]]
+        :rtype: List[int]
+        &amp;quot;&amp;quot;&amp;quot;
+
+        m, n = len(grid), len(grid[0])
+        
+        # Connect unconnected bricks and 
+        def dfs(i, j):
+            if not (0&amp;lt;=i&amp;lt;m and 0&amp;lt;=j&amp;lt;n) or grid[i][j]!=1:
+                return 0
+            ret = 1
+            grid[i][j] = 2
+            ret += sum(dfs(x, y) for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)])
+            return ret
+        
+        # Check whether (i, j) is connected to Not Falling Bricks
+        def is_connected(i, j):
+            return i==0 or any([0&amp;lt;=x&amp;lt;m and 0&amp;lt;=y&amp;lt;n and grid[x][y]==2 for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]])
+        
+        # Mark whether there is a brick at the each hit
+        for i, j in hits:
+            grid[i][j] -= 1
+                
+        # Get grid after all hits
+        for i in range(n):
+            dfs(0, i)
+        
+        # Reversely add the block of each hits and get count of newly add bricks
+        ret = [0]*len(hits)
+        for k in reversed(range(len(hits))):
+            i, j = hits[k]
+            grid[i][j] += 1
+            if grid[i][j]==1 and is_connected(i, j):
+                ret[k] = dfs(i, j)-1
+            
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 126: Word Ladder II</title>
+      <link>http://guoyc.com/en/post/word_ladder2/</link>
+      <pubDate>Sat, 17 Mar 2018 19:30:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/word_ladder2/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;a href=&#34;https://leetcode.com/problems/word-ladder/&#34;&gt;Leetcode 127. Word Ladder&lt;/a&gt; and &lt;a href=&#34;https://leetcode.com/problems/word-ladder-ii&#34;&gt;Leetcode 126. Word Ladder II&lt;/a&gt; are Breadth-First Search problems of strings.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/126_2.png&#34; alt=&#34;Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At each step, we can change one letter of a given string into another letter, but the step is valid only when the new string is in the given list &lt;code&gt;wordList&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;simpliest-bfs-tle&#34;&gt;Simpliest BFS (TLE)&lt;/h1&gt;
+
+&lt;p&gt;My first solution starts BFS at the &lt;em&gt;beginWord&lt;/em&gt;, at each step, check every word in the list, if it only got only one position different, add it to next level. It gots TLE.&lt;/p&gt;
+
+&lt;p&gt;Here is the code I used to expand each level:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def adj(w1, w2):
+    if len(w1)!=len(w2):
+        return False
+    diff = 0
+    for i in range(len(w1)):
+        if w1[i]!=w2[i]:
+            diff += 1
+            if diff&amp;gt;=2:
+                return False
+    return diff==1
+
+def expand(words, visited):
+    ret = set()
+    for w1 in words:
+        for w2 in wordList:
+            if w2 in visited:
+                continue
+            if adj(w1, w2):
+                ret.add(w2)
+    return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and the bfs code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;s = {beginWord}
+visited = {beginWord}
+
+while s:
+    s = expand(s, visited)
+    visited |= s
+    if not s:
+    	return []
+	if endWord in s:
+		break    
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;two-way-bfs-tle&#34;&gt;Two-way BFS (TLE)&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/126_1.png&#34; alt=&#34;1-way and 2-way bfs&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Since simple BFS expands more nodes than two-way BFS, I tried two-way BFS but still got TLE, here is the two-way bfs code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;s1, s2 = {beginWord}, {endWord}
+visited1, visited2 = {beginWord}, {endWord}
+path1, path2 = collections.defaultdict(list), collections.defaultdict(list)
+
+while s1 and s2:
+    s1 = expand(s1, visited1, path1)
+    visited1 |= s1
+    
+    if s1&amp;amp;s2:
+        return build(s1&amp;amp;s2, path1, path2)
+    
+    s2 = expand(s2, visited2, path2)
+    visited2 |= s2
+    
+    if s1&amp;amp;s2:
+            return build(s1&amp;amp;s2, path1, path2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;use-wildcard-to-quickly-match-adjacent-words&#34;&gt;Use wildcard to quickly match adjacent words&lt;/h1&gt;
+
+&lt;p&gt;After TLE using two-way BFS, I realized it&amp;rsquo;s the expand part that costs too much time checking words. So we need a faster way to get valid jumps between words.&lt;/p&gt;
+
+&lt;p&gt;We create a map, the key of the map are words with a wildcard &amp;lsquo;*&amp;rsquo; in it. The value is a list consists of all words that match the key. For each word, we can replace each character of it into a wildcard &amp;lsquo;*&amp;rsquo; and put it in the list. When we want to expand from this word, we generate words with a &amp;lsquo;*&amp;rsquo; and union all values of them.&lt;/p&gt;
+
+&lt;p&gt;Take &lt;code&gt;[&#39;dog&#39;, &#39;log&#39;, &#39;dot&#39;]&lt;/code&gt; for example, we can get &lt;code&gt;&#39;\*og&#39;, &#39;d\*g&#39;, &#39;do\*&#39;&lt;/code&gt; from &amp;lsquo;dog&amp;rsquo;, part of the map (used when expand &amp;lsquo;dog&amp;rsquo;) is &lt;code&gt;{&#39;\*og&#39;:[dog, log], &#39;d\*g&#39;:[dog], &#39;do\*&#39;:[dog, dot]}&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;So the expand part becomes:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dic = collections.defaultdict(list)
+
+for w in wordList:
+    for i in range(len(w)):
+        dic[w[:i]+&#39;*&#39;+w[i+1:]].append(w)
+
+def expand(words, visited, path):
+    ret = set()
+    for w1 in words:
+        for i in range(len(w1)):
+            w = w1[:i]+&#39;*&#39;+w1[i+1:]
+            nexts = [_ for _ in dic[w] if _ not in visited]
+            ret.update(nexts)
+            for n in nexts:
+                path[n].append(w1)
+    return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The whole solution:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    def findLadders(self, beginWord, endWord, wordList):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: List[List[str]]
+        &amp;quot;&amp;quot;&amp;quot;
+        
+        if endWord not in wordList:
+            return []
+        
+        dic = collections.defaultdict(list)
+        
+        for w in wordList:
+            for i in range(len(w)):
+                dic[w[:i]+&#39;*&#39;+w[i+1:]].append(w)
+        
+        def expand(words, visited, path):
+            ret = set()
+            for w1 in words:
+                for i in range(len(w1)):
+                    w = w1[:i]+&#39;*&#39;+w1[i+1:]
+                    nexts = [_ for _ in dic[w] if _ not in visited]
+                    ret.update(nexts)
+                    for n in nexts:
+                        path[n].append(w1)
+            return ret
+        
+        def havecommon(s1, s2):
+            return s1&amp;amp;s2
+            
+        s1, s2 = {beginWord}, {endWord}
+        visited1, visited2 = {beginWord}, {endWord}
+        path1, path2 = collections.defaultdict(list), collections.defaultdict(list)
+        
+        if s1&amp;amp;s2:
+            return [[beginWord, endWord]]
+        
+        def build(s, path1, path2):
+            ret = []
+            for w in s:
+                ps = [[w]]
+                while True:
+                    new_ps = []
+                    found = False
+                    for p in ps:
+                        if p[0] in path1:
+                            found = True
+                            for ww in path1[p[0]]:
+                                new_ps.append([ww]+p)
+                    if not found:
+                        break
+                    ps = new_ps
+                    
+                while True:
+                    new_ps = []
+                    found = False
+                    for p in ps:
+                        if p[-1] in path2:
+                            found = True
+                            for ww in path2[p[-1]]:
+                                new_ps.append(p+[ww])
+                    if not found:
+                        break
+                    ps = new_ps
+
+                ret.extend(ps)
+            return ret
+        
+        c1, c2 = 0, 1
+        while s1 and s2:
+            s1 = expand(s1, visited1, path1)
+            visited1 |= s1
+            c1 += 1
+            
+            if s1&amp;amp;s2:
+                return build(s1&amp;amp;s2, path1, path2)
+            
+            s2 = expand(s2, visited2, path2)
+            visited2 |= s2
+            c2 += 1
+            
+            if s1&amp;amp;s2:
+                return build(s1&amp;amp;s2, path1, path2)
+            
+        return []
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Got pass in 152ms. (For word ladder, we don&amp;rsquo;t need to build the path, just return $c1+c2$)&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Leetcode 327: Count of Range Sum</title>
+      <link>http://guoyc.com/en/post/count_of_range_sum/</link>
+      <pubDate>Thu, 15 Mar 2018 13:15:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/count_of_range_sum/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/327_1.png&#34; alt=&#34;Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This problem ask us to find the count of all range sums between &lt;a href=&#34;inclusive&#34;&gt;lower, upper&lt;/a&gt; for an array. Numbers in the array can be either negative or positive, so we can&amp;rsquo;t use two pointers to solve this problem.&lt;/p&gt;
+
+&lt;p&gt;An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you &lt;strong&gt;must&lt;/strong&gt; do better than O($N^2$).&lt;/p&gt;
+
+&lt;p&gt;What is a familier time complexity that is better than O($N^2$)? O($N$) and O($N(logN)^m$).&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s think of merge sort, in merge sort, we call merge $logN$ times and each merge cost O($N$) time. So if we can find a divide and conquer method and complete each merge process in O($N(logN)^m$), we can achieve a total time complexity better than O($N^2$).&lt;/p&gt;
+
+&lt;h1 id=&#34;divide-and-conquer-on-original-array&#34;&gt;Divide and Conquer on original array&lt;/h1&gt;
+
+&lt;p&gt;Let&amp;rsquo;s try it on original array, $T(N)=2*T(\frac{N}{2})+T(merge)$.&lt;/p&gt;
+
+&lt;p&gt;When we divide an array arr[l:r] into arr[l:m] and arr[m+1:r], the merge process is to find count of (i, j) pairs such that $i\in[l:m]\wedge j\in[m+1:r]\wedge sum(arr[i:j]) \in [lower, upper]$.&lt;/p&gt;
+
+&lt;p&gt;We can finish this in O($N^2$), just try each i in the left part and each j in the right part and compute the range sum.&lt;/p&gt;
+
+&lt;p&gt;But this leads exceeds our expected O($N(logN)^m$). We can do better. We can calculate the prefix sum array of the right part: $prefix[x]=sum(arr[m+1:x])$ and suffix sum array of the left part: $suffix[x]=sum(arr[x:m])$. Then for each $i \in [l:m]$, we want to find all j such that $prefix[j]+suffix[x] \in [lower, upper]$. This also costs O($N^2$), but if we sort the suffix array and use binary search for each i, search $lower-suffix[i]$ and $upper-suffix[i]$ to get count of valid j&amp;rsquo;s, the time complexity becomes $O(NlogN)$.&lt;/p&gt;
+
+&lt;p&gt;So this method gives us a O($N(logN)^2$) solution.&lt;/p&gt;
+
+&lt;h1 id=&#34;divide-and-conquer-on-prefix-sum-array&#34;&gt;Divide and Conquer on prefix sum array&lt;/h1&gt;
+
+&lt;p&gt;In the previous solution, we calculate prefix sum array and suffix sum array in each merge process, if we just calculate the prefix sum array before, can we save more time?&lt;/p&gt;
+
+&lt;p&gt;The answer is yes, just like &lt;a href=&#34;https://leetcode.com/problems/reverse-pairs/description/&#34;&gt;Leetcode 493. Reverse Pairs&lt;/a&gt; or &lt;a href=&#34;https://www.geeksforgeeks.org/counting-inversions/&#34;&gt;Count Inversions in an array&lt;/a&gt;, we can guarantee at each merge process, both left and right part are sorted, and with this property the time we used on merge can be reduced.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s recall what we do in merge sort:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Initialize i=l, j=m+1
+while i&amp;lt;=m or j&amp;lt;=r:
+    if i&amp;lt;=m and j&amp;lt;=r:
+        if a[i]&amp;lt;=a[j]:
+            append a[i++] to sorted array
+            i++
+        else:
+            append a[j++] to sorted array
+    else if i&amp;lt;=m:
+        append a[i++] to sorted array
+    else:
+        append a[j++] to sorted array
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In merge sort, we compare a[i] with a[j], in this problem, we need to compare a[i]+lower and a[i]+upper with a[j].
+Following is my code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def countRangeSum(self, nums, lower, upper):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type nums: List[int]
+        :type lower: int
+        :type upper: int
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        sumarr = [0]
+        for n in nums:
+            sumarr.append(sumarr[-1]+n)
+        
+        def ms(arr, l, r):
+            if l&amp;gt;=r:
+                return 0
+            m = (l+r)&amp;gt;&amp;gt;1
+            return ms(arr, l, m)+ms(arr, m+1, r)+merge(arr, l, m, r)
+        
+        def merge(arr, l, m, r):
+            ret = 0
+            # lower_bound[x] means that for all j&amp;gt;=lower_bound[x], a[j]&amp;gt;=a[i]+lower. 
+            # And the same for upper_bound
+            lower_bound, upper_bound = {}, {} 
+            i, j = l, m+1
+            while i&amp;lt;=m:
+                while j&amp;lt;=r and arr[j]&amp;lt;arr[i]+lower:
+                    j += 1
+                lower_bound[i] = j
+                i += 1
+            i, j = m, r
+            while i&amp;gt;=l:
+                while j&amp;gt;m and arr[j]&amp;gt;arr[i]+upper:
+                    j -= 1
+                upper_bound[i] = j
+                i -= 1
+            for i in range(l, m+1):
+                ret += max(0, upper_bound[i]-lower_bound[i]+1)
+            # Attention, I am lazy here, a standard way should use typical merge sort
+            arr[l:r+1] = sorted(arr[l:r+1])
+            return ret
+                
+        return ms(sumarr, 0, len(sumarr)-1)            
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Last thing is that in this problem, why we can use this method is that &lt;strong&gt;we don&amp;rsquo;t care the order of the prefix sum array, we only need prefix sums are at the correct side when we do merge on that range&lt;/strong&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 42: Trapping Rain Water I &amp; II</title>
+      <link>http://guoyc.com/en/post/rain_drop/</link>
+      <pubDate>Wed, 14 Mar 2018 19:41:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/rain_drop/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;a href=&#34;https://leetcode.com/problems/trapping-rain-water/description/&#34;&gt;42.Trapping Rain Water&lt;/a&gt; and &lt;a href=&#34;https://leetcode.com/problems/trapping-rain-water-ii/description/&#34;&gt;407.Trapping Rain Water II&lt;/a&gt; are very interesting problems.&lt;/p&gt;
+
+&lt;h1 id=&#34;trapping-rain-water&#34;&gt;Trapping Rain Water&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/42_1.png&#34; alt=&#34;Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This problem is taged with &amp;ldquo;Two Pointers&amp;rdquo; and &amp;ldquo;Stack&amp;rdquo;, they corresponds to two different solutions.&lt;/p&gt;
+
+&lt;h2 id=&#34;two-pointers-solution&#34;&gt;Two Pointers Solution&lt;/h2&gt;
+
+&lt;p&gt;Let hl=height[0] and rl=height[len(height)-1] be height of left border and height of right border, and left=1, right=len(height)-2.&lt;/p&gt;
+
+&lt;p&gt;This is a 1-D pool, so there are only two borders left and right, and space between them can trap min(hl, hr) water.&lt;/p&gt;
+
+&lt;p&gt;So suppose hl&amp;lt;hr,&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If A[left]&amp;lt;=hl, position (left) can hold (hl-A[left]) water.&lt;/li&gt;
+&lt;li&gt;If A[left]&amp;gt;hl, position (left) can&amp;rsquo;t hold any water, just update hl=left[l].&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Operations are symmetrical for the situation hl&amp;gt;hr. And choose either left or right when hl==hr.&lt;/p&gt;
+
+&lt;p&gt;When left&amp;gt;right, stop and return the sum of capacity at every position.&lt;/p&gt;
+
+&lt;p&gt;Here is the code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def trap(self, height):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type height: List[int]
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        if not height:
+            return 0
+        l, r = 0, len(height)-1
+        hl, hr = height[l], height[r]
+        l, r = l+1, r-1
+        total = 0
+        while l&amp;lt;=r:
+            if hl&amp;lt;=hr:
+                if height[l]&amp;lt;=hl:
+                    total += (hl-height[l])
+                else:
+                    hl = height[l]
+                l += 1
+            else:
+                if height[r]&amp;lt;=hr:
+                    total += (hr-height[r])
+                else:
+                    hr = height[r]
+                r -= 1
+        return total
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;stack-solution&#34;&gt;Stack solution&lt;/h2&gt;
+
+&lt;p&gt;The stack solution maintains a stack whose elements are possible left local border for following positions. And the top of the stack is poped when its right local border comes.&lt;/p&gt;
+
+&lt;p&gt;As the picture shows:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/42_2.png&#34; alt=&#34;pic&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here is the code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def trap(self, height):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type height: List[int]
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        if not height:
+            return 0
+        st = []
+        total = 0
+        for i in range(len(height)):
+            if not st or height[i]&amp;lt;height[st[-1]]:
+                st.append(i)
+            else:
+                while st and height[st[-1]]&amp;lt;height[i]:
+                    idx = st.pop(-1)
+                    if st:
+                        total += (min(height[st[-1]], height[i])-height[idx])*(i-st[-1]-1)
+                st.append(i)
+        return total
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;trapping-rain-water-ii&#34;&gt;Trapping Rain Water II&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/407_1.png&#34; alt=&#34;Description&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the first problem, in 1-D space we only have two borders, but in 2-D space we need to build wall on four directions. So we can evolve from the two pointers to (2*m+2*n-4) pointers given a pool with size m*n.&lt;/p&gt;
+
+&lt;p&gt;In the two pointers problem, we always choose the lowest one by just comparing hl and hr, but when we have more pointers, to pick a lowest one from them with new pointers coming in becomes more difficult. The first data structure that comes to mind should be a min-heap. We extends from outer to innner until we visited all cells, so to solve this problem, just use heap to get the node to expand.&lt;/p&gt;
+
+&lt;p&gt;Here is the code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def trapRainWater(self, grid):
+        &amp;quot;&amp;quot;&amp;quot;
+        :type heightMap: List[List[int]]
+        :rtype: int
+        &amp;quot;&amp;quot;&amp;quot;
+        if not grid or not grid[0]:
+            return 0
+        
+        m, n = len(grid), len(grid[0])
+        
+        heap = []
+        
+        visited = set()
+        for i in range(m):
+            heapq.heappush(heap, (grid[i][0], i, 0))
+            heapq.heappush(heap, (grid[i][n-1], i, n-1))
+            visited.add((i, 0))
+            visited.add((i, n-1))
+        for i in range(n):
+            heapq.heappush(heap, (grid[0][i], 0, i))
+            heapq.heappush(heap, (grid[m-1][i], m-1, i))
+            visited.add((0, i))
+            visited.add((m-1, i))
+            
+        ret = 0
+        while heap:
+            h, i, j = heapq.heappop(heap)
+            for (x, y) in [(i+1, j), (i-1, j), (i, j-1), (i, j+1)]:
+                if 0&amp;lt;=x&amp;lt;m and 0&amp;lt;=y&amp;lt;n and (x, y) not in visited:
+                    ret += 0 if grid[x][y]&amp;gt;=h else (h-grid[x][y])
+                    heapq.heappush(heap, (max(grid[x][y], h), x, y))
+                    visited.add((x, y))
+        
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>http://guoyc.com/en/about/</link>
+      <pubDate>Mon, 12 Mar 2018 13:46:35 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/about/</guid>
+      
+        <description>&lt;ul&gt;
+&lt;li&gt;From 2017.08 to Now, I am currently a student @&lt;a href=&#34;http://www.ust.hk/&#34;&gt;HKUST&lt;/a&gt;, majoring in &lt;a href=&#34;https://www.sengpp.ust.hk/programs/it/en/&#34;&gt;Information Techonology&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;From 2016.11 to 2017.06, I worked @&lt;a href=&#34;http://mooctest.net&#34;&gt;Mooctet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;From 2015.08 to 2016.04, I worked @&lt;a href=&#34;http://yuanfudao.com&#34;&gt;Yuanfudao&lt;/a&gt; as Serverend Software Engineer&lt;/li&gt;
+&lt;li&gt;From 2011.09 to 2015.06, I studied @&lt;a href=&#34;https://www.nju.edu.cn/&#34;&gt;Nanjing University&lt;/a&gt; and majored in Software Engineering&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Contact me @Wechat:&lt;/p&gt;
+
+&lt;!-- &lt;img src=&#34;http://guoyc.com/images/wechat_qr2.png&#34; width=&#34;300px&#34; height=&#34;300px&#34; /&gt; --&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/wechat_qr.jpg&#34; alt=&#34;Wechat QRCode&#34; /&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Face Detection &amp; Recognition</title>
+      <link>http://guoyc.com/en/post/face-recognition/</link>
+      <pubDate>Sat, 14 Oct 2017 00:14:02 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/face-recognition/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;preprocessing&#34;&gt;Preprocessing&lt;/h1&gt;
+
+&lt;h2 id=&#34;histogram-equalization&#34;&gt;Histogram Equalization&lt;/h2&gt;
+
+&lt;p&gt;Use cdf to transform intensity.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-matlab&#34;&gt;function eqimg = histogramequalization(img)
+    maximum = round(max(img(:)));
+    minimum = round(min(img(:)));
+    counts = zeros(maximum-minimum+1, 1);
+    
+    [h, w] = size(img);
+    
+    for i = 1:h
+        for j = 1:w
+            counts(round(img(i, j)-minimum+1)) = counts((img(i, j)-minimum)+1) + 1;
+        end
+    end
+    
+    for i = 2:length(counts)
+        counts(i) = counts(i) + counts(i-1);
+    end
+    
+    eqimg = img;
+    
+    for i = 1:h
+        for j = 1:w
+            eqimg(i, j) = (counts(round(img(i, j)-minimum)+1)/(h*w)) * (maximum-minimum) + minimum;
+        end
+    end
+    
+end
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;face-detection&#34;&gt;Face Detection&lt;/h1&gt;
+
+&lt;h2 id=&#34;image-pyramid-and-neural-network&#34;&gt;Image Pyramid and Neural Network&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/face-recognition/detection1.png&#34; alt=&#34;Image Pyramid and Neural Network&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/face-recognition/detection1-rotated.png&#34; alt=&#34;Image Pyramid and Neural Network&#34; /&gt;
+&lt;img src=&#34;http://guoyc.com/images/face-recognition/detection1-rotated2.png&#34; alt=&#34;Image Pyramid and Neural Network&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;integral-image-and-adaboost&#34;&gt;Integral Image and AdaBoost&lt;/h2&gt;
+
+&lt;p&gt;Use Viola-Jones&amp;rsquo;s method to get features and use AdaBoost to combine many weak classifiers into a strong classifier&lt;/p&gt;
+
+&lt;h3 id=&#34;integral-image&#34;&gt;Integral Image&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-matlab&#34;&gt;function [img] = integralimage(img)
+    
+    [h, w] = size(img);
+    
+    for i = 2:h
+        img(i, 1) = img(i-1, 1) + img(i, 1);
+    end
+    
+    for i = 2:w
+        img(1, i) = img(1, i-1) + img(1, i);
+    end
+
+    for i = 2:h
+        for j = 2:w
+            img(i, j) = img(i-1, j) + img(i, j-1) - img(i-1, j-1) + img(i, j);
+        end
+    end
+    
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;adaboost&#34;&gt;AdaBoost&lt;/h3&gt;
+
+&lt;p&gt;See &lt;a href=&#34;http://guoyc.com/docs/adaboost.pdf&#34;&gt;AdaBoost and the Super Bowl of Classifiers A Tutorial Introduction to Adaptive Boosting&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;$n$ weak classifiers $K=[K_1, K_2, \cdots, K_n]$ and their weights $\alpha=[\alpha_1, \alpha_2, \cdots, \alpha_n]$&lt;/p&gt;
+
+&lt;p&gt;Adaboost trains a strong classifier: $C=sgn(\displaystyle\sum_{i}\alpha_i*K_i)$&lt;/p&gt;
+
+&lt;p&gt;Weights array $W=[w_1, w_2, \cdots, w_m]$ for $m$ training images.&lt;/p&gt;
+
+&lt;p&gt;The algorithm is as following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;W = ones(m)
+
+while len(K) &amp;gt; 0:
+    choose K_i with minimum W_e    
+    alpha_i = 1/2*ln((W-W_e)/W_e)
+    for w in W_e:
+        w *= ((W-W_e)/W_e)^(1/2)
+    for w in W_c:
+        w *= ((W-W_c)/W_c)^(1/2)
+    remove K_i from K
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;face-recognition-using-eigenface&#34;&gt;Face Recognition using eigenface&lt;/h1&gt;
+
+&lt;h2 id=&#34;flatten&#34;&gt;Flatten&lt;/h2&gt;
+
+&lt;p&gt;Flatten each image into 1D vector $[X_1, X_2, \cdots, X_m]$.&lt;/p&gt;
+
+&lt;h2 id=&#34;pca&#34;&gt;PCA&lt;/h2&gt;
+
+&lt;p&gt;Calculate $\overline{X}=\frac{1}{m}\displaystyle\sum_i{X_i}$.&lt;/p&gt;
+
+&lt;p&gt;Calculate covariance matrix $Cov$ for $[X_1-\overline{X}, \cdots, X_m-\overline{X}]$.&lt;/p&gt;
+
+&lt;p&gt;Calculate $eigValues=[\lambda_1, \cdots, \lambda_t]$ and related eigVectors for $Cov$.&lt;/p&gt;
+
+&lt;p&gt;Calculate coefficients for images by multiplying eigVectors $[g_1, \cdots, g_t]$.&lt;/p&gt;
+
+&lt;p&gt;Calculate eigFace for training images: $\overline{X} + \displaystyle\sum_i{g_i*eigV_i}$&lt;/p&gt;
+
+&lt;h2 id=&#34;get-nearest-face&#34;&gt;Get nearest Face&lt;/h2&gt;
+
+&lt;p&gt;For a test face $X_{test}$&lt;/p&gt;
+
+&lt;p&gt;Calculate eigFace of $X_{test}$ and use nearest neighbor.&lt;/p&gt;
+
+&lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
+
+&lt;p&gt;The following is my implementation of the algorithm.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class FaceRecognizer:
+	def __init__(self):
+		pass
+
+	def train(self, trainSet, labels):
+		imgLen = trainSet.shape[1]
+		avg = np.average(trainSet, axis=0)
+		trainSet = trainSet.astype(np.float64)
+		trainSet -= np.repeat(np.reshape(avg, (1, imgLen)), len(trainSet), 0)
+		cov = np.matmul(trainSet, trainSet.transpose())
+		eigValues, eigVectors = np.linalg.eig(cov)
+		max_arg = eigValues.argsort()[::-1]
+		eigValues = eigValues[max_arg[:20]]
+		eigVectors = eigVectors[:][max_arg[:20]].transpose()
+		self.eigValues = eigValues
+		self.eigVectors = eigVectors
+		self.coefficients = np.matmul(trainSet.transpose(), eigVectors)
+		self.labels = labels
+		self.avg = avg
+		self.imLen = imgLen
+
+	def recognize(self, img):
+		img = np.reshape(img, (1, self.imLen)) - self.avg
+		coef = np.matmul(img, self.eigVectors)
+		diff = self.coefficients - np.repeat(coef, len(self.coefficients), 0)
+		diff = np.sum(diff ** 2, 1)
+		idx = np.argsort(diff)[0]
+		return self.labels[idx]
+
+	def getEigVecs(self):
+		return self.eigVectors
+
+	def getAvg(self):
+		return self.avg
+
+	def getCoefficients(self):
+		return self.coefficients
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Test code that uses the recognizer:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import numpy as np
+import cv2
+from PIL import Image
+from matplotlib import pyplot as plt
+import os
+import face_recognizer
+
+path_train = &#39;./Data/Yale faces/Cropped&#39;
+
+data = []
+labels = []
+
+shape = (0, 0)
+i = 0
+for f in os.listdir(path_train):
+	if not f.startswith(&#39;.&#39;) and f.endswith(&#39;.pgm&#39;):
+		img = Image.open(os.path.join(path_train, f))
+		img = np.array(img)
+		if img.ndim == 3:
+			img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+		shape = img.shape
+		data.append(img.flatten())
+		labels.append(f.split(&#39;.&#39;)[0])
+		i += 1
+
+data = np.array(data)
+
+recognizer = face_recognizer.FaceRecognizer()
+
+recognizer.train(data, labels)
+
+eigVecs = recognizer.getCoefficients()
+
+_, plts = plt.subplots(5, 5)
+
+eigImgs = []
+for i, vec in enumerate(eigVecs.transpose()):
+	eigVec = np.real(vec)
+	miin = np.min(eigVec)
+	maax = np.max(eigVec)
+	eigVec = 255 * (eigVec - miin) / (maax - miin)
+	eigImg = eigVec.astype(np.int32).reshape(shape)
+	plts[i / 5][i % 5].imshow(eigImg, &#39;gray&#39;)
+	eigImgs.append(eigImg)
+
+plts[4][0].imshow(recognizer.getAvg().reshape(shape), &#39;gray&#39;)
+
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/face-recognition/eigenface.png&#34; alt=&#34;Eigenface&#34; /&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Using Hough Transform to detect lines and circles</title>
+      <link>http://guoyc.com/en/post/hough/</link>
+      <pubDate>Wed, 27 Sep 2017 08:03:08 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/en/post/hough/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;hough-line&#34;&gt;Hough-Line&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-matlab&#34;&gt;function [H, theta, r] = myhough(BW)
+    [h, w] = size(BW);
+
+    theta_low = -pi/2;
+    theta_high = pi/2;
+
+    r_low = -sqrt(h^2+w^2);
+    r_high = sqrt(h^2+w^2);
+
+    num_theta = 180;
+    num_r = round(r_high*2);
+    H = zeros(num_theta, num_r);
+
+    for x = 1:h
+        for y = 1:w
+            if BW(x, y)==1
+                for i = 1:num_theta
+                    theta = theta_low + (i-1)/num_theta*(theta_high-theta_low);
+                    r = x*cos(theta) + y*sin(theta);
+                    j = round(1 + (num_r-1) * (r-r_low)/(r_high-r_low));
+                    H(i, j) = H(i, j) + 1;
+                end
+            end
+        end
+    end
+    
+    [m, I] = max(H(:));
+    [i, j] = ind2sub(size(H), I);
+
+    theta = theta_low + (i-1)/num_theta*(theta_high-theta_low);
+    r = r_low + (j-1)/num_r*(r_high-r_low);
+    
+    while (abs(theta)&amp;lt;=pi/90 &amp;amp;&amp;amp; (abs(r)&amp;lt;=2 || abs(abs(r)-h)&amp;lt;=2)) || (abs(pi/2-abs(theta))&amp;lt;=pi/90 &amp;amp;&amp;amp; (abs(r)&amp;lt;=2 || abs(abs(r)-w)&amp;lt;=2)) 
+        H(i, j) = 0;
+        [m, I] = max(H(:));
+        [i, j] = ind2sub(size(H), I);
+
+        theta = theta_low + (i-1)/num_theta*(theta_high-theta_low);
+        r = r_low + (j-1)/num_r*(r_high-r_low);
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;hough-circle&#34;&gt;Hough-Circle&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-matlab&#34;&gt;function [x, y, R] = myhoughcircle(BW, max_r, k, gap)
+
+    [h, w] = size(BW);
+
+    num_x = h;
+    num_y = w;
+    
+    if nargin &amp;lt; 2 || isempty(max_r)
+        max_r = min(h/2, w/2);
+    end
+    if nargin &amp;lt; 3
+        k = 1;
+    end
+    if nargin &amp;lt; 4
+        gap = 20;
+    end
+    
+    H = zeros(num_x, num_y, max_r);
+
+    for i = 1:h
+        for j = 1:w 
+            if BW(i, j)==1
+                for a = 1:num_x
+                    for b = 1:num_y
+                        r = round(sqrt((a-i)^2+(b-j)^2));
+                        if r&amp;gt;0 &amp;amp;&amp;amp; r&amp;lt;=max_r
+                            H(a, b, r) = H(a, b, r) + 1;
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    
+    img = cat(3, BW, BW, BW)*255;
+    
+    hh = H(:);
+    
+    prex = 0;
+    prey = 0;
+    preR = 0;
+    
+    idx = 1;
+    
+    while idx&amp;lt;=k
+        
+        [~, I] = max(hh);
+        [x, y, R] = ind2sub(size(H), I);
+        hh(I) = 0;
+        
+        if (x-prex)&amp;lt;=gap &amp;amp;&amp;amp; (y-prey)&amp;lt;=gap &amp;amp;&amp;amp; (R-preR)&amp;lt;=gap
+           continue 
+        end
+                        
+        for i = 1:h
+            for j = 1:w
+                computed_r = sqrt((i-x)^2+(j-y)^2);
+                if abs(computed_r-R)&amp;lt;=1
+                    img(i, j, :) = [255, 0, 0];
+                end
+            end
+        end
+        prex = x;
+        prey = y;
+        preR = R;
+        idx = idx+1;
+        
+    end
+        
+end
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+  </channel>
+</rss>

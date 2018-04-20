@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/</link>
+    <description>Recent content in Tags on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Wed, 13 Sep 2017 22:34:07 +0000</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Algorithm</title>
+      <link>http://guoyc.com/tags/algorithm/</link>
+      <pubDate>Wed, 13 Sep 2017 22:34:07 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Artificial Intelligence</title>
+      <link>http://guoyc.com/tags/artificial-intelligence/</link>
+      <pubDate>Wed, 13 Sep 2017 22:34:07 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/artificial-intelligence/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Belief</title>
+      <link>http://guoyc.com/tags/belief/</link>
+      <pubDate>Sat, 09 Sep 2017 00:48:51 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/belief/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bfs</title>
+      <link>http://guoyc.com/tags/bfs/</link>
+      <pubDate>Sat, 07 Apr 2018 14:22:08 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/bfs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Binary Search</title>
+      <link>http://guoyc.com/tags/binary-search/</link>
+      <pubDate>Wed, 18 Apr 2018 15:58:51 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/binary-search/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bit Manipulation</title>
+      <link>http://guoyc.com/tags/bit-manipulation/</link>
+      <pubDate>Tue, 27 Mar 2018 18:34:12 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/bit-manipulation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dfs</title>
+      <link>http://guoyc.com/tags/dfs/</link>
+      <pubDate>Mon, 16 Apr 2018 14:55:46 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/dfs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Divide and Conquer</title>
+      <link>http://guoyc.com/tags/divide-and-conquer/</link>
+      <pubDate>Mon, 09 Apr 2018 16:21:15 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/divide-and-conquer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dynamic Programming</title>
+      <link>http://guoyc.com/tags/dynamic-programming/</link>
+      <pubDate>Fri, 20 Apr 2018 11:57:25 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/dynamic-programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Graph</title>
+      <link>http://guoyc.com/tags/graph/</link>
+      <pubDate>Fri, 23 Mar 2018 00:20:35 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/graph/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Greedy</title>
+      <link>http://guoyc.com/tags/greedy/</link>
+      <pubDate>Thu, 29 Mar 2018 18:39:49 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/greedy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Heap</title>
+      <link>http://guoyc.com/tags/heap/</link>
+      <pubDate>Wed, 28 Mar 2018 16:44:36 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/heap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Machine Learning</title>
+      <link>http://guoyc.com/tags/machine-learning/</link>
+      <pubDate>Sat, 09 Sep 2017 23:02:41 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Opencv</title>
+      <link>http://guoyc.com/tags/opencv/</link>
+      <pubDate>Tue, 17 Oct 2017 00:27:22 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/opencv/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Recognition</title>
+      <link>http://guoyc.com/tags/recognition/</link>
+      <pubDate>Tue, 17 Oct 2017 00:27:22 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/recognition/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Search</title>
+      <link>http://guoyc.com/tags/search/</link>
+      <pubDate>Wed, 13 Sep 2017 22:34:07 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/search/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Single Number</title>
+      <link>http://guoyc.com/tags/single-number/</link>
+      <pubDate>Tue, 27 Mar 2018 18:34:12 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/single-number/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sorted Matrix</title>
+      <link>http://guoyc.com/tags/sorted-matrix/</link>
+      <pubDate>Tue, 20 Mar 2018 19:18:59 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/sorted-matrix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stack</title>
+      <link>http://guoyc.com/tags/stack/</link>
+      <pubDate>Tue, 03 Apr 2018 18:59:41 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/tags/stack/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

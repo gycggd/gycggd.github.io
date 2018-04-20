@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>LeetCode 152. Maximum Product Subarray - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。 动态规划 maximum[i]表示以i结尾的subarr" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/max_product_subarray/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="LeetCode 152. Maximum Product Subarray" />
+<meta property="og:description" content="这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。 动态规划 maximum[i]表示以i结尾的subarr" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/max_product_subarray/" />
+
+
+
+<meta property="article:published_time" content="2018-04-09T16:21:15&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-04-09T16:21:15&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="LeetCode 152. Maximum Product Subarray">
+<meta itemprop="description" content="这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。 动态规划 maximum[i]表示以i结尾的subarr">
+
+
+<meta itemprop="datePublished" content="2018-04-09T16:21:15&#43;08:00" />
+<meta itemprop="dateModified" content="2018-04-09T16:21:15&#43;08:00" />
+<meta itemprop="wordCount" content="362">
+
+
+
+<meta itemprop="keywords" content="Dynamic Programming,Divide and Conquer," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LeetCode 152. Maximum Product Subarray"/>
+<meta name="twitter:description" content="这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。 动态规划 maximum[i]表示以i结尾的subarr"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">LeetCode 152. Maximum Product Subarray</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-09 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> LeetCode </a>
+            
+          </div>
+        <span class="more-meta"> 约 362 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#动态规划">动态规划</a></li>
+<li><a href="#分而治之">分而治之</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p><img src="/images/leetcode/152_1.png" alt="desc" /></p>
+
+<p>这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。</p>
+
+<h1 id="动态规划">动态规划</h1>
+
+<p>maximum[i]表示以i结尾的subarray的最大乘积
+minimum[i]表示以i结尾的subarray的最小乘积</p>
+
+<p>初始状态：</p>
+
+<p>maximum[0]=minimum[0]=nums[0]</p>
+
+<p>递推公式：</p>
+
+<p><code>maximum[i] = max(nums[i], maximum[i-1]*nums[i], minimum[i-1]*nums[i])</code>
+<code>minimum[i] = min(nums[i], maximum[i-1]*nums[i], minimum[i-1]*nums[i])</code></p>
+
+<pre><code>class Solution:
+    def maxProduct(self, nums):
+        maximum = [0]*len(nums)
+        minimum = [0]*len(nums)
+        maximum[0], minimum[0], ret = nums[0], nums[0], nums[0]
+        for i in range(1, len(nums)):
+            maximum[i] = max(nums[i], maximum[i-1]*nums[i], minimum[i-1]*nums[i])
+            minimum[i] = min(nums[i], maximum[i-1]*nums[i], minimum[i-1]*nums[i])
+            ret = max(maximum[i], ret)
+        return ret
+</code></pre>
+
+<p>降低空间复杂度：</p>
+
+<pre><code>class Solution:
+    def maxProduct(self, nums):
+        maximum, minimum, ret = [nums[0]]*3
+        for n in nums[1:]:
+            maximum, minimum = max(n, n*maximum, n*minimum), min(n, n*maximum, n*minimum)
+            ret = max(maximum, ret)
+        return ret
+</code></pre>
+
+<h1 id="分而治之">分而治之</h1>
+
+<p>三种情况：</p>
+
+<ul>
+<li>maxProduct在左边(递归)</li>
+<li>maxProduct在右边(递归)</li>
+<li>maxProduct一半在左边一半在右边(merge)</li>
+</ul>
+
+<pre><code>class Solution:
+    def maxProduct(self, nums):
+        def dc(arr, l, r):
+            if l==r: return arr[l]
+            mid = (l+r)&gt;&gt;1
+            return max(dc(arr, l, mid), dc(arr, mid+1, r), merge(arr, l, r, mid))
+        
+        def merge(arr, l, r, m):
+            lmax, lmin = arr[m], arr[m]
+            rmax, rmin = 1, 1
+            
+            i, prod = m-1, arr[m]
+            while i&gt;=l:
+                prod *= arr[i]
+                lmax, lmin = max(prod, lmax), min(prod, lmin)
+                if prod==0: break
+                i -= 1
+            
+            j, prod = m+1, 1
+            while j&lt;=r:
+                prod *= arr[j]
+                rmax, rmin = max(prod, rmax), min(prod, rmin)
+                if prod==0: break
+                j += 1
+            return max(lmax*rmax, lmin*rmin)
+        
+        return dc(nums, 0, len(nums)-1)         
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/dynamic-programming/">Dynamic Programming</a>
+          
+          <a href="/tags/divide-and-conquer/">Divide and Conquer</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/unique_path/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 62. Unique Paths</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/leetcode_weekly_contest_79/">
+            <span class="next-text nav-default">Leetcode Weekly Contest 79</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Leetcode Weekly Contest 76 - Guoyc&#39;s blog</title>
+  <link rel="alternate" hreflang="en" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="800. Similar RGB Color This is so easy, just split into 3 parts, and for each part find the closest &amp;lsquo;XX&amp;rsquo; format value. For &amp;lsquo;XY&amp;rsquo;, the closes must be among &amp;lsquo;XX&amp;rsquo;, &amp;lsquo;(X-1)(X-1)&amp;rsquo;, &amp;lsquo;(X&#43;1)(X&#43;1)&amp;rsquo;, so check them all and choose cloest. My 5-line code here: def similarRGB(self, color): ret = &#39;#&#39; for i in range(1, 6, 2): c1, c2 = [int(_) if &#39;0&#39;&amp;lt;=_&amp;lt;=&#39;9&#39; else 10&#43;ord(_)-ord(&#39;a&#39;) for _ in color[i:i&#43;2]] c =" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/en/post/leetcode_weekly_contest_76/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Leetcode Weekly Contest 76" />
+<meta property="og:description" content="800. Similar RGB Color This is so easy, just split into 3 parts, and for each part find the closest &lsquo;XX&rsquo; format value. For &lsquo;XY&rsquo;, the closes must be among &lsquo;XX&rsquo;, &lsquo;(X-1)(X-1)&rsquo;, &lsquo;(X&#43;1)(X&#43;1)&rsquo;, so check them all and choose cloest. My 5-line code here: def similarRGB(self, color): ret = &#39;#&#39; for i in range(1, 6, 2): c1, c2 = [int(_) if &#39;0&#39;&lt;=_&lt;=&#39;9&#39; else 10&#43;ord(_)-ord(&#39;a&#39;) for _ in color[i:i&#43;2]] c =" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/en/post/leetcode_weekly_contest_76/" />
+
+
+
+<meta property="article:published_time" content="2018-03-18T12:53:17&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-18T12:53:17&#43;08:00"/>
+
+<meta property="og:site_name" content="Guoyc&#39;s blog" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Leetcode Weekly Contest 76">
+<meta itemprop="description" content="800. Similar RGB Color This is so easy, just split into 3 parts, and for each part find the closest &lsquo;XX&rsquo; format value. For &lsquo;XY&rsquo;, the closes must be among &lsquo;XX&rsquo;, &lsquo;(X-1)(X-1)&rsquo;, &lsquo;(X&#43;1)(X&#43;1)&rsquo;, so check them all and choose cloest. My 5-line code here: def similarRGB(self, color): ret = &#39;#&#39; for i in range(1, 6, 2): c1, c2 = [int(_) if &#39;0&#39;&lt;=_&lt;=&#39;9&#39; else 10&#43;ord(_)-ord(&#39;a&#39;) for _ in color[i:i&#43;2]] c =">
+
+
+<meta itemprop="datePublished" content="2018-03-18T12:53:17&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-18T12:53:17&#43;08:00" />
+<meta itemprop="wordCount" content="1136">
+
+
+
+<meta itemprop="keywords" content="BFS,Dynamic Programming,Graph," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Leetcode Weekly Contest 76"/>
+<meta name="twitter:description" content="800. Similar RGB Color This is so easy, just split into 3 parts, and for each part find the closest &lsquo;XX&rsquo; format value. For &lsquo;XY&rsquo;, the closes must be among &lsquo;XX&rsquo;, &lsquo;(X-1)(X-1)&rsquo;, &lsquo;(X&#43;1)(X&#43;1)&rsquo;, so check them all and choose cloest. My 5-line code here: def similarRGB(self, color): ret = &#39;#&#39; for i in range(1, 6, 2): c1, c2 = [int(_) if &#39;0&#39;&lt;=_&lt;=&#39;9&#39; else 10&#43;ord(_)-ord(&#39;a&#39;) for _ in color[i:i&#43;2]] c ="/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Guoyc&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/en/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/en/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/en/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/en/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/en/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">Guoyc&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Leetcode Weekly Contest 76</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-18 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> Leetcode </a>
+            
+          </div>
+        <span class="more-meta"> 1136 words </span>
+        <span class="more-meta"> 3 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#800-similar-rgb-color">800. Similar RGB Color</a></li>
+<li><a href="#801-minimum-swaps-to-make-sequences-increasing">801. Minimum Swaps To Make Sequences Increasing</a></li>
+<li><a href="#802-find-eventual-safe-states">802. Find Eventual Safe States</a></li>
+<li><a href="#803-bricks-falling-when-hit">803. Bricks Falling When Hit</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="800-similar-rgb-color">800. Similar RGB Color</h1>
+
+<p><img src="/images/leetcode/800_1.png" alt="800 Description" /></p>
+
+<p>This is so easy, just split into 3 parts, and for each part find the closest &lsquo;XX&rsquo; format value.</p>
+
+<p>For &lsquo;XY&rsquo;, the closes must be among &lsquo;XX&rsquo;, &lsquo;(X-1)(X-1)&rsquo;, &lsquo;(X+1)(X+1)&rsquo;, so check them all and choose cloest.</p>
+
+<p>My 5-line code here:</p>
+
+<pre><code>def similarRGB(self, color):
+    ret = '#'
+    for i in range(1, 6, 2):
+        c1, c2 = [int(_) if '0'&lt;=_&lt;='9' else 10+ord(_)-ord('a') for _ in color[i:i+2]]
+        c = c1+sorted(enumerate([abs((c1*16+c2)-(x*16+x)) for x in [c1-1, c1, c1+1]]), key=lambda _:_[1])[0][0]-1
+        ret += str(c)*2 if c&lt;=9 else chr(c-10+ord('a'))*2
+    return ret
+</code></pre>
+
+<h1 id="801-minimum-swaps-to-make-sequences-increasing">801. Minimum Swaps To Make Sequences Increasing</h1>
+
+<p><img src="/images/leetcode/801_1.png" alt="801 Description" /></p>
+
+<p>Take <code>1, 2, 3, 8, 5</code>和<code>5, 6, 7, 4, 9</code> for example，we only need to swap <code>8</code> and <code>4</code>.</p>
+
+<p>This problem can be solved using dynamic programming, at each position, we can choose to swap or not. Since we want two sorted arrays, at each position, whether to swap or not depends on the choice at previous position, so we can form a recursive formula.</p>
+
+<pre><code>N = len(A)
+dp = [[maxint]\*2 for \_ in range(N)]
+</code></pre>
+
+<p>Let initialize a N*2 array dp,</p>
+
+<ul>
+<li>dp[i][0] means the least swaps used to make A[:i+1] and B[:i+1] sorted having no swap at i-th position.</li>
+<li>dp[i][1] means the least swaps used to make A[:i+1] and B[:i+1] sorted having swap at i-th position.</li>
+</ul>
+
+<p>Here is the recursive formula:</p>
+
+<p>For $i \in [1, N]$:</p>
+
+<p>If A[i]&gt;A[i-1] and B[i]&gt;B<a href="they are in order without swap">i-1</a>:
+$$dp[i][0]=min(dp[i][0], dp[i-1][0])$$ (no swap at i-1 and no swap at i)
+$$dp[i][1]=min(dp[i][1], dp[i-1][1]+1)$$ (swap at i-1 so swap at i to make in order)</p>
+
+<p>If A[i]&gt;B[i-1] and B[i]&gt;A<a href="they are in order with a swap">i-1</a>:
+$$dp[i][0]=min(dp[i][0], dp[i-1][1])$$ (swap at i-1, no need to swap at i)
+$$dp[i][1]=min(dp[i][1], dp[i-1][0]+1)$$ (no swap at i-1, so swap at i)</p>
+
+<p>The two cases don&rsquo;t conflict with each other, so we choose minimum of them when both holds.</p>
+
+<p>What we want to return is $min(dp[N-1][0], dp[N-1][1])$.</p>
+
+<p>At every recursion, we only need the last result, so we can use less space, from $O(N)$ to $O(1)$, time complexity $O(N)$.</p>
+
+<p>20-Line Python Solution：</p>
+
+<pre><code>class Solution:
+    def minSwap(self, A, B):
+        &quot;&quot;&quot;
+        :type A: List[int]
+        :type B: List[int]
+        :rtype: int
+        &quot;&quot;&quot;
+        n = len(A)
+        pre = [0, 1]
+        for i in range(1, n):
+            cur = [sys.maxsize, sys.maxsize]
+            if A[i]&gt;A[i-1] and B[i]&gt;B[i-1]:
+                cur[0] = min(cur[0], pre[0])
+                cur[1] = min(cur[1], pre[1]+1)
+            if A[i]&gt;B[i-1] and B[i]&gt;A[i-1]:
+                cur[0] = min(cur[0], pre[1])
+                cur[1] = min(cur[1], pre[0]+1)
+            pre = cur
+        return min(pre)
+</code></pre>
+
+<h1 id="802-find-eventual-safe-states">802. Find Eventual Safe States</h1>
+
+<p><img src="/images/leetcode/802_1.png" alt="802 Description" /></p>
+
+<p>This is equal to find nodes which doesn&rsquo;t lead to a circle in any path.</p>
+
+<p>My AC soluction during contest finds all nodes in circles, and then remove nodes connected to circle nodes until no more nodes can be removed. Here is my 800ms verbose code:</p>
+
+<pre><code>def eventualSafeNodes(self, graph):
+    &quot;&quot;&quot;
+    :type graph: List[List[int]]
+    :rtype: List[int]
+    &quot;&quot;&quot;
+    n = len(graph)
+    ret = set(range(n))
+    visited = set()
+    path = set()
+    for i in range(n):
+        if i in visited:
+            continue
+        st = [(i, False)]
+        while st:
+            n, v = st.pop()
+            visited.add(n)
+            if v:
+                path.remove(n)
+                continue
+            st.append((n, True))
+            path.add(n)
+            for nn in graph[n]:
+                if nn in path:
+                    idx = len(st)-1
+                    while idx&gt;=0:
+                        if st[idx][1] and st[idx][0] in ret:
+                            ret.remove(st[idx][0])
+                        idx -= 1
+                    continue
+                if nn not in ret:
+                    idx = len(st)-1
+                    while idx&gt;=0:
+                        if st[idx][1] and st[idx][0] in ret:
+                            ret.remove(st[idx][0])
+                        idx -= 1
+                    continue
+                if nn in visited:
+                    continue
+                st.append((nn, False))
+    n = len(graph)
+    while True:
+        pre = len(ret)
+        for i in range(n):
+            if i not in ret:
+                continue
+            for j in graph[i]:
+                if j not in ret:
+                    ret.remove(i)
+                    break
+        if len(ret)==pre:
+            break
+    return list(ret)
+</code></pre>
+
+<p>After the contest, I found we can solve it by walk along the path reversely.</p>
+
+<ol>
+<li>Find nodes with out degree 0, they are terminal nodes, we remove them from graph and they are added to result</li>
+<li>For nodes who are connected terminal nodes, since terminal nodes are removed, we decrease in-nodes&rsquo; out degree by 1 and if its out degree equals to 0, it become new terminal nodes</li>
+<li>Repeat 2 until no terminal nodes can be found.</li>
+</ol>
+
+<p>Here is my 300ms 20-line Python Code:</p>
+
+<pre><code>def eventualSafeNodes(self, graph):
+    &quot;&quot;&quot;
+    :type graph: List[List[int]]
+    :rtype: List[int]
+    &quot;&quot;&quot;
+    n = len(graph)
+    out_degree = collections.defaultdict(int)
+    in_nodes = collections.defaultdict(list) 
+    queue = []
+    ret = []
+    for i in range(n):
+        out_degree[i] = len(graph[i])
+        if out_degree[i]==0:
+            queue.append(i)
+        for j in graph[i]:
+            in_nodes[j].append(i)  
+    while queue:
+        term_node = queue.pop(0)
+        ret.append(term_node)
+        for in_node in in_nodes[term_node]:
+            out_degree[in_node] -= 1
+            if out_degree[in_node]==0:
+                queue.append(in_node)
+    return sorted(ret)
+</code></pre>
+
+<h1 id="803-bricks-falling-when-hit">803. Bricks Falling When Hit</h1>
+
+<p><img src="/images/leetcode/803_1.png" alt="803 Description" /></p>
+
+<p>A straight-forward solution is to count no-dropping bricks after each hit and return the difference.</p>
+
+<p>I did it during contest and of course got TLE because it does dfs from all bricks at the top for every hit.</p>
+
+<p>So how to decrease dfs processes? We can reverse the problem and count how many new no-dropping bricks are added when we add the bricks reversely. It&rsquo;s just the same of counting dropping bricks when erase one brick.</p>
+
+<p>Let m, n = len(grid), len(grid[0]).</p>
+
+<p>Here is the detailed solution:</p>
+
+<ol>
+<li>For each hit (i, j), if grid[i][j]==0, set grid[i][j]=-1 otherwise set grid[i][j]=0. Since a hit may happen at an empty position, we need to seperate emptys from bricks.</li>
+<li>For i in [0, n], do dfs at grid[i][0] and mark no-dropping bricks. Here we get the grid after all hits.</li>
+<li>Then for each hit (i,j) (reversely), first we check grid[i][j]==-1, if yes, it&rsquo;s empty, skip this hit. Then we check whether it&rsquo;s connected to any no-dropping bricks or it&rsquo;s at the top, if not, it can&rsquo;t add any no-dropping bricks, skip this hit. Otherwise we do dfs at grid[i][j], mark new added no-dropping bricks and record amount of them.</li>
+<li>Return the amounts of new added no-dropping bricks at each hits.</li>
+</ol>
+
+<p>Using this method, we only do $O(n)+O(len(hits))$ dfs.</p>
+
+<p>Here is an example：
+<img src="/images/leetcode/803_2.png" alt="803 Description" />
+<img src="/images/leetcode/803_3.png" alt="803 Description" />
+<img src="/images/leetcode/803_4.png" alt="803 Description" />
+<img src="/images/leetcode/803_5.png" alt="803 Description" />
+<img src="/images/leetcode/803_6.png" alt="803 Description" /></p>
+
+<p>Code here：</p>
+
+<pre><code>class Solution:
+    def hitBricks(self, grid, hits):
+        &quot;&quot;&quot;
+        :type grid: List[List[int]]
+        :type hits: List[List[int]]
+        :rtype: List[int]
+        &quot;&quot;&quot;
+
+        m, n = len(grid), len(grid[0])
+        
+        # Connect unconnected bricks and 
+        def dfs(i, j):
+            if not (0&lt;=i&lt;m and 0&lt;=j&lt;n) or grid[i][j]!=1:
+                return 0
+            ret = 1
+            grid[i][j] = 2
+            ret += sum(dfs(x, y) for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)])
+            return ret
+        
+        # Check whether (i, j) is connected to Not Falling Bricks
+        def is_connected(i, j):
+            return i==0 or any([0&lt;=x&lt;m and 0&lt;=y&lt;n and grid[x][y]==2 for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]])
+        
+        # Mark whether there is a brick at the each hit
+        for i, j in hits:
+            grid[i][j] -= 1
+                
+        # Get grid after all hits
+        for i in range(n):
+            dfs(0, i)
+        
+        # Reversely add the block of each hits and get count of newly add bricks
+        ret = [0]*len(hits)
+        for k in reversed(range(len(hits))):
+            i, j = hits[k]
+            grid[i][j] += 1
+            if grid[i][j]==1 and is_connected(i, j):
+                ret[k] = dfs(i, j)-1
+            
+        return ret
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/bfs/">BFS</a>
+          
+          <a href="/tags/dynamic-programming/">Dynamic Programming</a>
+          
+          <a href="/tags/graph/">Graph</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/en/post/word_ladder2/">
+            <span class="next-text nav-default">LeetCode 126: Word Ladder II</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      Show Disqus Comments
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

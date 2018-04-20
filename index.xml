@@ -1,0 +1,2370 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>郭玉晨的博客</title>
+    <link>http://guoyc.com/</link>
+    <description>Recent content on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Fri, 20 Apr 2018 11:57:25 +0800</lastBuildDate>
+    
+        <atom:link href="http://guoyc.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LeetCode 87. Scramble String</title>
+      <link>http://guoyc.com/post/scramble_string/</link>
+      <pubDate>Fri, 20 Apr 2018 11:57:25 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/scramble_string/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+
+&lt;div class=&#34;question-description&#34;&gt;&lt;div&gt;&lt;p&gt;Given a string &lt;em&gt;s1&lt;/em&gt;, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.&lt;/p&gt;
+
+&lt;p&gt;Below is one possible representation of &lt;em&gt;s1&lt;/em&gt; = &lt;code&gt;&#34;great&#34;&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;    great
+   /    \
+  gr    eat
+ / \    /  \
+g   r  e   at
+           / \
+          a   t
+&lt;/pre&gt;
+
+&lt;p&gt;To scramble the string, we may choose any non-leaf node and swap its two children.&lt;/p&gt;
+
+&lt;p&gt;For example, if we choose the node &lt;code&gt;&#34;gr&#34;&lt;/code&gt; and swap its two children, it produces a scrambled string &lt;code&gt;&#34;rgeat&#34;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;    rgeat
+   /    \
+  rg    eat
+ / \    /  \
+r   g  e   at
+           / \
+          a   t
+&lt;/pre&gt;
+
+&lt;p&gt;We say that &lt;code&gt;&#34;rgeat&#34;&lt;/code&gt; is a scrambled string of &lt;code&gt;&#34;great&#34;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Similarly, if we continue to swap the children of nodes &lt;code&gt;&#34;eat&#34;&lt;/code&gt; and &lt;code&gt;&#34;at&#34;&lt;/code&gt;, it produces a scrambled string &lt;code&gt;&#34;rgtae&#34;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;    rgtae
+   /    \
+  rg    tae
+ / \    /  \
+r   g  ta  e
+       / \
+      t   a
+&lt;/pre&gt;
+
+&lt;p&gt;We say that &lt;code&gt;&#34;rgtae&#34;&lt;/code&gt; is a scrambled string of &lt;code&gt;&#34;great&#34;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Given two strings &lt;em&gt;s1&lt;/em&gt; and &lt;em&gt;s2&lt;/em&gt; of the same length, determine if &lt;em&gt;s2&lt;/em&gt; is a scrambled string of &lt;em&gt;s1&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Input:&lt;/strong&gt; s1 = &#34;great&#34;, s2 = &#34;rgeat&#34;
+&lt;strong&gt;Output:&lt;/strong&gt; true
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Input:&lt;/strong&gt; s1 = &#34;abcde&#34;, s2 = &#34;caebd&#34;
+&lt;strong&gt;Output:&lt;/strong&gt; false&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&#34;solutions&#34;&gt;Solutions&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;N=len(s1)=len(s2)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;isScramble(s1, s2)&lt;/code&gt; iff &lt;code&gt;s1&lt;/code&gt;和&lt;code&gt;s2&lt;/code&gt;可以分为两部分，这两部分分别符合Scramble String。&lt;/p&gt;
+
+&lt;p&gt;即存在&lt;code&gt;0&amp;lt;k&amp;lt;N&lt;/code&gt;，使得&lt;code&gt;isScramble(s1[:k], s2[:k]) &amp;amp;&amp;amp; isScramble(s1[k:], s2[k:])&lt;/code&gt;或者&lt;code&gt;isScramble(s1[:k], s2[N-k:]) &amp;amp;&amp;amp; isScramble(s1[k:], s2[:N-k])&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;对应下面两种匹配方式：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/87_2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;下面是两种解法：&lt;/p&gt;
+
+&lt;h2 id=&#34;top-down&#34;&gt;Top-down&lt;/h2&gt;
+
+&lt;p&gt;这里使用了prefixSum和suffixSum来进行剪枝&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果&lt;code&gt;check(s1[:k], s2[:k])&lt;/code&gt;则s1[:k], s2[:k]的和一定相等，所以先判断prefixSum1和prefixSum2&lt;/li&gt;
+&lt;li&gt;如果&lt;code&gt;check(s1[:k], s2[N-k:])&lt;/code&gt;则s1[:k], s2[N-k:]的和一定相等，所以先判断prefixSum1和suffixSum2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def isScramble(self, s1, s2):
+        if len(s1)!=len(s2): return False
+        def check(S1, S2):
+            if S1==S2: return True
+            if sorted(S1)!=sorted(S2): return False
+            N = len(S1)
+            prefixSum1 = 0
+            prefixSum2, suffixSum2 = 0, 0
+            for i in range(N):
+                if i&amp;gt;0 and prefixSum1==prefixSum2 and check(S1[:i], S2[:i]) and check(S1[i:], S2[i:]): return True
+                if i&amp;gt;0 and prefixSum1==suffixSum2 and check(S1[:i], S2[N-i:]) and check(S1[i:], S2[:N-i]): return True
+            return False
+        return check(s1, s2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    public boolean isScramble(String s1, String s2) {
+        if (s1.length()!=s2.length()) {
+            return false;
+        }
+        if (s1.equals(s2)) {
+            return true;
+        }
+        int counter1[] = new int[26], counter2[]=new int[26];
+        for (char c:s1.toCharArray()) {
+            counter1[c-&#39;a&#39;]++;
+        }
+        for (char c:s2.toCharArray()) {
+            counter2[c-&#39;a&#39;]++;
+        }
+        for (int i=0; i&amp;lt;26; i++) {
+            if (counter1[i]!=counter2[i]) {
+                return false;
+            }
+        }
+        int N = s1.length();
+        int prefixSum1 = 0;
+        int prefixSum2 = 0, suffixSum2 = 0;
+        for (int i=0; i&amp;lt;N; i++) {
+            if (i&amp;gt;0 &amp;amp;&amp;amp; prefixSum1==prefixSum2 &amp;amp;&amp;amp; isScramble(s1.substring(0, i), s2.substring(0, i)) &amp;amp;&amp;amp;
+                isScramble(s1.substring(i), s2.substring(i))) {
+                return true;
+            }
+            if (i&amp;gt;0 &amp;amp;&amp;amp; prefixSum1==suffixSum2 &amp;amp;&amp;amp; isScramble(s1.substring(0, i), s2.substring(N-i)) &amp;amp;&amp;amp;
+                isScramble(s1.substring(i), s2.substring(0, N-i))) {
+                return true;
+            }
+            prefixSum1 += s1.charAt(i);
+            prefixSum2 += s2.charAt(i);
+            suffixSum2 += s2.charAt(N-1-i);
+        }
+        return false;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;bottom-up&#34;&gt;Bottom-up&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;dp[l][i][j]&lt;/code&gt;表示&lt;code&gt;isScramble(s1[i:i+l], s2[j:j+l])&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def isScramble(self, s1, s2):
+        if len(s1)!=len(s2): return False
+        N = len(s1)
+        dp = [[[False]*N for _ in range(N)] for _ in range(N+1)]
+        for l in range(1, N+1):
+            for i in range(N-l+1):
+                for j in range(N-l+1):
+                    if dp[l][i][j]: continue
+                    if s1[i:i+l]==s2[j:j+l]:
+                        dp[l][i][j] = True
+                        continue
+                    for k in range(1, l):
+                        if dp[k][i][j] and dp[l-k][i+k][j+k]:
+                            dp[l][i][j] = True
+                            break
+                        if dp[k][i][j+l-k] and dp[l-k][i+k][j]:
+                            dp[l][i][j] = True
+                            break
+        return dp[N][0][0]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    public boolean isScramble(String s1, String s2) {
+        if (s1.length()!=s2.length()) {
+            return false;
+        }
+        int N = s1.length();
+        boolean dp[][][] = new boolean[N+1][N][N];
+        boolean hasLen[] = new boolean[N+1];
+        
+        for (int l=1; l&amp;lt;N+1; l++) {
+            for (int i=0; i&amp;lt;N-l+1; i++) {
+                for (int j=0; j&amp;lt;N-l+1; j++) {
+                    if (dp[l][i][j])
+                        continue;
+                    if (s1.substring(i, i+l).equals(s2.substring(j, j+l))) {
+                        dp[l][i][j] = true;
+                        hasLen[l] = true;
+                        continue;
+                    }
+                    for (int k=1; k&amp;lt;l; k++) {
+                        if (!hasLen[k] || !hasLen[l-k]) {
+                            continue;
+                        }
+                        if (dp[k][i][j] &amp;amp;&amp;amp; dp[l-k][i+k][j+k]) {
+                            dp[l][i][j] = true;
+                            hasLen[l] = true;
+                            break;
+                        }
+                        if (dp[k][i][j+l-k] &amp;amp;&amp;amp; dp[l-k][i+k][j]) {
+                            dp[l][i][j] = true;
+                            hasLen[l] = true;
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        return dp[N][0][0];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 91. Decode Ways</title>
+      <link>http://guoyc.com/post/decode_ways/</link>
+      <pubDate>Thu, 19 Apr 2018 17:06:01 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/decode_ways/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+
+&lt;div class=&#34;question-description&#34;&gt;&lt;div&gt;&lt;p&gt;A message containing letters from &lt;code&gt;A-Z&lt;/code&gt; is being encoded to numbers using the following mapping:&lt;/p&gt;
+
+&lt;pre&gt;&#39;A&#39; -&amp;gt; 1
+&#39;B&#39; -&amp;gt; 2
+...
+&#39;Z&#39; -&amp;gt; 26
+&lt;/pre&gt;
+
+&lt;p&gt;Given a &lt;strong&gt;non-empty&lt;/strong&gt; string containing only digits, determine the total number of ways to decode it.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Input:&lt;/strong&gt; &#34;12&#34;
+&lt;strong&gt;Output:&lt;/strong&gt; 2
+&lt;strong&gt;Explanation:&lt;/strong&gt;&amp;nbsp;It could be decoded as &#34;AB&#34; (1 2) or &#34;L&#34; (12).
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Input:&lt;/strong&gt; &#34;226&#34;
+&lt;strong&gt;Output:&lt;/strong&gt; 3
+&lt;strong&gt;Explanation:&lt;/strong&gt;&amp;nbsp;It could be decoded as &#34;BZ&#34; (2 26), &#34;VF&#34; (22 6), or &#34;BBF&#34; (2 2 6).&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&#34;solutions&#34;&gt;Solutions&lt;/h1&gt;
+
+&lt;h1 id=&#34;top-down&#34;&gt;Top-down&lt;/h1&gt;
+
+&lt;p&gt;令count(S, i)为S[i:]的decode方式数目。&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;count(S, i)=1 if i==len(S)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;count(S, i)=0&lt;/code&gt;
+&lt;code&gt;if S[i] can be decoded, count(S, i)+=count(S, i+1)&lt;/code&gt;
+&lt;code&gt;if S[i+1] can be decoded, count(S, i)+=count(S, i+2)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;p&gt;Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def numDecodings(self, s):
+        if not s: return 0
+        memo = {}
+        def cnt(s, i):
+            if i not in memo:
+                if i&amp;gt;len(s): ret = 0
+                elif i==len(s): ret = 1
+                elif s[i]==&#39;0&#39;: ret = 0
+                elif s[i]==&#39;1&#39; or (s[i]==&#39;2&#39; and i+1&amp;lt;len(s) and s[i+1]&amp;lt;=&#39;6&#39;): ret = cnt(s, i+1)+cnt(s,i+2)
+                else: ret = cnt(s, i+1) # s[i]&amp;gt;&#39;2&#39;
+                memo[i] = ret
+            return memo[i]
+        return cnt(s, 0)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    public int numDecodings(String s) {
+        if (s==null || s.length()==0) return 0;
+        int len = s.length();
+        int memo[] = new int[len];
+        for (int i=0; i&amp;lt;len; i++) memo[i] = -1;
+        return count(s.toCharArray(), 0, memo);
+    }
+    
+    private int count(char[] ca, int i, int[] memo) {
+        if (i&amp;gt;ca.length) 
+            return 0;
+        if (i==ca.length) 
+            return 1;
+        if (memo[i]==-1) {
+            int ret;
+            if (ca[i]==&#39;0&#39;) 
+                ret = 0;
+            else if (ca[i]==&#39;1&#39; || (ca[i]==&#39;2&#39; &amp;amp;&amp;amp; i+1&amp;lt;ca.length &amp;amp;&amp;amp; ca[i+1]&amp;lt;=&#39;6&#39;)) 
+                ret = count(ca, i+1, memo)+count(ca, i+2, memo);
+            else 
+                ret = count(ca, i+1, memo);
+            memo[i] = ret;
+        }   
+        return memo[i];
+    }
+    
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;bottom-up&#34;&gt;Bottom-up&lt;/h1&gt;
+
+&lt;p&gt;用&lt;code&gt;dp[i]&lt;/code&gt;表示&lt;code&gt;S[:i]&lt;/code&gt;的decode方式数目。&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[0]=1 if S[0]!=&#39;0&#39; else 0&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i]=0&lt;/code&gt;
+&lt;code&gt;if S[i] can be decoded, dp[i]+=dp[i-1]&lt;/code&gt;
+&lt;code&gt;if S[i-1:i+1] can be decoded, dp[i]+=dp[i-2]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;p&gt;Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def numDecodings(self, s):
+        if not s: return 0
+        dp = [0]*(len(s)+1)
+        dp[-1] = 1
+        if s[0]!=&#39;0&#39;: dp[0]=1
+        for i in range(1, len(s)):
+            if s[i]!=&#39;0&#39;: dp[i] += dp[i-1]
+            if s[i-1]==&#39;1&#39; or (s[i-1]==&#39;2&#39; and s[i]&amp;lt;=&#39;6&#39;): dp[i] += dp[i-2]
+        return dp[len(s)-1]d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    public int numDecodings(String s) {
+        if (s==null || s.length()==0) return 0;
+        char[] ca = s.toCharArray();
+        int dp[] = new int[s.length()];
+        if (ca[0]!=&#39;0&#39;) dp[0]=1;
+        for (int i=1; i&amp;lt;s.length(); i++) {
+            if (ca[i]!=&#39;0&#39;) dp[i] += dp[i-1];
+            if (ca[i-1]==&#39;1&#39; || (ca[i-1]==&#39;2&#39; &amp;amp;&amp;amp; ca[i]&amp;lt;=&#39;6&#39;)) dp[i] += (i-2&amp;gt;=0? dp[i-2]: 1);
+        }
+        return dp[s.length()-1];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 718. Maximum Length of Repeated Subarray</title>
+      <link>http://guoyc.com/post/max_len_of_rep_subarray/</link>
+      <pubDate>Wed, 18 Apr 2018 15:58:51 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_len_of_rep_subarray/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+
+&lt;div class=&#34;question-description&#34;&gt;&lt;div&gt;&lt;p&gt;Given two integer arrays &lt;code&gt;A&lt;/code&gt; and &lt;code&gt;B&lt;/code&gt;, return the maximum length of an subarray that appears in both arrays.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Example 1:&lt;/b&gt;&lt;br&gt;
+&lt;/p&gt;&lt;pre&gt;&lt;b&gt;Input:&lt;/b&gt;
+A: [1,2,3,2,1]
+B: [3,2,1,4,7]
+&lt;b&gt;Output:&lt;/b&gt; 3
+&lt;b&gt;Explanation:&lt;/b&gt; 
+The repeated subarray with maximum length is [3, 2, 1].
+&lt;/pre&gt;
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;
+&lt;/p&gt;&lt;ol&gt;
+&lt;li&gt;1 &amp;lt;= len(A), len(B) &amp;lt;= 1000&lt;/li&gt;
+&lt;li&gt;0 &amp;lt;= A[i], B[i] &amp;lt; 100&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&#34;solutions&#34;&gt;Solutions&lt;/h1&gt;
+
+&lt;h2 id=&#34;动态规划&#34;&gt;动态规划&lt;/h2&gt;
+
+&lt;p&gt;问题定义：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j]&lt;/code&gt;表示A以第i个字符结尾的子串与B以第j个字符结尾的子串最长共同序列的长度。&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][0]= 1 if A[i]==B[0] else 0&lt;/code&gt;
+&lt;code&gt;dp[0][j]= 1 if A[0]==B[j] else 0&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j] = (dp[i-1][j-1]+1) if A[i]==B[j] else 0&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;返回：&lt;/p&gt;
+
+&lt;p&gt;max value in dp&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;p&gt;Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def findLength(self, A, B):
+        m, n = len(A), len(B)
+        dp = [[0]*n for _ in range(m)]
+        ret = 0
+        for i in range(m):
+            if A[i]==B[0]:
+                dp[i][0] = 1
+                ret = max(ret, dp[i][0])
+        for j in range(n):
+            if A[0]==B[j]:
+                dp[0][j] = 1
+                ret = max(ret, dp[0][j])
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = (dp[i-1][j-1] + 1) if A[i]==B[j] else 0
+                ret = max(dp[i][j], ret)
+        return ret        
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    public int findLength(int[] A, int[] B) {
+        int m=A.length, n=B.length;
+        int[][] dp = new int[m][n];
+        for (int i=0; i&amp;lt;m; i++)
+            dp[i][0] = (A[i]==B[0]?1:0);
+        for (int j=0; j&amp;lt;n; j++)
+            dp[0][j] = (A[0]==B[j]?1:0);
+        for (int i=1; i&amp;lt;m; i++)
+            for (int j=1; j&amp;lt;n; j++)
+                dp[i][j] = (A[i]==B[j]?(dp[i-1][j-1]+1):0);
+        int ret = 0;
+        for (int i=0; i&amp;lt;m; i++)
+            for (int j=0; j&amp;lt;n; j++)
+                ret = (dp[i][j]&amp;gt;ret)?dp[i][j]:ret;
+        return ret;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;二分查找&#34;&gt;二分查找&lt;/h2&gt;
+
+&lt;p&gt;因为最长的可能为&lt;code&gt;maximum=min(len(A), len(B))&lt;/code&gt;，所以只要在&lt;code&gt;[0, maximum]&lt;/code&gt;上进行二分查找就行了。&lt;/p&gt;
+
+&lt;p&gt;用一个check(l)函数来对A和B所有长度为l的子串进行对比，看是否有长度为l的共同子串。&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;p&gt;Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def findLength(self, A, B):
+        
+        def check(length):
+            seen = {A[i:i+length]
+                    for i in range(len(A) - length + 1)}
+            return any(B[j:j+length] in seen
+                       for j in range(len(B) - length + 1))
+
+        A = &#39;&#39;.join(map(chr, A))
+        B = &#39;&#39;.join(map(chr, B))
+        lo, hi = 0, min(len(A), len(B)) + 1
+        while lo+1 &amp;lt; hi:
+            mi = (lo + hi) // 2
+            if check(mi):
+                lo = mi
+            else:
+                hi = mi
+        return lo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    public int findLength(int[] A, int[] B) {
+        
+//         String strA = Arrays.stream(A).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+//         String strB = Arrays.stream(B).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+        StringBuilder sbA = new StringBuilder(), sbB = new StringBuilder();
+        for (int i:A)
+            sbA.append((char)i);
+        for (int i:B)
+            sbB.append((char)i);
+        String strA=sbA.toString(), strB=sbB.toString();
+        
+        int left=0, right=Math.min(A.length, B.length)+1;
+        while (left+1&amp;lt;right) {
+            int mid = (left+right)&amp;gt;&amp;gt;1;
+            if (check(strA, strB, mid)) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+    
+    private boolean check(String strA, String strB, int len) {
+        Set&amp;lt;String&amp;gt; set = new HashSet&amp;lt;&amp;gt;();
+        for (int i=0; i&amp;lt;strA.length()-len+1; i++) {
+            set.add(strA.substring(i, i+len));
+        }
+        
+        for (int i=0; i&amp;lt;strB.length()-len+1; i++) {
+            if (set.contains(strB.substring(i, i+len))) {
+                return true;
+            }
+        }
+        return false;
+        
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 494. Target Sum</title>
+      <link>http://guoyc.com/post/target_sum/</link>
+      <pubDate>Tue, 17 Apr 2018 14:36:05 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/target_sum/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+
+&lt;div class=&#34;question-description&#34;&gt;&lt;div&gt;&lt;p&gt;
+You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols &lt;code&gt;+&lt;/code&gt; and &lt;code&gt;-&lt;/code&gt;. For each integer, you should choose one from &lt;code&gt;+&lt;/code&gt; and &lt;code&gt;-&lt;/code&gt; as its new symbol.
+&lt;/p&gt; 
+
+&lt;p&gt;Find out how many ways to assign symbols to make sum of integers equal to target S.  
+&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Example 1:&lt;/b&gt;&lt;br&gt;
+&lt;/p&gt;&lt;pre&gt;&lt;b&gt;Input:&lt;/b&gt; nums is [1, 1, 1, 1, 1], S is 3. 
+&lt;b&gt;Output:&lt;/b&gt; 5
+&lt;b&gt;Explanation:&lt;/b&gt; 
+
+-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+
+There are 5 ways to assign symbols to make the sum of nums be target 3.
+&lt;/pre&gt;
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt;&lt;br&gt;
+&lt;/p&gt;&lt;ol&gt;
+&lt;li&gt;The length of the given array is positive and will not exceed 20. &lt;/li&gt;
+&lt;li&gt;The sum of elements in the given array will not exceed 1000.&lt;/li&gt;
+&lt;li&gt;Your output answer is guaranteed to be fitted in a 32-bit integer.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&#34;solutions&#34;&gt;Solutions&lt;/h1&gt;
+
+&lt;h2 id=&#34;plain-dp&#34;&gt;Plain DP&lt;/h2&gt;
+
+&lt;p&gt;Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def findTargetSumWays(self, nums, S):
+        def dp(i, target):
+            if i==-1: return 1 if target==0 else 0
+            if (i, target) not in memo:
+                memo[(i, target)] = dp(i-1, target-nums[i])+dp(i-1, target+nums[i])
+            return memo[(i, target)]
+        return dp(len(nums)-1, S)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        return dp(nums, nums.length-1, S, new HashMap&amp;lt;&amp;gt;());
+    }
+    public int dp(int[] nums, int i, int target, Map&amp;lt;String, Integer&amp;gt; memo) {
+        if (i==-1) {
+            return target==0?1:0;
+        }
+        String key = String.valueOf(i)+&#39;,&#39;+String.valueOf(target);
+        if (!memo.containsKey(key)) {
+            memo.put(key, dp(nums, i-1, target+nums[i], memo)+dp(nums, i-1, target-nums[i], memo));
+        }
+        return memo.get(key);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;dp-with-a-trick&#34;&gt;DP with a trick&lt;/h2&gt;
+
+&lt;p&gt;令plus为取+号元素之和，minus为取-号元素之和。&lt;/p&gt;
+
+&lt;p&gt;则:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;plus+minus = sum(nums)
+plus-minus = S
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以得到：&lt;code&gt;plus=(S+sum(nums))/2&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;那么接下来就是一个背包问题了，nums中取若干个元素，和为plus&lt;/p&gt;
+
+&lt;p&gt;Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def findTargetSumWays(self, nums, S):
+        total = sum(nums)
+        # total&amp;lt;S 或者 奇偶性不同
+        if total&amp;lt;S or (total^S)&amp;amp;1: return 0
+        plus = (S+total)&amp;gt;&amp;gt;1
+        cnt = [0]*(plus+1)
+        cnt[0] = 1
+        for n in nums:
+            for i in range(plus, -1, -1):
+                if i-n&amp;lt;0: break
+                cnt[i] += cnt[i-n]
+        return cnt[plus]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        int total = Arrays.stream(nums).sum();
+        if (total&amp;lt;S || ((total^S)&amp;amp;1)==1) {
+            return 0;
+        }
+        int plus = (total+S)&amp;gt;&amp;gt;1;
+        int cnt[] = new int[plus+1];
+        cnt[0] = 1;
+        for (int n:nums) {
+            for (int i=plus; i&amp;gt;=n; i--) {
+                cnt[i] += cnt[i-n];
+            }
+        }
+        return cnt[plus];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 464. Can I Win</title>
+      <link>http://guoyc.com/post/can_i_win/</link>
+      <pubDate>Mon, 16 Apr 2018 14:55:46 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/can_i_win/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+
+&lt;div class=&#34;question-description&#34;&gt;&lt;div&gt;&lt;p&gt;In the &#34;100 game,&#34; two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. &lt;/p&gt;
+
+&lt;p&gt;What if we change the game so that players cannot re-use integers? &lt;/p&gt;
+
+&lt;p&gt;For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &amp;gt;= 100.&lt;/p&gt;
+
+&lt;p&gt;Given an integer &lt;code&gt;maxChoosableInteger&lt;/code&gt; and another integer &lt;code&gt;desiredTotal&lt;/code&gt;, determine if the first player to move can force a win, assuming both players play optimally. &lt;/p&gt;
+
+&lt;p&gt;You can always assume that &lt;code&gt;maxChoosableInteger&lt;/code&gt; will not be larger than 20 and &lt;code&gt;desiredTotal&lt;/code&gt; will not be larger than 300.
+&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Example&lt;/b&gt;
+&lt;/p&gt;&lt;pre&gt;&lt;b&gt;Input:&lt;/b&gt;
+maxChoosableInteger = 10
+desiredTotal = 11
+
+&lt;b&gt;Output:&lt;/b&gt;
+false
+
+&lt;b&gt;Explanation:&lt;/b&gt;
+No matter which integer the first player choose, the first player will lose.
+The first player can choose an integer from 1 up to 10.
+If the first player choose 1, the second player can only choose integers from 2 up to 10.
+The second player will win by choosing 10 and get a total = 11, which is &amp;gt;= desiredTotal.
+Same with other integers chosen by the first player, the second player will always win.
+&lt;/pre&gt;
+&lt;p&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+
+&lt;p&gt;小时候玩过这样的游戏，两个人轮流报1或者2，从0开始加上报的数字，先到达30的人获胜。玩多了发现一个规律，后报的人始终可以获胜，假设A，B两人，A先报数字，那么如果A报1，B就报2，反之A报2，B就报1，这样可以发现，所有3的倍数的数字都被B占了，所以B始终可以获胜。&lt;/p&gt;
+
+&lt;p&gt;这一题与之类似，不过多了个条件：每个数字只能使用一次。&lt;/p&gt;
+
+&lt;p&gt;那就多了一种情况，就是两个人都获胜不了，如果所有可以使用的数字之和小于target，这种情况作为特殊情况处理。&lt;/p&gt;
+
+&lt;h2 id=&#34;如果数字可以重复使用&#34;&gt;如果数字可以重复使用&lt;/h2&gt;
+
+&lt;p&gt;现在先实现数字可以重复使用的情况：&lt;/p&gt;
+
+&lt;p&gt;令&lt;code&gt;dp[i]&lt;/code&gt;表示玩家在当前和为i的情况下是否可以获胜。
+choose表示玩家可以使用1~choose之间的数字。
+target表示先到达target的玩家获胜。&lt;/p&gt;
+
+&lt;p&gt;初始情况：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i]=True if (i+choose)&amp;gt;=target&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i]=True if dp[i+j]=False for any i+1&amp;lt;=j&amp;lt;=i+choose&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;返回结果:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[0]&lt;/code&gt;（即先选择的玩家是否获胜）&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def canIWin(self, choose, total):
+        dp = [False]*(total+1)
+        for i in range(total, -1, -1):
+            if i+choose&amp;gt;=total:
+                dp[i] = True
+                continue
+            for j in range(1, choose+1):
+                if not dp[i+j]:
+                    dp[i] = True
+                    break
+        return dp[0]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;数字不可以重复使用&#34;&gt;数字不可以重复使用&lt;/h2&gt;
+
+&lt;p&gt;如果数字不可以重复使用的话，很直观的想法就是dfs进行回溯，新建一个数组保存每个数字的使用情况。&lt;/p&gt;
+
+&lt;p&gt;伪代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function dp(cur, used):
+	for i in [1, choose]:
+		# 如果i已经被使用，continue
+		if used[i]:
+			continue
+		# 如果选择i可以超过total，获胜
+		if cur+i&amp;gt;=total:
+			return true
+		# 选i，如果下一步对手在cur+i处不能获胜，则我方获胜
+		used[i] = true
+		tmp = dp(cur+i, used)
+		used[i] = false
+		if tmp:
+			return true
+	return false
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;实现之后可以发现TLE，问题在于有很多used数组相同的情况，很多重复计算。所以加上一个memory可以大幅减少时间。实现后代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def canIWin(self, choose, total):
+        if choose*(choose+1)/2&amp;lt;total:
+            return False
+        
+        dp = [False]*total
+        used = [False]*(choose+1)
+        used[0] = True
+        
+        memo = {}
+        def f(cur):
+            key = str(used)
+            if key in memo:
+                return memo[key]
+            else:
+                for i in range(choose, 0, -1):
+                    if not used[i]:
+                        if cur+i&amp;gt;=total: 
+                            memo[key] = True
+                            return True
+                        used[i] = True
+                        tmp = f(cur+i)
+                        used[i] = False
+                        if not tmp: 
+                            memo[key] = True
+                            return True
+                memo[key] = False
+                return False
+        
+        return f(0)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;耗时800ms左右。因为我们这里的memory每次都是把一个数组转化成字符串来作为dict的key的，非常耗时，而题目描述中choose不超过20，那么可以在这里进行改进，用一个数字，数字的第i位用来标记i是否被使用过，改进后Python代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def canIWin(self, choose, total):
+        if choose*(choose+1)/2&amp;lt;total: return False
+        memo = {}
+        def dp(cur, used):
+            if used in memo:
+                return memo[used]
+            else:
+                for i in range(choose, 0, -1):
+                    if not used&amp;amp;(1&amp;lt;&amp;lt;i):
+                        if cur+i&amp;gt;=total: 
+                            memo[used] = True
+                            return True
+                        if not dp(cur+i, used|(1&amp;lt;&amp;lt;i)): 
+                            memo[used] = True
+                            return True
+                memo[used] = False
+                return False
+        return dp(0, 0)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Java代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+    
+    public boolean canIWin(int choose, int total) {
+        if (choose&amp;gt;=total)
+            return true;
+        if (choose*(choose+1)/2&amp;lt;total)
+            return false;
+        # 这里用一个Boolean的数组来做的memory，比map要快很多，但空间也用的多了
+        Boolean memo[] = new Boolean[1&amp;lt;&amp;lt;(choose+1)];
+        return dp(0, 0, choose, total, memo);
+    }
+    private boolean dp(int cur, int used, int choose, int total, Boolean[] memo) {
+        if (memo[used]!=null) 
+            return memo[used];
+        for (int i=choose; i&amp;gt;0; i--) {
+            if ((used&amp;amp;(1&amp;lt;&amp;lt;i))==0) {
+                if (cur+i&amp;gt;=total) {
+                    memo[used] = true;
+                    return true;
+                }
+                if (!dp(cur+i, used|(1&amp;lt;&amp;lt;i), choose, total, memo)) {
+                    memo[used] = true;
+                    return true;
+                }
+            }
+        }
+        memo[used] = false;
+        return false;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 80</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_80/</link>
+      <pubDate>Sun, 15 Apr 2018 10:43:24 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_80/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;819-most-common-word&#34;&gt;819. Most Common Word&lt;/h1&gt;
+
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+
+&lt;div class=&#34;question-content&#34;&gt;
+              &lt;p&gt;&lt;/p&gt;&lt;p&gt;Given a paragraph&amp;nbsp;and a list of banned words, return the most frequent word that is not in the list of banned words.&amp;nbsp; It is guaranteed there is at least one word that isn&#39;t banned, and that the answer is unique.&lt;/p&gt;
+
+&lt;p&gt;Words in the list of banned words are given in lowercase, and free of punctuation.&amp;nbsp; Words in the paragraph are not case sensitive.&amp;nbsp; The answer is in lowercase.&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Example:&lt;/strong&gt;
+&lt;strong&gt;Input:&lt;/strong&gt; 
+paragraph = &#34;Bob hit a ball, the hit BALL flew far after it was hit.&#34;
+banned = [&#34;hit&#34;]
+&lt;strong&gt;Output:&lt;/strong&gt; &#34;ball&#34;
+&lt;strong&gt;Explanation:&lt;/strong&gt; 
+&#34;hit&#34; occurs 3 times, but it is a banned word.
+&#34;ball&#34; occurs twice (and no other word does), so it is the most frequent non-banned word in the paragraph. 
+Note that words in the paragraph are not case sensitive,
+that punctuation is ignored (even if adjacent to words, such as &#34;ball,&#34;), 
+and that &#34;hit&#34; isn&#39;t the answer even though it occurs more because it is banned.
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note: &lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;&lt;code&gt;1 &amp;lt;= paragraph.length &amp;lt;= 1000&lt;/code&gt;.&lt;/li&gt;
+    &lt;li&gt;&lt;code&gt;1 &amp;lt;= banned.length &amp;lt;= 100&lt;/code&gt;.&lt;/li&gt;
+    &lt;li&gt;&lt;code&gt;1 &amp;lt;= banned[i].length &amp;lt;= 10&lt;/code&gt;.&lt;/li&gt;
+    &lt;li&gt;The answer is unique, and written in lowercase (even if its occurrences in &lt;code&gt;paragraph&lt;/code&gt;&amp;nbsp;may have&amp;nbsp;uppercase symbols, and even if it is a proper noun.)&lt;/li&gt;
+    &lt;li&gt;&lt;code&gt;paragraph&lt;/code&gt; only consists of letters, spaces, or the punctuation symbols &lt;code&gt;!?&#39;,;.&lt;/code&gt;&lt;/li&gt;
+    &lt;li&gt;Different words in&amp;nbsp;&lt;code&gt;paragraph&lt;/code&gt;&amp;nbsp;are always separated by a space.&lt;/li&gt;
+    &lt;li&gt;There are no hyphens or hyphenated words.&lt;/li&gt;
+    &lt;li&gt;Words only consist of letters, never apostrophes or other punctuation symbols.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;Simple String processing&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def mostCommonWord(self, para, banned):
+        banned = set(banned)
+        # Only preserve a-z and space
+        para = &#39;&#39;.join([_ if &#39;a&#39;&amp;lt;=_&amp;lt;=&#39;z&#39; or _==&#39; &#39; else &#39;&#39; for _ in para.lower()])
+        words = para.split()
+        dic = collections.Counter(words)
+        cnt, ret = 0, None
+        for word in dic:
+            if word not in banned:
+                if dic[word]&amp;gt;cnt:
+                    cnt = dic[word]
+                    ret = word
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;817-linked-list-components&#34;&gt;817. Linked List Components&lt;/h1&gt;
+
+&lt;h2 id=&#34;description-1&#34;&gt;Description&lt;/h2&gt;
+
+&lt;div class=&#34;question-content&#34;&gt;
+              &lt;p&gt;&lt;/p&gt;&lt;p&gt;We are given&amp;nbsp;&lt;code&gt;head&lt;/code&gt;,&amp;nbsp;the head node of a linked list containing&amp;nbsp;&lt;strong&gt;unique integer values&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;We are also given the list&amp;nbsp;&lt;code&gt;G&lt;/code&gt;, a subset of the values in the linked list.&lt;/p&gt;
+
+&lt;p&gt;Return the number of connected components in &lt;code&gt;G&lt;/code&gt;, where two values are connected if they appear consecutively in the linked list.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Input:&lt;/strong&gt; 
+head: 0-&amp;gt;1-&amp;gt;2-&amp;gt;3
+G = [0, 1, 3]
+&lt;strong&gt;Output:&lt;/strong&gt; 2
+&lt;strong&gt;Explanation:&lt;/strong&gt; 
+0 and 1 are connected, so [0, 1] and [3] are the two connected components.
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Input:&lt;/strong&gt; 
+head: 0-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;4
+G = [0, 3, 1, 4]
+&lt;strong&gt;Output:&lt;/strong&gt; 2
+&lt;strong&gt;Explanation:&lt;/strong&gt; 
+0 and 1 are connected, 3 and 4 are connected, so [0, 1] and [3, 4] are the two connected components.
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Note: &lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;If&amp;nbsp;&lt;code&gt;N&lt;/code&gt;&amp;nbsp;is the&amp;nbsp;length of the linked list given by&amp;nbsp;&lt;code&gt;head&lt;/code&gt;,&amp;nbsp;&lt;code&gt;1 &amp;lt;= N &amp;lt;= 10000&lt;/code&gt;.&lt;/li&gt;
+    &lt;li&gt;The value of each node in the linked list will be in the range&lt;code&gt; [0, N - 1]&lt;/code&gt;.&lt;/li&gt;
+    &lt;li&gt;&lt;code&gt;1 &amp;lt;= G.length &amp;lt;= 10000&lt;/code&gt;.&lt;/li&gt;
+    &lt;li&gt;&lt;code&gt;G&lt;/code&gt; is a subset of all values in the linked list.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;  
+
+&lt;h2 id=&#34;solution-1&#34;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;Just count continuous nodes&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def numComponents(self, head, G):
+        G = set(G)
+        node = head
+        cnt = 0
+        while node:
+            # If match, continue until not match
+            if node.val in G:
+                cnt += 1
+                while node.next and node.next.val in G:
+                    node = node.next
+            node = node.next
+        return cnt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;818-race-car&#34;&gt;818. Race Car&lt;/h1&gt;
+
+&lt;h2 id=&#34;description-2&#34;&gt;Description&lt;/h2&gt;
+
+&lt;div class=&#34;question-content&#34;&gt;
+              &lt;p&gt;&lt;/p&gt;&lt;p&gt;Your car starts at position 0 and speed +1 on an infinite number line.&amp;nbsp; (Your car can go into negative positions.)&lt;/p&gt;
+
+&lt;p&gt;Your car drives automatically according to a sequence of instructions A (accelerate) and R (reverse).&lt;/p&gt;
+
+&lt;p&gt;When you get an instruction &#34;A&#34;, your car does the following:&amp;nbsp;&lt;code&gt;position += speed, speed *= 2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;When you get an instruction &#34;R&#34;, your car does the following: if your speed is positive then&amp;nbsp;&lt;code&gt;speed = -1&lt;/code&gt;&amp;nbsp;, otherwise&amp;nbsp;&lt;code&gt;speed = 1&lt;/code&gt;.&amp;nbsp; (Your position stays the same.)&lt;/p&gt;
+
+&lt;p&gt;For example, after commands &#34;AAR&#34;, your car goes to positions 0-&amp;gt;1-&amp;gt;3-&amp;gt;3, and your speed goes to 1-&amp;gt;2-&amp;gt;4-&amp;gt;-1.&lt;/p&gt;
+
+&lt;p&gt;Now for some target position, say the &lt;strong&gt;length&lt;/strong&gt; of the shortest sequence of instructions to get there.&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;
+&lt;strong&gt;Input:&lt;/strong&gt; 
+target = 3
+&lt;strong&gt;Output:&lt;/strong&gt; 2
+&lt;strong&gt;Explanation:&lt;/strong&gt; 
+The shortest instruction sequence is &#34;AA&#34;.
+Your position goes from 0-&amp;gt;1-&amp;gt;3.
+&lt;/pre&gt;
+
+&lt;pre&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;
+&lt;strong&gt;Input:&lt;/strong&gt; 
+target = 6
+&lt;strong&gt;Output:&lt;/strong&gt; 5
+&lt;strong&gt;Explanation:&lt;/strong&gt; 
+The shortest instruction sequence is &#34;AAARA&#34;.
+Your position goes from 0-&amp;gt;1-&amp;gt;3-&amp;gt;7-&amp;gt;7-&amp;gt;6.
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note: &lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;&lt;code&gt;1 &amp;lt;= target &amp;lt;= 10000&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;      
+
+&lt;h2 id=&#34;solution-2&#34;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;Simple BFS, use a trick to prevent Memory Limit Exceed, only remember (position, speed) pair in visited when speed==1 or speed ==-1 (After R operation).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def racecar(self, target):
+        if target==0:
+            return 0
+        q = [(0, 1)]
+        visited = set((0, 1))
+        cnt = 0
+        while q:
+            new_q = []
+            cnt += 1
+            for pos, sp in q:
+                p1, s1 = pos+sp, sp*2
+                if p1==target:
+                    return cnt
+                p2, s2 = pos, -1 if sp&amp;gt;0 else 1
+                
+                # If we remember every position and speed pair, we get Memory Limit Exceed
+                # The most annoying part is continuous R, so only remember situations with speed 1 and -1
+                if (p1, s1) not in visited:
+                    if s1==1 or s1==-1:
+                        visited.add((p1, s1))
+                    new_q.append((p1, s1))
+                if (p2, s2) not in visited:
+                    visited.add((p2, s2))
+                    if s1==1 or s1==-1:
+                        visited.add((p1, s1))
+                    new_q.append((p2, s2))
+            q = new_q
+        return -1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;816-ambiguous-coordinates&#34;&gt;816. Ambiguous Coordinates&lt;/h1&gt;
+
+&lt;h2 id=&#34;description-3&#34;&gt;Description&lt;/h2&gt;
+
+&lt;div class=&#34;question-content&#34;&gt;
+              &lt;p&gt;&lt;/p&gt;&lt;p&gt;We had some 2-dimensional coordinates, like &lt;code&gt;&#34;(1, 3)&#34;&lt;/code&gt; or &lt;code&gt;&#34;(2, 0.5)&#34;&lt;/code&gt;.&amp;nbsp; Then, we removed&amp;nbsp;all commas, decimal points, and spaces, and ended up with the string&amp;nbsp;&lt;code&gt;S&lt;/code&gt;.&amp;nbsp; Return a list of strings representing&amp;nbsp;all possibilities for what our original coordinates could have been.&lt;/p&gt;
+
+&lt;p&gt;Our original representation never had extraneous zeroes, so we never started with numbers like &#34;00&#34;, &#34;0.0&#34;, &#34;0.00&#34;, &#34;1.0&#34;, &#34;001&#34;, &#34;00.01&#34;, or any other number that can be represented with&amp;nbsp;less digits.&amp;nbsp; Also, a decimal point within a number never occurs without at least one digit occuring before it, so we never started with numbers like &#34;.1&#34;.&lt;/p&gt;
+
+&lt;p&gt;The final answer list can be returned in any order.&amp;nbsp; Also note that all coordinates in the final answer&amp;nbsp;have exactly one space between them (occurring after the comma.)&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;
+&lt;strong&gt;Input:&lt;/strong&gt; &#34;(123)&#34;
+&lt;strong&gt;Output:&lt;/strong&gt; [&#34;(1, 23)&#34;, &#34;(12, 3)&#34;, &#34;(1.2, 3)&#34;, &#34;(1, 2.3)&#34;]
+&lt;/pre&gt;
+
+&lt;pre&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;
+&lt;strong&gt;Input:&lt;/strong&gt; &#34;(00011)&#34;
+&lt;strong&gt;Output:&lt;/strong&gt; &amp;nbsp;[&#34;(0.001, 1)&#34;, &#34;(0, 0.011)&#34;]
+&lt;strong&gt;Explanation:&lt;/strong&gt; 
+0.0, 00, 0001 or 00.01 are not allowed.
+&lt;/pre&gt;
+
+&lt;pre&gt;&lt;strong&gt;Example 3:&lt;/strong&gt;
+&lt;strong&gt;Input:&lt;/strong&gt; &#34;(0123)&#34;
+&lt;strong&gt;Output:&lt;/strong&gt; [&#34;(0, 123)&#34;, &#34;(0, 12.3)&#34;, &#34;(0, 1.23)&#34;, &#34;(0.1, 23)&#34;, &#34;(0.1, 2.3)&#34;, &#34;(0.12, 3)&#34;]
+&lt;/pre&gt;
+
+&lt;pre&gt;&lt;strong&gt;Example 4:&lt;/strong&gt;
+&lt;strong&gt;Input:&lt;/strong&gt; &#34;(100)&#34;
+&lt;strong&gt;Output:&lt;/strong&gt; [(10, 0)]
+&lt;strong&gt;Explanation:&lt;/strong&gt; 
+1.0 is not allowed.
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note: &lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;&lt;code&gt;4 &amp;lt;= S.length &amp;lt;= 12&lt;/code&gt;.&lt;/li&gt;
+    &lt;li&gt;&lt;code&gt;S[0]&lt;/code&gt; = &#34;(&#34;, &lt;code&gt;S[S.length - 1]&lt;/code&gt; = &#34;)&#34;, and the other elements in &lt;code&gt;S&lt;/code&gt; are digits.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;solution-3&#34;&gt;Solution&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def ambiguousCoordinates(self, S):
+        
+        def possible_val(S):
+            ret = set()
+            # S itself valid
+            if S[0]!=&#39;0&#39; or len(S)==1:
+                ret.add(S)
+            for _ in range(1, len(S)):
+                left, right = S[:_], S[_:]
+                # left of . valid if first char is not &#39;0&#39; or its length is just 1
+                if len(left)==1 or not left[0]==&#39;0&#39;:
+                    # right of . valid if last char is not &#39;0&#39;
+                    if right[-1]!=&#39;0&#39;:
+                        ret.add(left+&#39;.&#39;+right)
+            return ret
+        
+        # Remove parenthesis
+        S = S[1:-1]
+        ret = []
+        for i in range(1, len(S)):
+            # S1: String for first coord, S2: String for second coord
+            S1, S2 = S[:i], S[i:]
+            # Possible values for S1 and S2
+            s1, s2 = possible_val(S1), possible_val(S2)
+            if not s1 or not s2: continue
+            for c1 in s1:
+                for c2 in s2:
+                    ret.append(&#39;(&#39;+c1+&#39;, &#39;+c2+&#39;)&#39;)
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 62. Unique Paths</title>
+      <link>http://guoyc.com/post/unique_path/</link>
+      <pubDate>Tue, 10 Apr 2018 01:38:55 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/unique_path/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;62-unique-path&#34;&gt;62. Unique Path&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/62_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;动态规划&#34;&gt;动态规划&lt;/h2&gt;
+
+&lt;p&gt;初始状态:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][0] = 1&lt;/code&gt;
+&lt;code&gt;dp[0][i] = 1&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j]=dp[i-1][j]+dp[i][j-1]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;返回：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[-1][-1]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def uniquePaths(self, m, n):
+        dp = [[0]*n for _ in range(m)]
+        for i in range(m): dp[i][0] = 1
+        for j in range(n): dp[0][j] = 1
+        
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i][j-1]+dp[i-1][j]
+        return dp[-1][-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def uniquePaths(self, m, n):
+        dp = [1]*n
+        for i in range(m-1):
+            for j in range(n):
+                dp[j] += (dp[j-1] if j-1&amp;gt;=0 else 0)
+        return dp[-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;组合&#34;&gt;组合&lt;/h2&gt;
+
+&lt;p&gt;问题即为m+n-2次移动，在其中取m-1次向下移动，不需要考虑顺序。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def uniquePaths(self, m, n):
+        def f(n):
+            ret = 1
+            for i in range(1, n+1):
+                ret *= i
+            return ret
+        return f(m+n-2)//(f(m-1)*f(n-1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;63-unique-path-ii&#34;&gt;63. Unique Path II&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/63_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;动态规划-1&#34;&gt;动态规划&lt;/h2&gt;
+
+&lt;p&gt;初始状态:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j]=0 for all i, j&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][0] = 1&lt;/code&gt; if &lt;code&gt;dp[i-1][0]==1 and grid[i][0]==0&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[0][i] = 1&lt;/code&gt; if &lt;code&gt;dp[0][i-1]==1 and grid[0][i]==0&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;If &lt;code&gt;dp[i][j]==0&lt;/code&gt;, &lt;code&gt;dp[i][j]=dp[i-1][j]+dp[i][j-1]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;返回：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[-1][-1]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def uniquePathsWithObstacles(self, grid):
+        m, n = len(grid), len(grid[0])
+        if grid[0][0]==1 or grid[-1][-1]==1: return 0
+        dp = [[0]*n for _ in range(m)]
+        for i in range(m):
+            if grid[i][0]==0:
+                dp[i][0] = 1 
+            else:
+                break
+        for j in range(n):
+            if grid[0][j]==0:
+                dp[0][j] = 1
+            else:
+                break
+        for i in range(1, m):
+            for j in range(1, n):
+                if grid[i][j]==1:
+                    continue
+                else:
+                    dp[i][j] = dp[i-1][j]+dp[i][j-1]
+        return dp[-1][-1]
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 152. Maximum Product Subarray</title>
+      <link>http://guoyc.com/post/max_product_subarray/</link>
+      <pubDate>Mon, 09 Apr 2018 16:21:15 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_product_subarray/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/152_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题有O(N)的DP解法和O(NlogN)的DC解法，与53 Maximum Subarray类似。&lt;/p&gt;
+
+&lt;h1 id=&#34;动态规划&#34;&gt;动态规划&lt;/h1&gt;
+
+&lt;p&gt;maximum[i]表示以i结尾的subarray的最大乘积
+minimum[i]表示以i结尾的subarray的最小乘积&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;maximum[0]=minimum[0]=nums[0]&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;maximum[i] = max(nums[i], maximum[i-1]*nums[i], minimum[i-1]*nums[i])&lt;/code&gt;
+&lt;code&gt;minimum[i] = min(nums[i], maximum[i-1]*nums[i], minimum[i-1]*nums[i])&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def maxProduct(self, nums):
+        maximum = [0]*len(nums)
+        minimum = [0]*len(nums)
+        maximum[0], minimum[0], ret = nums[0], nums[0], nums[0]
+        for i in range(1, len(nums)):
+            maximum[i] = max(nums[i], maximum[i-1]*nums[i], minimum[i-1]*nums[i])
+            minimum[i] = min(nums[i], maximum[i-1]*nums[i], minimum[i-1]*nums[i])
+            ret = max(maximum[i], ret)
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;降低空间复杂度：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def maxProduct(self, nums):
+        maximum, minimum, ret = [nums[0]]*3
+        for n in nums[1:]:
+            maximum, minimum = max(n, n*maximum, n*minimum), min(n, n*maximum, n*minimum)
+            ret = max(maximum, ret)
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;分而治之&#34;&gt;分而治之&lt;/h1&gt;
+
+&lt;p&gt;三种情况：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;maxProduct在左边(递归)&lt;/li&gt;
+&lt;li&gt;maxProduct在右边(递归)&lt;/li&gt;
+&lt;li&gt;maxProduct一半在左边一半在右边(merge)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def maxProduct(self, nums):
+        def dc(arr, l, r):
+            if l==r: return arr[l]
+            mid = (l+r)&amp;gt;&amp;gt;1
+            return max(dc(arr, l, mid), dc(arr, mid+1, r), merge(arr, l, r, mid))
+        
+        def merge(arr, l, r, m):
+            lmax, lmin = arr[m], arr[m]
+            rmax, rmin = 1, 1
+            
+            i, prod = m-1, arr[m]
+            while i&amp;gt;=l:
+                prod *= arr[i]
+                lmax, lmin = max(prod, lmax), min(prod, lmin)
+                if prod==0: break
+                i -= 1
+            
+            j, prod = m+1, 1
+            while j&amp;lt;=r:
+                prod *= arr[j]
+                rmax, rmin = max(prod, rmax), min(prod, rmin)
+                if prod==0: break
+                j += 1
+            return max(lmax*rmax, lmin*rmin)
+        
+        return dc(nums, 0, len(nums)-1)         
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 79</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_79/</link>
+      <pubDate>Sun, 08 Apr 2018 13:03:16 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_79/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;812-largest-triangle-area&#34;&gt;812. Largest Triangle Area&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/812_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;直接三层循环用海伦公式计算即可&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from math import sqrt
+class Solution:
+    def largestTriangleArea(self, points):
+        dist = {}
+        def d(p1, p2):
+            return sqrt((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)
+        N = len(points)
+        for i in range(N):
+            for j in range(i+1, N):
+                if i not in dist:
+                    dist[i] = {}
+                dist[i][j] = d(points[i], points[j])
+        ret = 0
+        for i in range(N):
+            for j in range(i+1, N):
+                for k in range(j+1, N):
+                    p1, p2, p3 = dist[i][j], dist[j][k], dist[i][k]
+                    p = (p1+p2+p3)/2
+                    ret = max(ret, sqrt(max(p*(p-p1)*(p-p2)*(p-p3), 0)))
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;813-largest-sum-of-averages&#34;&gt;813. Largest Sum of Averages&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/813_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;用dp解决，dp(i, k)表示&lt;code&gt;A[i:]&lt;/code&gt;的K个划分的最大average sum&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp(i, 1) = avg(A[i:])&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp(i, k) = max(avg(A[i:j]), dp(j, k-1)) for j in range(i, len(A))&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;返回：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp(0, k)&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def largestSumOfAverages(self, A, K):
+        N = len(A)
+        ps = [0]*N
+        for i in range(N):
+            ps[i] = (ps[i-1] if i-1&amp;gt;=0 else 0)+A[i]
+        def avg(i, j):
+            x = (ps[j]-(ps[i-1] if i-1&amp;gt;=0 else 0))/(j-i+1)
+            return x
+        dic = {}
+        def dp(i, k):
+            if k==0: 
+                return 0 if i==len(A) else -sys.maxsize
+            if i+k&amp;gt;len(A): return -sys.maxsize
+            if k==1: return avg(i, len(A)-1)
+            if (i, k) not in dic:
+                ret = -sys.maxsize
+                for j in range(i, len(A)):
+                    x = dp(j+1, k-1)
+                    ret = max(ret, x+avg(i, j))
+                dic[(i, k)] = ret
+            return dic[(i, k)]
+        return dp(0, K)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;814-binary-tree-pruning&#34;&gt;814. Binary Tree Pruning&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/814_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;简单的dfs就可以了&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def pruneTree(self, root):
+        def dfs(node):
+            if not node: return False
+            l, r = dfs(node.left), dfs(node.right)
+            if not l: node.left = None
+            if not r: node.right = None
+            return (node.val==1) or l or r
+        x = dfs(root)
+        if not x:
+            return None
+        return root
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;815-bus-routes&#34;&gt;815. Bus Routes&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/815_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;一开始用站台来做bfs，遇到Time和Memory超过限制，用Bidirectional BFS还是TLE，然后用公交线路来做BFS通过。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def numBusesToDestination(self, routes, S, T):
+        if S==T: return 0
+        nr = len(routes)
+        routes = [set(_) for _ in routes]
+        cross = [[False]*nr for _ in range(nr)]
+        for i in range(nr):
+            for j in range(i, nr):
+                if i==j:
+                    cross[i][j] = True
+                else:
+                    c = (len(routes[i]&amp;amp;routes[j])&amp;gt;0)
+                    cross[i][j] = cross[j][i] = c
+        dic = collections.defaultdict(set)
+        for r in range(len(routes)):
+            for i in routes[r]:
+                dic[i].add(r)
+        q = list(dic[S])
+        dest = dic[T]
+        visited = dic[S]
+        cnt = 0
+        while q:
+            cnt += 1
+            new_q = []
+            for idx in q:
+                if idx in dest:
+                    return cnt
+                for new_idx in range(nr):
+                    if cross[idx][new_idx] and new_idx not in visited:
+                        visited.add(new_idx)
+                        new_q.append(new_idx)
+            q = new_q
+        return -1
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 322. Coin Change</title>
+      <link>http://guoyc.com/post/coin_change1/</link>
+      <pubDate>Sat, 07 Apr 2018 14:22:08 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/coin_change1/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/322_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;动态规划&#34;&gt;动态规划&lt;/h1&gt;
+
+&lt;p&gt;dp[i]为构成i的最少硬币数目&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[0] = 0&lt;/code&gt;
+&lt;code&gt;dp[i] = sys.maxsize for i!=0&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i+c] = min(dp[i+c], dp[i]+1) for c in coins&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;返回：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[amount] if dp[amount]!=sys.maxsize else -1&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def coinChange(self, coins, amount):
+        dp = [sys.maxsize]*(amount+1)
+        dp[0] = 0
+        for i in range(amount):
+            for c in coins:
+                if i+c&amp;lt;=amount:
+                    dp[i+c] = min(dp[i+c], dp[i]+1)
+        return dp[amount] if dp[amount]!=sys.maxsize else -1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;广度优先遍历&#34;&gt;广度优先遍历&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    ret = sys.maxsize
+    def coinChange(self, coins, amount):
+        if amount == 0: return 0
+        q = [0]
+        cnt =  0
+        visited = {0}
+        while q:
+            cnt += 1
+            new_q = []
+            for v in q:
+                for c in coins:
+                    new_v = v + c
+                    if new_v == amount: return cnt
+                    elif new_v &amp;gt; amount: continue
+                    elif new_v not in visited:
+                        visited.add(new_v)
+                        new_q.append(new_v)
+            q = new_q
+        return -1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;深度优先遍历-剪枝&#34;&gt;深度优先遍历+剪枝&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    ret = sys.maxsize
+    def coinChange(self, coins, amount):
+    	# 排序为了剪枝
+        coins.sort()
+        def dfs(target, i, cnt):
+        	# 剪枝
+            if i&amp;lt;0 or target&amp;lt;0 or cnt&amp;gt;=self.ret: return
+            q = target//coins[i]
+            # 剪枝：因为coins[i]为当前最大，尽量取coins[i]肯定最优，后面不用检查了
+            if target%coins[i]==0:
+                self.ret = min(self.ret, cnt+q)
+                return
+            # 剪枝：因为除不尽，至少还有一个
+            if q+cnt+1&amp;gt;=self.ret: return
+            # 取一个coins[i]
+            dfs(target-coins[i], i, cnt+1)
+            # 不取coins[i]了，往前取更小的面值
+            dfs(target, i-1, cnt)
+        dfs(amount, len(coins)-1, 0)
+        return self.ret if self.ret&amp;lt;sys.maxsize else -1
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 97. Interleaving String</title>
+      <link>http://guoyc.com/post/interleave_string/</link>
+      <pubDate>Fri, 06 Apr 2018 14:12:41 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/interleave_string/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/97_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;o-mn-space&#34;&gt;O(MN) Space&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j]&lt;/code&gt;表示&lt;code&gt;isInterleave(self, s1[:i], s2[:j], s3[:i+j])&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][0]=True&lt;/code&gt; if &lt;code&gt;dp[i-1][0]==True&lt;/code&gt; and &lt;code&gt;s1[i-1]==s3[i-1]&lt;/code&gt;
+&lt;code&gt;dp[0][i]=True&lt;/code&gt; if &lt;code&gt;dp[0][i-1]==True&lt;/code&gt; and &lt;code&gt;s2[i-1]==s3[i-1]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j]=(s1[i-1]==s3[i+j-1] and dp[i-1][j]) or (s2[j-1]==s3[i+j-1] and dp[i][j-1])&lt;/code&gt;
+分别是从s1取下一个字符和从s2取下一个字符&lt;/p&gt;
+
+&lt;p&gt;返回结果：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[-1][-1]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def isInterleave(self, s1, s2, s3):
+        l1, l2 = len(s1), len(s2)
+        if len(s3)!=l1+l2: return False
+        if l1==0 or l2==0: return (l1 and s1==s3) or (l2 and s2==s3) or not s3
+        dp = [[False]*(l2+1) for _ in range(l1+1)]
+        dp[0][0] = True
+        for i in range(l1):
+            if s1[i]==s3[i]: dp[i+1][0]=True
+            else: break
+        for i in range(l2):
+            if s2[i]==s3[i]: dp[0][i+1]=True
+            else: break
+        for i in range(1, l1+1):
+            for j in range(1, l2+1):
+                dp[i][j] = (s1[i-1]==s3[i+j-1] and dp[i-1][j]) or (s2[j-1]==s3[i+j-1] and dp[i][j-1])
+        return dp[-1][-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;o-n-space&#34;&gt;O(N) Space&lt;/h1&gt;
+
+&lt;p&gt;基于O(MN)的空间优化版本&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def isInterleave(self, s1, s2, s3):
+        l1, l2 = len(s1), len(s2)
+        if len(s3)!=l1+l2: return False
+        if l1==0 or l2==0: return (l1 and s1==s3) or (l2 and s2==s3) or not s3
+        dp = [False]*(l2+1)
+        dp[0] = True
+        for i in range(l2):
+            if s2[i]==s3[i]: dp[i+1]=True
+            else: break
+        for i in range(1, l1+1):
+            for j in range(l2+1):
+                dp[j] = (s1[i-1]==s3[i+j-1] and dp[j]) or (j-1&amp;gt;=0 and s2[j-1]==s3[i+j-1] and dp[j-1])
+        return dp[-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;o-max-m-n-space-with-early-stopping&#34;&gt;O(max(M, N)) Space, with Early Stopping&lt;/h1&gt;
+
+&lt;p&gt;用一个set来记录有效的(i1, i2)使得&lt;code&gt;isInterleave(s1[:i], s2[:i], s3[:i+j])&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;在len(s3)上循环，如果set为空，则提前结束。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def isInterleave(self, s1, s2, s3):
+        l1, l2 = len(s1), len(s2)
+        if len(s3)!=l1+l2: return False
+        if l1==0 or l2==0: return (l1 and s1==s3) or (l2 and s2==s3) or not s3
+        options = {(0, 0)}
+        for c in s3:
+            new_options = set()
+            for (i1, i2) in options:
+                if i1&amp;lt;l1 and s1[i1]==c: new_options.add((i1+1, i2))
+                if i2&amp;lt;l2 and s2[i2]==c: new_options.add((i1, i2+1))
+            if not new_options: return False
+            options = new_options
+        return True
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 53. Maximum Subarray</title>
+      <link>http://guoyc.com/post/max_subarray/</link>
+      <pubDate>Thu, 05 Apr 2018 13:58:51 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/max_subarray/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/53_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题有O(N)的DP解法和O(NlogN)的DC解法&lt;/p&gt;
+
+&lt;h1 id=&#34;动态规划&#34;&gt;动态规划&lt;/h1&gt;
+
+&lt;p&gt;dp[i]表示以i结尾的asubarray的最大和。&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;dp[0]=nums[0]&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;If dp[i-1]&amp;lt;0, dp[i]=nums[i]
+Else dp[i]=dp[i-1]+nums[i]&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def maxSubArray(self, nums):
+        if not nums: return 0
+        dp = [0]*len(nums)
+        for i in range(len(nums)):
+            if i==0 or dp[i-1]&amp;lt;0: dp[i] = nums[i]
+            else: dp[i] = dp[i-1]+nums[i]
+        return max(dp)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def maxSubArray(self, nums):
+        s, ret = 0, -sys.maxsize
+        for n in nums:
+            if s&amp;lt;0: s = n
+            else: s += n
+            ret = max(ret, s)
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;分而治之&#34;&gt;分而治之&lt;/h1&gt;
+
+&lt;p&gt;三种情况：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;maxSubarray在左边(递归)&lt;/li&gt;
+&lt;li&gt;maxSubarray在左边(递归)&lt;/li&gt;
+&lt;li&gt;maxSubarray一半在左边一半在右边(cross)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def maxSubArray(self, nums):
+        def dc(nums, l, r):
+            if l&amp;gt;=r: return 0 if l&amp;gt;r else nums[l]
+            mid = (l+r)&amp;gt;&amp;gt;1
+            return max(dc(nums, l, mid), dc(nums, mid+1, r), cross(nums, mid, l, r))
+
+        def cross(nums, mid, l,r):
+            left_sum, left_max = nums[mid], nums[mid]
+            for _ in range(mid-1, l-1, -1):
+                left_sum += nums[_]
+                left_max = max(left_sum, left_max)
+            right_sum, right_max = 0, 0
+            for _ in range(mid+1, r+1):
+                right_sum += nums[_]
+                right_max = max(right_sum, right_max)
+            return left_max+right_max
+        return dc(nums, 0, len(nums)-1)             
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 64. Minimum Path Sum</title>
+      <link>http://guoyc.com/post/min_path_sum/</link>
+      <pubDate>Wed, 04 Apr 2018 13:06:45 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/min_path_sum/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/64_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题是一道简单的动态规划题，&lt;code&gt;dp[i][j]&lt;/code&gt;表示从(0, 0)到(i, j)的min path sum。&lt;/p&gt;
+
+&lt;p&gt;初始状态：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][0]&lt;/code&gt;和&lt;code&gt;dp[0][j]&lt;/code&gt;是第一行和第一列的prefix sum&lt;/p&gt;
+
+&lt;p&gt;递推公式：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j]=min(dp[i-1][j], dp[i][j-1])+grid[i][j]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;输出：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[-1][-1]&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;o-mn-time-o-mn-space&#34;&gt;O(MN) Time, O(MN) Space&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def minPathSum(self, grid):
+        if not grid or not grid[0]: return 0
+        m, n = len(grid), len(grid[0])
+        dp = [[0]*n for _ in range(m)]
+        dp[0][0] = grid[0][0]
+        for i in range(1, m):
+            dp[i][0] = dp[i-1][0]+grid[i][0]
+        for i in range(1, n):
+            dp[0][i] = dp[0][i-1]+grid[0][i]
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1])+grid[i][j]
+        return dp[m-1][n-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;o-mn-time-o-n-space&#34;&gt;O(MN) Time, O(N) Space&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def minPathSum(self, grid):
+        if not grid or not grid[0]: return 0
+        m, n = len(grid), len(grid[0])
+        dp = [0]*n
+        dp[0] = grid[0][0]
+        for i in range(1, n):
+            dp[i] = dp[i-1]+grid[0][i]
+        for _ in range(1, m):
+            for i in range(n):
+                dp[i] = min(dp[i], dp[i-1] if i-1&amp;gt;=0 else sys.maxsize)+grid[_][i]
+        return dp[n-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;o-mn-time-o-1-space-modify-original-grid&#34;&gt;O(MN) Time, O(1) Space (Modify original grid)&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def minPathSum(self, grid):
+        if not grid or not grid[0]: return 0
+        m, n = len(grid), len(grid[0])
+        for i in range(1, m):
+            grid[i][0] = grid[i-1][0]+grid[i][0]
+        for i in range(1, n):
+            grid[0][i] = grid[0][i-1]+grid[0][i]
+        for i in range(1, m):
+            for j in range(1, n):
+                grid[i][j] = min(grid[i-1][j], grid[i][j-1])+grid[i][j]
+        return grid[-1][-1]
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 32. Longest Valid Parentheses</title>
+      <link>http://guoyc.com/post/longest_valid_p/</link>
+      <pubDate>Tue, 03 Apr 2018 18:59:41 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/longest_valid_p/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/32_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;三个解法&lt;/p&gt;
+
+&lt;h1 id=&#34;动态规划解法&#34;&gt;动态规划解法&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/32_2.png&#34; alt=&#34;dp&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def longestValidParentheses(self, s):
+        length = [0]*len(s)
+        for i in range(len(s)):
+            if s[i]==&#39;(&#39;:
+                length[i] = 0
+            elif i-1&amp;gt;=0:
+                if s[i-1]==&#39;(&#39;:
+                    length[i] = (length[i-2] if i-2&amp;gt;=0 else 0)+2
+                elif i-1-length[i-1]&amp;gt;=0 and s[i-1-length[i-1]]==&#39;(&#39;:
+                    length[i] = 2+length[i-1]+(length[i-2-length[i-1]] if i-2-length[i-1]&amp;gt;=0 else 0)
+        return max(length) if len(s)&amp;gt;0 else 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;栈解法&#34;&gt;栈解法&lt;/h1&gt;
+
+&lt;p&gt;栈解法，遇到匹配的就消除掉，只余下不匹配的index，因此之后栈里面只余下不匹配的index，这些index之间就都是匹配的括号了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def longestValidParentheses(self, s):
+        st = []
+        for i in range(len(s)):
+            if s[i]==&#39;(&#39;:
+                st.append(i)
+            else:
+                if st:
+                    if s[st[-1]]==&#39;(&#39;:
+                        st.pop(-1)
+                    else:
+                        st.append(i)
+                else:
+        if not st:
+            return len(s)
+        start, end = 0, len(s)
+        ret = 0
+        while st:
+            start = st.pop(-1)
+            ret = max(ret, end-start-1)
+            end = start
+        ret = max(ret, end)
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;从左到右-从右到左&#34;&gt;从左到右，从右到左&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def longestValidParentheses(self, s):
+        ret = 0
+        l, r = 0, 0
+        for c in s:
+            if c==&#39;(&#39;:
+                l += 1
+            else:
+                r += 1
+            if l==r:
+                ret = max(ret, l+r)
+            elif l&amp;lt;r:
+                l, r = 0, 0
+        l, r = 0, 0
+        for c in s[::-1]:
+            if c==&#39;(&#39;:
+                l += 1
+            else:
+                r += 1
+            if l==r:
+                ret = max(ret, l+r)
+            elif l&amp;gt;r:
+                l, r = 0, 0
+        return ret
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 486. Predict the Winner</title>
+      <link>http://guoyc.com/post/predict_the_winner/</link>
+      <pubDate>Mon, 02 Apr 2018 18:43:03 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/predict_the_winner/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/486_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;非递归方式&#34;&gt;非递归方式&lt;/h1&gt;
+
+&lt;p&gt;这一题可以通过定义一个矩阵dp，&lt;code&gt;dp[i][j]&lt;/code&gt;表示当原来的nums数组只剩下&lt;code&gt;nums[i:j]&lt;/code&gt;时，选手可以获得的最多的分数。&lt;/p&gt;
+
+&lt;p&gt;那么初始情况是：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][i]=nums[i]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;递推公式为：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j]=max(sum(nums[i:j])-dp[i][j-1], sum(nums[i:j])-dp[i+1][j])&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;dp[i][j-1]&lt;/code&gt;和&lt;code&gt;dp[i+1][j]&lt;/code&gt;分别是选择头和尾时，对手可以获得的分数，用sum(nums[i:j])减去对手的分数即为自己的分数。&lt;/p&gt;
+
+&lt;p&gt;返回结果为：&lt;/p&gt;
+
+&lt;p&gt;分数为&lt;code&gt;dp[0][len(nums)-1]&lt;/code&gt;，对比&lt;code&gt;dp[0][len(nums)-1]*2&lt;/code&gt;和&lt;code&gt;sum(nums)&lt;/code&gt;的大小即可~&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def PredictTheWinner(self, nums):
+        N = len(nums)
+        dp = [[0]*N for _ in range(N)]
+        pre_sum = [nums[0]]*(N+1)
+        # 用prefix sum来降低求sum(nums[i:j])的复杂度
+        pre_sum[-1] = 0
+        for i in range(1, N):
+            pre_sum[i] = pre_sum[i-1]+nums[i]
+        for i in range(N):
+            dp[i][i] = nums[i]
+        for l in range(1, N):
+            for i in range(N-l):
+            	# 递推
+                dp[i][i+l] = max(pre_sum[i+l]-pre_sum[i-1]-dp[i+1][i+l], pre_sum[i+l]-pre_sum[i-1]-dp[i][i+l-1])
+        return dp[0][N-1]*2&amp;gt;=pre_sum[N-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;递归方式&#34;&gt;递归方式&lt;/h1&gt;
+
+&lt;p&gt;Recursion with memory.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def PredictTheWinner(self, nums):
+        total = sum(nums)
+        memo = {}
+        def score(l, r, t):
+            if l&amp;gt;r: return 0
+            if (l, r) not in memo:
+                memo[(l, r)] = t-min(score(l+1, r, t-nums[l]), score(l, r-1, t-nums[r]))
+            return memo[(l, r)]
+        sc = score(0, len(nums)-1, total)
+        return sc&amp;gt;=total-sc
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Leetcode Weekly Contest 78</title>
+      <link>http://guoyc.com/post/leetcode_weekly_contest_78/</link>
+      <pubDate>Sun, 01 Apr 2018 12:15:33 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/leetcode_weekly_contest_78/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;808-soup-servings&#34;&gt;808. Soup Servings&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/808_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题最重要的一点就是Notes里的一行提示：&lt;code&gt;Answers within 10^-6 of the true value will be accepted as correct.&lt;/code&gt;。所以说审题很重要啊= =。&lt;/p&gt;
+
+&lt;p&gt;因为这行提示，当N很大的时候，这个概率是离1非常近的，所以可以直接返回1。剩余部分用动态规划来解决，这里最小粒度是25，用&lt;code&gt;N=(N+24)//25&lt;/code&gt;来简化问题。估计一个阈值500来处理当N很大的情况（直接返回1）。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def soupServings(self, N):
+        memo = {}
+        def dp(n1, n2):
+        	# 当其中有一个少于等于0时，可以直接返回
+            if n1&amp;lt;=0 and n2&amp;lt;=0: return 0.5
+            if n1&amp;lt;=0: return 1
+            if n2&amp;lt;=0: return 0
+            if (n1, n2) not in memo:
+            	# 4种情况
+                memo[(n1, n2)] = (dp(max(0, n1-4), n2)+dp(max(0, n1-3), max(0, n2-1))+dp(max(0, n1-2), max(0, n2-2))+dp(max(0, n1-1), max(0, n2-3)))*0.25
+            return memo[(n1, n2)]
+        N = (N+24)//25
+        if N&amp;gt;500:
+            return 1
+        return dp(N, N)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;809-expressive-words&#34;&gt;809. Expressive Words&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/809_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题是普通的字符串处理题。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def expressiveWords(self, S, words):
+        def f(s1, s2):
+            i1, i2 = 0, 0
+            while i1&amp;lt;len(s1) and i2&amp;lt;len(s2):
+                c1, c2 = s1[i1], s2[i2]
+                cnt1, cnt2 = 1, 1
+                if c1!=c2:
+                    return False
+                while i1+1&amp;lt;len(s1) and s1[i1+1]==c1:
+                    i1, cnt1 = i1+1, cnt1+1
+                while i2+1&amp;lt;len(s2) and s2[i2+1]==c2:
+                    i2, cnt2 = i2+1, cnt2+1
+                if (cnt1&amp;lt;3 and cnt1!=cnt2) or cnt1&amp;lt;cnt2:
+                    return False
+                i1, i2 = i1+1, i2+1
+            return i1==len(s1) and i2==len(s2)
+        return sum(f(S, w) for w in words)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;810-chalkboard-xor-game&#34;&gt;810. Chalkboard XOR Game&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/810_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题contest进行的时候少了个条件：&lt;code&gt;Also, if any player starts their turn with the bitwise XOR of all the elements of the chalkboard equal to 0, then that player wins.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;问题可以转化为：&lt;/p&gt;
+
+&lt;p&gt;把nums全部取异或得到一个xor，之后每个人轮流取一个数和xor进行异或，如果开始时xor为0则获胜。&lt;/p&gt;
+
+&lt;p&gt;两种情况：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;xor==0，直接获胜&lt;/li&gt;
+&lt;li&gt;xor!=0，
+
+&lt;ul&gt;
+&lt;li&gt;nums长度为偶数
+
+&lt;ul&gt;
+&lt;li&gt;这种情况所有数不可能都相等，所以至少有两个数不同（否则xor为0）。所以Alice只要取一个和xor不同的数即可保证异或值不为0，因此Alice不会输。&lt;/li&gt;
+&lt;li&gt;这种情况Alice必胜&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;nums长度为奇数
+
+&lt;ul&gt;
+&lt;li&gt;必输&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def xorGame(self, nums):
+    xor = 0
+    for i in nums: xor ^= i
+    return xor == 0 or len(nums) % 2 == 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;811-subdomain-visit-count&#34;&gt;811. Subdomain Visit Count&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/811_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题也是字符串处理加上一个map就可以解决的。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def subdomainVisits(self, cpdomains):
+        counter = collections.Counter()
+        for s in cpdomains:
+            items = s.split(&#39; &#39;)
+            cnt = int(items[0])
+            domains = items[1].split(&#39;.&#39;)[::-1]
+            for i in range(len(domains)):
+                counter[&#39;.&#39;.join(domains[:i+1][::-1])] += cnt
+        return [str(counter[k])+&#39; &#39;+k for k in counter]
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 198. House Robber</title>
+      <link>http://guoyc.com/post/house_robber/</link>
+      <pubDate>Sat, 31 Mar 2018 22:04:55 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/house_robber/</guid>
+      
+        <description>&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/198_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题还是一道简单的动态规划题。搞一个dp数组，&lt;code&gt;dp[i]&lt;/code&gt;表示抢劫前i个房子的最大收获。所以dp[i+1]有两种选择：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;不抢劫第i个房子，所以可以抢第&lt;code&gt;i+1&lt;/code&gt;个房子，&lt;code&gt;dp[i+1]=dp[i-1]+nums[i+1]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;抢劫第i个房子，所以不能抢第&lt;code&gt;i+1&lt;/code&gt;个房子，&lt;code&gt;dp[i+1]=dp[i]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;综上，&lt;code&gt;dp[i+1]=max(dp[i], dp[i-1]+nums[i+1]&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution(object):
+    def rob(self, nums):
+        n = len(nums)
+        if n==0: return 0
+        dp = [0]*n
+        for i in range(n):
+        	# 加上边界情况
+            dp[i] = max(dp[i-1] if i-1&amp;gt;=0 else 0, (dp[i-2] if i-2&amp;gt;=0 else 0)+nums[i])
+        return dp[n-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里时间复杂度与空间复杂度都是O(N)，其实空间复杂度可以降低到O(1)，因为每一次递推过程中，下一个值只取决于前两个值。优化之后如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution(object):
+    def rob(self, nums):
+        prev, curr = 0, 0
+        for num in nums:
+            prev, curr = curr, max(prev+num, curr)
+        return curr
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 72. Edit Distance</title>
+      <link>http://guoyc.com/post/edit_dist/</link>
+      <pubDate>Fri, 30 Mar 2018 19:39:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/edit_dist/</guid>
+      
+        <description>&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/72_1.png&#34; alt=&#34;72&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;edit distance经常用来计算文档的相似度，这一题是一道经典的动态规划题。搞一个dp数组&lt;code&gt;dp[i][j]&lt;/code&gt;表示&lt;code&gt;w1[:i]&lt;/code&gt;和&lt;code&gt;w2[:j]&lt;/code&gt;的edit distance。然后初始状态为&lt;code&gt;dp[i][0]=i, dp[0][j]=j&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;递推如下：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;w1[i-1]==w2[j-1]&lt;/code&gt;, &lt;code&gt;dp[i][j]=dp[i-1][j-1]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;w1[i-1]!=w2[j-1]&lt;/code&gt;, &lt;code&gt;dp[i][j]=min(dp[i-1][j-1], dp[i][j-1], dp[i-1][j])+1&lt;/code&gt;. 依次代表替换，删除和添加一个字符的情况。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution(object):
+    def minDistance(self, w1, w2):
+        m, n = len(w1), len(w2)
+        if not m or not n: return max(m, n)
+        dp = [[0]*(n+1) for _ in range(m+1)]
+        for i in range(m+1): 
+            dp[i][0] = i
+        for j in range(n+1):
+            dp[0][j] = j
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                if w1[i-1]==w2[j-1]: dp[i][j] = dp[i-1][j-1]
+                else: dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])+1
+        return dp[m][n]
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 435. Non-overlapping Intervals</title>
+      <link>http://guoyc.com/post/non_overlap_interval/</link>
+      <pubDate>Thu, 29 Mar 2018 18:39:49 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/non_overlap_interval/</guid>
+      
+        <description>&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/435_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一题是很常见的一道区间的问题，其他的外壳如task schedule。&lt;/p&gt;
+
+&lt;p&gt;只需要把区间按结束点排序，然后尽量从左往右遍历一次即可。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution:
+    def eraseOverlapIntervals(self, intervals):
+        intervals.sort(key=lambda x:x.end)        
+        end = -sys.maxsize
+        count = 0
+        for i in intervals:
+            if i.start&amp;lt;end: continue
+            end = i.end
+            count += 1
+        return len(intervals)-count
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode 378. Kth Smallest Element in a Sorted Matrix</title>
+      <link>http://guoyc.com/post/k_smallest_in_sorted_matrix/</link>
+      <pubDate>Wed, 28 Mar 2018 16:44:36 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/k_smallest_in_sorted_matrix/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/378_1.png&#34; alt=&#34;desc&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;之前写过LeetCode 74: Search a 2-D matrix和LeetCode 240: Search a 2-D matrix II这两题，当时提到了这一题。这里要说的这一题的两种解法分别是&lt;code&gt;klogm&lt;/code&gt;和&lt;code&gt;(m+n)log(max-min)&lt;/code&gt;，其中k是O(mn)的，所以后者要快一点。还有一种最快的O(m)的解法下次再说。（m,n为矩阵长宽）&lt;/p&gt;
+
+&lt;h1 id=&#34;堆解法&#34;&gt;堆解法&lt;/h1&gt;
+
+&lt;p&gt;这里是一个例子:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/378_2.png&#34; alt=&#34;example&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如上图所示，从左上角即最小的数字开始，每次取出最小的数字，并把该数字右边的数字加进去，如果该数字在最左边，把其下方数字也加入。重复取k次即得到第k小数字。&lt;/p&gt;
+
+&lt;p&gt;每次复杂度为O(logm)，所以复杂度为O(klogm)，代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution(object):
+    def kthSmallest(self, matrix, k):
+        heap = []
+        m, n = len(matrix), len(matrix[0])
+        heapq.heappush(heap, (matrix[0][0], 0, 0))
+        
+        while k&amp;gt;0:
+            v, i, j = heapq.heappop(heap)
+            k -= 1
+            if k==0:
+                return v
+            if j+1&amp;lt;n:
+                heapq.heappush(heap, (matrix[i][j+1], i, j+1))
+            if j==0 and i+1&amp;lt;m:
+                heapq.heappush(heap, (matrix[i+1][j], i+1, j))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/378_3.png&#34; alt=&#34;heap&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;二分查找解法&#34;&gt;二分查找解法&lt;/h1&gt;
+
+&lt;p&gt;我们知道最大数为&lt;code&gt;matrix[i-1][j-1]&lt;/code&gt;，最小数为&lt;code&gt;matrix[0][0]&lt;/code&gt;，第k小的数肯定在这两货之间，所以可以用二分法。二分的判断条件是对于mid=(l+r)/2，判断矩阵中小于mid的数字个数与(k-1)的关系。而得到小于mid的数字个数复杂度为O(m+n)（方法与LeetCode 74: Search a 2-D matrix类似）。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution(object):
+    def kthSmallest(self, matrix, k):
+        m, n = len(matrix), len(matrix[0])
+        def count(v):
+            ret, i, j = 0, m-1, 0
+            # mini是返回矩阵比k大的最小的数，因为v不一定在矩阵中，所以取比v大的最小的数才是第k小的
+            mini = sys.maxsize
+            while j&amp;lt;n:
+                while i&amp;gt;=0 and matrix[i][j]&amp;gt;=v:
+                    i -= 1
+                mini = min(mini, matrix[i+1][j] if i+1&amp;lt;m else sys.maxsize)
+                ret += (i+1)
+                j += 1
+            return ret, mini
+        l, r = matrix[0][0]-1, matrix[m-1][n-1]+1
+        while l+1&amp;lt;r:
+            mid = (l+r)&amp;gt;&amp;gt;1
+            cnt, mini = count(mid)
+            if cnt==k-1:
+                return mini
+            elif cnt&amp;lt;k-1:
+                l = mid
+            else:
+                r = mid
+        return count(l)[1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://guoyc.com/images/leetcode/378_4.png&#34; alt=&#34;bs&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;复杂度为&lt;code&gt;O((max-min)(m+n))&lt;/code&gt;不存在二次项，所以理论上要比&lt;code&gt;O(klogm)=O(mnlogm)&lt;/code&gt;快不少。&lt;/p&gt;
+</description>
+      
+    </item>
+    
+  </channel>
+</rss>

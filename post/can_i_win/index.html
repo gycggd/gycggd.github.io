@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>LeetCode 464. Can I Win - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="Description In the &#34;100 game,&#34; two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. What if we change the game so that players cannot re-use integers? For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &amp;gt;= 100. Given" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/can_i_win/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="LeetCode 464. Can I Win" />
+<meta property="og:description" content="Description In the &#34;100 game,&#34; two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. What if we change the game so that players cannot re-use integers? For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &gt;= 100. Given" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/can_i_win/" />
+
+
+
+<meta property="article:published_time" content="2018-04-16T14:55:46&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-04-16T14:55:46&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="LeetCode 464. Can I Win">
+<meta itemprop="description" content="Description In the &#34;100 game,&#34; two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. What if we change the game so that players cannot re-use integers? For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &gt;= 100. Given">
+
+
+<meta itemprop="datePublished" content="2018-04-16T14:55:46&#43;08:00" />
+<meta itemprop="dateModified" content="2018-04-16T14:55:46&#43;08:00" />
+<meta itemprop="wordCount" content="1222">
+
+
+
+<meta itemprop="keywords" content="Dynamic Programming,DFS," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LeetCode 464. Can I Win"/>
+<meta name="twitter:description" content="Description In the &#34;100 game,&#34; two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. What if we change the game so that players cannot re-use integers? For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &gt;= 100. Given"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">LeetCode 464. Can I Win</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-16 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> LeetCode </a>
+            
+          </div>
+        <span class="more-meta"> 约 1222 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#description">Description</a></li>
+<li><a href="#solution">Solution</a>
+<ul>
+<li><a href="#如果数字可以重复使用">如果数字可以重复使用</a></li>
+<li><a href="#数字不可以重复使用">数字不可以重复使用</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="description">Description</h1>
+
+<div class="question-description"><div><p>In the "100 game," two players take turns adding, to a running total, any integer from 1..10. The player who first causes the running total to reach or exceed 100 wins. </p>
+
+<p>What if we change the game so that players cannot re-use integers? </p>
+
+<p>For example, two players might take turns drawing from a common pool of numbers of 1..15 without replacement until they reach a total &gt;= 100.</p>
+
+<p>Given an integer <code>maxChoosableInteger</code> and another integer <code>desiredTotal</code>, determine if the first player to move can force a win, assuming both players play optimally. </p>
+
+<p>You can always assume that <code>maxChoosableInteger</code> will not be larger than 20 and <code>desiredTotal</code> will not be larger than 300.
+</p>
+
+<p><b>Example</b>
+</p><pre><b>Input:</b>
+maxChoosableInteger = 10
+desiredTotal = 11
+
+<b>Output:</b>
+false
+
+<b>Explanation:</b>
+No matter which integer the first player choose, the first player will lose.
+The first player can choose an integer from 1 up to 10.
+If the first player choose 1, the second player can only choose integers from 2 up to 10.
+The second player will win by choosing 10 and get a total = 11, which is &gt;= desiredTotal.
+Same with other integers chosen by the first player, the second player will always win.
+</pre>
+<p></p></div></div>
+
+<h1 id="solution">Solution</h1>
+
+<p>小时候玩过这样的游戏，两个人轮流报1或者2，从0开始加上报的数字，先到达30的人获胜。玩多了发现一个规律，后报的人始终可以获胜，假设A，B两人，A先报数字，那么如果A报1，B就报2，反之A报2，B就报1，这样可以发现，所有3的倍数的数字都被B占了，所以B始终可以获胜。</p>
+
+<p>这一题与之类似，不过多了个条件：每个数字只能使用一次。</p>
+
+<p>那就多了一种情况，就是两个人都获胜不了，如果所有可以使用的数字之和小于target，这种情况作为特殊情况处理。</p>
+
+<h2 id="如果数字可以重复使用">如果数字可以重复使用</h2>
+
+<p>现在先实现数字可以重复使用的情况：</p>
+
+<p>令<code>dp[i]</code>表示玩家在当前和为i的情况下是否可以获胜。
+choose表示玩家可以使用1~choose之间的数字。
+target表示先到达target的玩家获胜。</p>
+
+<p>初始情况：</p>
+
+<p><code>dp[i]=True if (i+choose)&gt;=target</code></p>
+
+<p>递推公式：</p>
+
+<p><code>dp[i]=True if dp[i+j]=False for any i+1&lt;=j&lt;=i+choose</code></p>
+
+<p>返回结果:</p>
+
+<p><code>dp[0]</code>（即先选择的玩家是否获胜）</p>
+
+<p>代码如下：</p>
+
+<pre><code>class Solution:
+    def canIWin(self, choose, total):
+        dp = [False]*(total+1)
+        for i in range(total, -1, -1):
+            if i+choose&gt;=total:
+                dp[i] = True
+                continue
+            for j in range(1, choose+1):
+                if not dp[i+j]:
+                    dp[i] = True
+                    break
+        return dp[0]
+</code></pre>
+
+<h2 id="数字不可以重复使用">数字不可以重复使用</h2>
+
+<p>如果数字不可以重复使用的话，很直观的想法就是dfs进行回溯，新建一个数组保存每个数字的使用情况。</p>
+
+<p>伪代码如下：</p>
+
+<pre><code>function dp(cur, used):
+	for i in [1, choose]:
+		# 如果i已经被使用，continue
+		if used[i]:
+			continue
+		# 如果选择i可以超过total，获胜
+		if cur+i&gt;=total:
+			return true
+		# 选i，如果下一步对手在cur+i处不能获胜，则我方获胜
+		used[i] = true
+		tmp = dp(cur+i, used)
+		used[i] = false
+		if tmp:
+			return true
+	return false
+</code></pre>
+
+<p>实现之后可以发现TLE，问题在于有很多used数组相同的情况，很多重复计算。所以加上一个memory可以大幅减少时间。实现后代码如下：</p>
+
+<pre><code>class Solution:
+    def canIWin(self, choose, total):
+        if choose*(choose+1)/2&lt;total:
+            return False
+        
+        dp = [False]*total
+        used = [False]*(choose+1)
+        used[0] = True
+        
+        memo = {}
+        def f(cur):
+            key = str(used)
+            if key in memo:
+                return memo[key]
+            else:
+                for i in range(choose, 0, -1):
+                    if not used[i]:
+                        if cur+i&gt;=total: 
+                            memo[key] = True
+                            return True
+                        used[i] = True
+                        tmp = f(cur+i)
+                        used[i] = False
+                        if not tmp: 
+                            memo[key] = True
+                            return True
+                memo[key] = False
+                return False
+        
+        return f(0)
+</code></pre>
+
+<p>耗时800ms左右。因为我们这里的memory每次都是把一个数组转化成字符串来作为dict的key的，非常耗时，而题目描述中choose不超过20，那么可以在这里进行改进，用一个数字，数字的第i位用来标记i是否被使用过，改进后Python代码如下：</p>
+
+<pre><code>class Solution:
+    def canIWin(self, choose, total):
+        if choose*(choose+1)/2&lt;total: return False
+        memo = {}
+        def dp(cur, used):
+            if used in memo:
+                return memo[used]
+            else:
+                for i in range(choose, 0, -1):
+                    if not used&amp;(1&lt;&lt;i):
+                        if cur+i&gt;=total: 
+                            memo[used] = True
+                            return True
+                        if not dp(cur+i, used|(1&lt;&lt;i)): 
+                            memo[used] = True
+                            return True
+                memo[used] = False
+                return False
+        return dp(0, 0)
+</code></pre>
+
+<p>Java代码如下：</p>
+
+<pre><code>class Solution {
+    
+    public boolean canIWin(int choose, int total) {
+        if (choose&gt;=total)
+            return true;
+        if (choose*(choose+1)/2&lt;total)
+            return false;
+        # 这里用一个Boolean的数组来做的memory，比map要快很多，但空间也用的多了
+        Boolean memo[] = new Boolean[1&lt;&lt;(choose+1)];
+        return dp(0, 0, choose, total, memo);
+    }
+    private boolean dp(int cur, int used, int choose, int total, Boolean[] memo) {
+        if (memo[used]!=null) 
+            return memo[used];
+        for (int i=choose; i&gt;0; i--) {
+            if ((used&amp;(1&lt;&lt;i))==0) {
+                if (cur+i&gt;=total) {
+                    memo[used] = true;
+                    return true;
+                }
+                if (!dp(cur+i, used|(1&lt;&lt;i), choose, total, memo)) {
+                    memo[used] = true;
+                    return true;
+                }
+            }
+        }
+        memo[used] = false;
+        return false;
+    }
+}
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/dynamic-programming/">Dynamic Programming</a>
+          
+          <a href="/tags/dfs/">DFS</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/target_sum/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 494. Target Sum</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/leetcode_weekly_contest_80/">
+            <span class="next-text nav-default">Leetcode Weekly Contest 80</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

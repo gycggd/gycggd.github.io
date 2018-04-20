@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Single Number on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/single-number/</link>
+    <description>Recent content in Single Number on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Tue, 27 Mar 2018 18:34:12 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/single-number/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LeetCode 371. Sum of Two Integers</title>
+      <link>http://guoyc.com/post/sum_of_two_int/</link>
+      <pubDate>Tue, 27 Mar 2018 18:34:12 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/sum_of_two_int/</guid>
+      <description>这一题是不准用+-*/来计算两个整数之和。 很容易想到是用位运算来做。 a和b之和包括两个部分，一个部分是a或b在某一位上有一个为1，这部分可以</description>
+    </item>
+    
+    <item>
+      <title>LeetCode 136. Single Number</title>
+      <link>http://guoyc.com/post/single_number/</link>
+      <pubDate>Mon, 19 Mar 2018 11:51:49 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/single_number/</guid>
+      <description>Single Number I 题目链接：136. Single Number 一个数组所有数字都包含两次，除了一个数字包含一次，要找出这个数字非常容易。 最简单的方法是使用一个counterM</description>
+    </item>
+    
+  </channel>
+</rss>

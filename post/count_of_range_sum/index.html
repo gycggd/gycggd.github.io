@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Leetcode 327: Count of Range Sum - Guoyc&#39;s blog</title>
+  <link rel="alternate" hreflang="en" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="This problem ask us to find the count of all range sums between lower, upper for an array. Numbers in the array can be either negative or positive, so we can&amp;rsquo;t use two pointers to solve this problem.
+An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you must do better than O($N^2$)." />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/count_of_range_sum/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Leetcode 327: Count of Range Sum" />
+<meta property="og:description" content="This problem ask us to find the count of all range sums between lower, upper for an array. Numbers in the array can be either negative or positive, so we can&rsquo;t use two pointers to solve this problem.
+An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you must do better than O($N^2$)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/count_of_range_sum/" />
+
+
+
+<meta property="article:published_time" content="2018-03-15T13:15:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-15T13:15:00&#43;08:00"/>
+
+<meta property="og:site_name" content="Guoyc&#39;s blog" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Leetcode 327: Count of Range Sum">
+<meta itemprop="description" content="This problem ask us to find the count of all range sums between lower, upper for an array. Numbers in the array can be either negative or positive, so we can&rsquo;t use two pointers to solve this problem.
+An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you must do better than O($N^2$).">
+
+
+<meta itemprop="datePublished" content="2018-03-15T13:15:00&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-15T13:15:00&#43;08:00" />
+<meta itemprop="wordCount" content="629">
+
+
+
+<meta itemprop="keywords" content="Divide and Conquer," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Leetcode 327: Count of Range Sum"/>
+<meta name="twitter:description" content="This problem ask us to find the count of all range sums between lower, upper for an array. Numbers in the array can be either negative or positive, so we can&rsquo;t use two pointers to solve this problem.
+An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you must do better than O($N^2$)."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Guoyc&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">Guoyc&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Leetcode 327: Count of Range Sum</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-15 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> Leetcode </a>
+            
+          </div>
+        <span class="more-meta"> 629 words </span>
+        <span class="more-meta"> 3 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#divide-and-conquer-on-original-array">Divide and Conquer on original array</a></li>
+<li><a href="#divide-and-conquer-on-prefix-sum-array">Divide and Conquer on prefix sum array</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p><img src="/images/leetcode/327_1.png" alt="Description" /></p>
+
+<p>This problem ask us to find the count of all range sums between <a href="inclusive">lower, upper</a> for an array. Numbers in the array can be either negative or positive, so we can&rsquo;t use two pointers to solve this problem.</p>
+
+<p>An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you <strong>must</strong> do better than O($N^2$).</p>
+
+<p>What is a familier time complexity that is better than O($N^2$)? O($N$) and O($N(logN)^m$).</p>
+
+<p>Let&rsquo;s think of merge sort, in merge sort, we call merge $logN$ times and each merge cost O($N$) time. So if we can find a divide and conquer method and complete each merge process in O($N(logN)^m$), we can achieve a total time complexity better than O($N^2$).</p>
+
+<h1 id="divide-and-conquer-on-original-array">Divide and Conquer on original array</h1>
+
+<p>Let&rsquo;s try it on original array, $T(N)=2*T(\frac{N}{2})+T(merge)$.</p>
+
+<p>When we divide an array arr[l:r] into arr[l:m] and arr[m+1:r], the merge process is to find count of (i, j) pairs such that $i\in[l:m]\wedge j\in[m+1:r]\wedge sum(arr[i:j]) \in [lower, upper]$.</p>
+
+<p>We can finish this in O($N^2$), just try each i in the left part and each j in the right part and compute the range sum.</p>
+
+<p>But this leads exceeds our expected O($N(logN)^m$). We can do better. We can calculate the prefix sum array of the right part: $prefix[x]=sum(arr[m+1:x])$ and suffix sum array of the left part: $suffix[x]=sum(arr[x:m])$. Then for each $i \in [l:m]$, we want to find all j such that $prefix[j]+suffix[x] \in [lower, upper]$. This also costs O($N^2$), but if we sort the suffix array and use binary search for each i, search $lower-suffix[i]$ and $upper-suffix[i]$ to get count of valid j&rsquo;s, the time complexity becomes $O(NlogN)$.</p>
+
+<p>So this method gives us a O($N(logN)^2$) solution.</p>
+
+<h1 id="divide-and-conquer-on-prefix-sum-array">Divide and Conquer on prefix sum array</h1>
+
+<p>In the previous solution, we calculate prefix sum array and suffix sum array in each merge process, if we just calculate the prefix sum array before, can we save more time?</p>
+
+<p>The answer is yes, just like <a href="https://leetcode.com/problems/reverse-pairs/description/">Leetcode 493. Reverse Pairs</a> or <a href="https://www.geeksforgeeks.org/counting-inversions/">Count Inversions in an array</a>, we can guarantee at each merge process, both left and right part are sorted, and with this property the time we used on merge can be reduced.</p>
+
+<p>Let&rsquo;s recall what we do in merge sort:</p>
+
+<pre><code>Initialize i=l, j=m+1
+while i&lt;=m or j&lt;=r:
+    if i&lt;=m and j&lt;=r:
+        if a[i]&lt;=a[j]:
+            append a[i++] to sorted array
+            i++
+        else:
+            append a[j++] to sorted array
+    else if i&lt;=m:
+        append a[i++] to sorted array
+    else:
+        append a[j++] to sorted array
+</code></pre>
+
+<p>In merge sort, we compare a[i] with a[j], in this problem, we need to compare a[i]+lower and a[i]+upper with a[j].
+Following is my code:</p>
+
+<pre><code>class Solution:
+    def countRangeSum(self, nums, lower, upper):
+        &quot;&quot;&quot;
+        :type nums: List[int]
+        :type lower: int
+        :type upper: int
+        :rtype: int
+        &quot;&quot;&quot;
+        sumarr = [0]
+        for n in nums:
+            sumarr.append(sumarr[-1]+n)
+        
+        def ms(arr, l, r):
+            if l&gt;=r:
+                return 0
+            m = (l+r)&gt;&gt;1
+            return ms(arr, l, m)+ms(arr, m+1, r)+merge(arr, l, m, r)
+        
+        def merge(arr, l, m, r):
+            ret = 0
+            # lower_bound[x] means that for all j&gt;=lower_bound[x], a[j]&gt;=a[i]+lower. 
+            # And the same for upper_bound
+            lower_bound, upper_bound = {}, {} 
+            i, j = l, m+1
+            while i&lt;=m:
+                while j&lt;=r and arr[j]&lt;arr[i]+lower:
+                    j += 1
+                lower_bound[i] = j
+                i += 1
+            i, j = m, r
+            while i&gt;=l:
+                while j&gt;m and arr[j]&gt;arr[i]+upper:
+                    j -= 1
+                upper_bound[i] = j
+                i -= 1
+            for i in range(l, m+1):
+                ret += max(0, upper_bound[i]-lower_bound[i]+1)
+            # Attention, I am lazy here, a standard way should use typical merge sort
+            arr[l:r+1] = sorted(arr[l:r+1])
+            return ret
+                
+        return ms(sumarr, 0, len(sumarr)-1)            
+</code></pre>
+
+<p>Last thing is that in this problem, why we can use this method is that <strong>we don&rsquo;t care the order of the prefix sum array, we only need prefix sums are at the correct side when we do merge on that range</strong>.</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/divide-and-conquer/">Divide and Conquer</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/word_ladder2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 126: Word Ladder II</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/rain_drop/">
+            <span class="next-text nav-default">LeetCode 42: Trapping Rain Water I &amp; II</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      Show Disqus Comments
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

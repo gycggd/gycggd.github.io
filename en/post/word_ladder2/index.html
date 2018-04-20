@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>LeetCode 126: Word Ladder II - Guoyc&#39;s blog</title>
+  <link rel="alternate" hreflang="en" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="Leetcode 127. Word Ladder and Leetcode 126. Word Ladder II are Breadth-First Search problems of strings.
+At each step, we can change one letter of a given string into another letter, but the step is valid only when the new string is in the given list wordList.
+Simpliest BFS (TLE) My first solution starts BFS at the beginWord, at each step, check every word in the list, if it only got only one position different, add it to next level." />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/en/post/word_ladder2/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="LeetCode 126: Word Ladder II" />
+<meta property="og:description" content="Leetcode 127. Word Ladder and Leetcode 126. Word Ladder II are Breadth-First Search problems of strings.
+At each step, we can change one letter of a given string into another letter, but the step is valid only when the new string is in the given list wordList.
+Simpliest BFS (TLE) My first solution starts BFS at the beginWord, at each step, check every word in the list, if it only got only one position different, add it to next level." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/en/post/word_ladder2/" />
+
+
+
+<meta property="article:published_time" content="2018-03-17T19:30:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-17T19:30:00&#43;08:00"/>
+
+<meta property="og:site_name" content="Guoyc&#39;s blog" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="LeetCode 126: Word Ladder II">
+<meta itemprop="description" content="Leetcode 127. Word Ladder and Leetcode 126. Word Ladder II are Breadth-First Search problems of strings.
+At each step, we can change one letter of a given string into another letter, but the step is valid only when the new string is in the given list wordList.
+Simpliest BFS (TLE) My first solution starts BFS at the beginWord, at each step, check every word in the list, if it only got only one position different, add it to next level.">
+
+
+<meta itemprop="datePublished" content="2018-03-17T19:30:00&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-17T19:30:00&#43;08:00" />
+<meta itemprop="wordCount" content="679">
+
+
+
+<meta itemprop="keywords" content="BFS," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LeetCode 126: Word Ladder II"/>
+<meta name="twitter:description" content="Leetcode 127. Word Ladder and Leetcode 126. Word Ladder II are Breadth-First Search problems of strings.
+At each step, we can change one letter of a given string into another letter, but the step is valid only when the new string is in the given list wordList.
+Simpliest BFS (TLE) My first solution starts BFS at the beginWord, at each step, check every word in the list, if it only got only one position different, add it to next level."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Guoyc&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/en/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/en/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/en/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/en/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/en/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">Guoyc&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/en/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">LeetCode 126: Word Ladder II</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-17 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> Leetcode </a>
+            
+          </div>
+        <span class="more-meta"> 679 words </span>
+        <span class="more-meta"> 4 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#simpliest-bfs-tle">Simpliest BFS (TLE)</a></li>
+<li><a href="#two-way-bfs-tle">Two-way BFS (TLE)</a></li>
+<li><a href="#use-wildcard-to-quickly-match-adjacent-words">Use wildcard to quickly match adjacent words</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p><a href="https://leetcode.com/problems/word-ladder/">Leetcode 127. Word Ladder</a> and <a href="https://leetcode.com/problems/word-ladder-ii">Leetcode 126. Word Ladder II</a> are Breadth-First Search problems of strings.</p>
+
+<p><img src="/images/leetcode/126_2.png" alt="Description" /></p>
+
+<p>At each step, we can change one letter of a given string into another letter, but the step is valid only when the new string is in the given list <code>wordList</code>.</p>
+
+<h1 id="simpliest-bfs-tle">Simpliest BFS (TLE)</h1>
+
+<p>My first solution starts BFS at the <em>beginWord</em>, at each step, check every word in the list, if it only got only one position different, add it to next level. It gots TLE.</p>
+
+<p>Here is the code I used to expand each level:</p>
+
+<pre><code>def adj(w1, w2):
+    if len(w1)!=len(w2):
+        return False
+    diff = 0
+    for i in range(len(w1)):
+        if w1[i]!=w2[i]:
+            diff += 1
+            if diff&gt;=2:
+                return False
+    return diff==1
+
+def expand(words, visited):
+    ret = set()
+    for w1 in words:
+        for w2 in wordList:
+            if w2 in visited:
+                continue
+            if adj(w1, w2):
+                ret.add(w2)
+    return ret
+</code></pre>
+
+<p>and the bfs code:</p>
+
+<pre><code>s = {beginWord}
+visited = {beginWord}
+
+while s:
+    s = expand(s, visited)
+    visited |= s
+    if not s:
+    	return []
+	if endWord in s:
+		break    
+</code></pre>
+
+<h1 id="two-way-bfs-tle">Two-way BFS (TLE)</h1>
+
+<p><img src="/images/leetcode/126_1.png" alt="1-way and 2-way bfs" /></p>
+
+<p>Since simple BFS expands more nodes than two-way BFS, I tried two-way BFS but still got TLE, here is the two-way bfs code:</p>
+
+<pre><code>s1, s2 = {beginWord}, {endWord}
+visited1, visited2 = {beginWord}, {endWord}
+path1, path2 = collections.defaultdict(list), collections.defaultdict(list)
+
+while s1 and s2:
+    s1 = expand(s1, visited1, path1)
+    visited1 |= s1
+    
+    if s1&amp;s2:
+        return build(s1&amp;s2, path1, path2)
+    
+    s2 = expand(s2, visited2, path2)
+    visited2 |= s2
+    
+    if s1&amp;s2:
+            return build(s1&amp;s2, path1, path2)
+</code></pre>
+
+<h1 id="use-wildcard-to-quickly-match-adjacent-words">Use wildcard to quickly match adjacent words</h1>
+
+<p>After TLE using two-way BFS, I realized it&rsquo;s the expand part that costs too much time checking words. So we need a faster way to get valid jumps between words.</p>
+
+<p>We create a map, the key of the map are words with a wildcard &lsquo;*&rsquo; in it. The value is a list consists of all words that match the key. For each word, we can replace each character of it into a wildcard &lsquo;*&rsquo; and put it in the list. When we want to expand from this word, we generate words with a &lsquo;*&rsquo; and union all values of them.</p>
+
+<p>Take <code>['dog', 'log', 'dot']</code> for example, we can get <code>'\*og', 'd\*g', 'do\*'</code> from &lsquo;dog&rsquo;, part of the map (used when expand &lsquo;dog&rsquo;) is <code>{'\*og':[dog, log], 'd\*g':[dog], 'do\*':[dog, dot]}</code>.</p>
+
+<p>So the expand part becomes:</p>
+
+<pre><code>dic = collections.defaultdict(list)
+
+for w in wordList:
+    for i in range(len(w)):
+        dic[w[:i]+'*'+w[i+1:]].append(w)
+
+def expand(words, visited, path):
+    ret = set()
+    for w1 in words:
+        for i in range(len(w1)):
+            w = w1[:i]+'*'+w1[i+1:]
+            nexts = [_ for _ in dic[w] if _ not in visited]
+            ret.update(nexts)
+            for n in nexts:
+                path[n].append(w1)
+    return ret
+</code></pre>
+
+<p>The whole solution:</p>
+
+<pre><code>    def findLadders(self, beginWord, endWord, wordList):
+        &quot;&quot;&quot;
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: List[List[str]]
+        &quot;&quot;&quot;
+        
+        if endWord not in wordList:
+            return []
+        
+        dic = collections.defaultdict(list)
+        
+        for w in wordList:
+            for i in range(len(w)):
+                dic[w[:i]+'*'+w[i+1:]].append(w)
+        
+        def expand(words, visited, path):
+            ret = set()
+            for w1 in words:
+                for i in range(len(w1)):
+                    w = w1[:i]+'*'+w1[i+1:]
+                    nexts = [_ for _ in dic[w] if _ not in visited]
+                    ret.update(nexts)
+                    for n in nexts:
+                        path[n].append(w1)
+            return ret
+        
+        def havecommon(s1, s2):
+            return s1&amp;s2
+            
+        s1, s2 = {beginWord}, {endWord}
+        visited1, visited2 = {beginWord}, {endWord}
+        path1, path2 = collections.defaultdict(list), collections.defaultdict(list)
+        
+        if s1&amp;s2:
+            return [[beginWord, endWord]]
+        
+        def build(s, path1, path2):
+            ret = []
+            for w in s:
+                ps = [[w]]
+                while True:
+                    new_ps = []
+                    found = False
+                    for p in ps:
+                        if p[0] in path1:
+                            found = True
+                            for ww in path1[p[0]]:
+                                new_ps.append([ww]+p)
+                    if not found:
+                        break
+                    ps = new_ps
+                    
+                while True:
+                    new_ps = []
+                    found = False
+                    for p in ps:
+                        if p[-1] in path2:
+                            found = True
+                            for ww in path2[p[-1]]:
+                                new_ps.append(p+[ww])
+                    if not found:
+                        break
+                    ps = new_ps
+
+                ret.extend(ps)
+            return ret
+        
+        c1, c2 = 0, 1
+        while s1 and s2:
+            s1 = expand(s1, visited1, path1)
+            visited1 |= s1
+            c1 += 1
+            
+            if s1&amp;s2:
+                return build(s1&amp;s2, path1, path2)
+            
+            s2 = expand(s2, visited2, path2)
+            visited2 |= s2
+            c2 += 1
+            
+            if s1&amp;s2:
+                return build(s1&amp;s2, path1, path2)
+            
+        return []
+</code></pre>
+
+<p>Got pass in 152ms. (For word ladder, we don&rsquo;t need to build the path, just return $c1+c2$)</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/bfs/">BFS</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/en/post/leetcode_weekly_contest_76/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Leetcode Weekly Contest 76</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/en/post/count_of_range_sum/">
+            <span class="next-text nav-default">Leetcode 327: Count of Range Sum</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      Show Disqus Comments
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

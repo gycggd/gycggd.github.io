@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Guoyc&#39;s blog</title>
+    <link>http://guoyc.com/posts/</link>
+    <description>Recent content in Posts on Guoyc&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Thu, 15 Mar 2018 13:15:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode 327: Count of Range Sum</title>
+      <link>http://guoyc.com/posts/count_of_range_sum/</link>
+      <pubDate>Thu, 15 Mar 2018 13:15:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/count_of_range_sum/</guid>
+      <description>This problem ask us to find the count of all range sums between lower, upper for an array. Numbers in the array can be either negative or positive, so we can&amp;rsquo;t use two pointers to solve this problem.
+An obvious solution is a O($N^2$) solution that calculate rangeSum(i, j) for all $i \in [0, N-1], j \in [i, N-1]$. But the problem says you must do better than O($N^2$).</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 42: Trapping Rain Water I &amp; II</title>
+      <link>http://guoyc.com/posts/rain_drop/</link>
+      <pubDate>Wed, 14 Mar 2018 19:41:00 +0800</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/rain_drop/</guid>
+      <description>42.Trapping Rain Water and 407.Trapping Rain Water II are very interesting problems.
+Trapping Rain Water This problem is taged with &amp;ldquo;Two Pointers&amp;rdquo; and &amp;ldquo;Stack&amp;rdquo;, they corresponds to two different solutions.
+Two Pointers Solution Let hl=height[0] and rl=height[len(height)-1] be height of left border and height of right border, and left=1, right=len(height)-2.
+This is a 1-D pool, so there are only two borders left and right, and space between them can trap min(hl, hr) water.</description>
+    </item>
+    
+    <item>
+      <title>用OpenCV来做数独</title>
+      <link>http://guoyc.com/posts/opencv-sudoku/</link>
+      <pubDate>Tue, 17 Oct 2017 00:27:22 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/opencv-sudoku/</guid>
+      <description>今天看OpenCV的时候花了几个小时写了一个小程序根据一个数独的初始图片自动完成数独，如下是一张数独的图片。
+下面所有的代码可以在我的Github上找到: Sudoku
+这里使用了OpenCV，pillow，numpy这几个库：
+import numpy as np import cv2 import os import shutil from PIL import Image  Preprocessing if board_origin.ndim == 3: board_origin = cv2.cvtColor(board_origin, cv2.COLOR_BGR2RGB) board_gray = cv2.cvtColor(board_origin, cv2.COLOR_RGB2GRAY) else: board_gray = board_origin board_gray = cv2.GaussianBlur(board_gray, (5, 5), 0) board_thresh = cv2.adaptiveThreshold(board_gray, 255, 1, 1, 5, 2) cv2.imshow(&#39;board_thresh&#39;, board_thresh)   如果不是灰度图像，转成灰度图像 做高斯模糊，去除Noise 二值化，转成黑白图像  效果如图： Extract Prefilled Numbers _, contours, hierarchy = cv2.findContours(board_thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) max_contour = contours[0] max_rect = cv2.</description>
+    </item>
+    
+    <item>
+      <title>Face Detection &amp; Recognition</title>
+      <link>http://guoyc.com/posts/face-recognition/</link>
+      <pubDate>Sat, 14 Oct 2017 00:14:02 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/face-recognition/</guid>
+      <description>Preprocessing Histogram Equalization Use cdf to transform intensity.
+function eqimg = histogramequalization(img) maximum = round(max(img(:))); minimum = round(min(img(:))); counts = zeros(maximum-minimum+1, 1); [h, w] = size(img); for i = 1:h for j = 1:w counts(round(img(i, j)-minimum+1)) = counts((img(i, j)-minimum)+1) + 1; end end for i = 2:length(counts) counts(i) = counts(i) + counts(i-1); end eqimg = img; for i = 1:h for j = 1:w eqimg(i, j) = (counts(round(img(i, j)-minimum)+1)/(h*w)) * (maximum-minimum) + minimum; end end end  Face Detection Image Pyramid and Neural Network Integral Image and AdaBoost Use Viola-Jones&amp;rsquo;s method to get features and use AdaBoost to combine many weak classifiers into a strong classifier</description>
+    </item>
+    
+    <item>
+      <title>Hough Transform霍夫变换</title>
+      <link>http://guoyc.com/posts/hough/</link>
+      <pubDate>Wed, 27 Sep 2017 08:03:08 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/hough/</guid>
+      <description> Hough-Line function [H, theta, r] = myhough(BW) [h, w] = size(BW); theta_low = -pi/2; theta_high = pi/2; r_low = -sqrt(h^2+w^2); r_high = sqrt(h^2+w^2); num_theta = 180; num_r = round(r_high*2); H = zeros(num_theta, num_r); for x = 1:h for y = 1:w if BW(x, y)==1 for i = 1:num_theta theta = theta_low + (i-1)/num_theta*(theta_high-theta_low); r = x*cos(theta) + y*sin(theta); j = round(1 + (num_r-1) * (r-r_low)/(r_high-r_low)); H(i, j) = H(i, j) + 1; end end end end [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low + (i-1)/num_theta*(theta_high-theta_low); r = r_low + (j-1)/num_r*(r_high-r_low); while (abs(theta)&amp;lt;=pi/90 &amp;amp;&amp;amp; (abs(r)&amp;lt;=2 || abs(abs(r)-h)&amp;lt;=2)) || (abs(pi/2-abs(theta))&amp;lt;=pi/90 &amp;amp;&amp;amp; (abs(r)&amp;lt;=2 || abs(abs(r)-w)&amp;lt;=2)) H(i, j) = 0; [m, I] = max(H(:)); [i, j] = ind2sub(size(H), I); theta = theta_low + (i-1)/num_theta*(theta_high-theta_low); r = r_low + (j-1)/num_r*(r_high-r_low); end end  Hough-Circle function [x, y, R] = myhoughcircle(BW, max_r, k, gap) [h, w] = size(BW); num_x = h; num_y = w; if nargin &amp;lt; 2 || isempty(max_r) max_r = min(h/2, w/2); end if nargin &amp;lt; 3 k = 1; end if nargin &amp;lt; 4 gap = 20; end H = zeros(num_x, num_y, max_r); for i = 1:h for j = 1:w if BW(i, j)==1 for a = 1:num_x for b = 1:num_y r = round(sqrt((a-i)^2+(b-j)^2)); if r&amp;gt;0 &amp;amp;&amp;amp; r&amp;lt;=max_r H(a, b, r) = H(a, b, r) + 1; end end end end end end img = cat(3, BW, BW, BW)*255; hh = H(:); prex = 0; prey = 0; preR = 0; idx = 1; while idx&amp;lt;=k [~, I] = max(hh); [x, y, R] = ind2sub(size(H), I); hh(I) = 0; if (x-prex)&amp;lt;=gap &amp;amp;&amp;amp; (y-prey)&amp;lt;=gap &amp;amp;&amp;amp; (R-preR)&amp;lt;=gap continue end for i = 1:h for j = 1:w computed_r = sqrt((i-x)^2+(j-y)^2); if abs(computed_r-R)&amp;lt;=1 img(i, j, :) = [255, 0, 0]; end end end prex = x; prey = y; preR = R; idx = idx+1; end end  </description>
+    </item>
+    
+    <item>
+      <title>Uniform and Heuristic Search</title>
+      <link>http://guoyc.com/posts/search/</link>
+      <pubDate>Wed, 13 Sep 2017 22:34:07 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/search/</guid>
+      <description>开始 先放一张女神照。
+搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cost)，因此有不同方式到达目标点时，代价可能是不同的。
+对于一个搜索策略来说，我们会关心以下几个问题：
+ 如果存在路径能够到达目标点，该策略是否一定能找到(Completeness) 该策略找到的路径是否为最优路径(Optimal)，即路径代价最小（Mnimal Path Cost） 策略的时间复杂度(Time Complexity)与空间复杂度(Space Complexity)  上图的8-puzzle problem便是一个搜索问题，每一次移动便对应着一次状态转移，当中间为空所有数字按大小呈顺时针从左上角排列时，就完成了目标
+搜索类型 根据搜索过程中是否利用到未遇到的节点的信息，可以分成以下两类
+ 盲目搜索 Uninformed(Blind) Search 启发式搜索 Informed(Heuristic) Search  盲目搜索 Uninformed(Blind) Search 盲目搜索即搜索过程中对于每一个状态与目标状态的距离没有任何评估，盲目地进行状态转换。
+搜索的过程可以看做是所有可达状态的一个树状结构：
+ 根节点为初始状态 每一步搜索从一个节点开始，做一个状态转换，生成一条边连接到新的状态节点  function GENERAL-SEARCH( problem, strategy) # returns a solution, or failure initialize the search tree using the initial state of problem loop do if there are no candidates for expansion then return failure choose a leaf node for expansion according to strategy if the node contains a goal state return the corresponding solution else expand the node and add the resulting nodes to the search tree end  8 Puzzle Problem 广度优先搜索 广度优先搜索在每一步会展开所有的叶子节点。下图为8-puzzle problem的广度优先搜索示意图</description>
+    </item>
+    
+    <item>
+      <title>bitmap有什么用</title>
+      <link>http://guoyc.com/posts/bitmap/</link>
+      <pubDate>Sun, 10 Sep 2017 14:02:51 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/bitmap/</guid>
+      <description>什么是bitmap 首先说明下，这里要说的bitmap是作为一种数据结构，不是位图的文件格式。
+一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功能。
+bitmap的用途 查找 设想一个场景，系统有很多很多的用户，同时系统有用户画像的功能，即给用户打上标签，如IT狗，学生党，技术宅等，如果用关系型数据库来存储这些信息的话，面对稀奇古怪的根据标签过滤的需求时，会产生非常丑陋的SQL语句。用bitmap的话则可以通过位运算符轻松的解决这些问题。
+构建 可以把bitmap看成一个数组,数组的下标是用户的id。比如上面的IT狗，学生，美女三个标签，我们可以用三个bitmap来表示。
+itdog = bitmap[max] student = bitmap[max] beauty = bitmap[max] user = bitmap[max] # user[id] = 1 iff 编号为id的用户存在 (后面需要用到这个信息)  例子  为id=xx的用户加上IT狗标签：itdog[xx] = 1 查找所有带有学生标签的的用户ID：filter(range(max), lambda id:student[id]==1) 查找所有的美女学生ID：与运算即可，filter(range(max), lambda id:(student &amp;amp; beauty)[id]==1) 查找所有的学生或IT狗：或运算即可，filter(range(max), lambda id:(student | itdog)[id]==1) 查找所有非学生用户：要用user，因为值为0的id也可能不存在。filter(range(max), lambda id:(student ^ user)[id]==1)  过滤 很多爬虫由于要爬取海量的数据，如何避免爬取重复的url是一个很重要的问题，如果用，著名的布隆过滤器(Bloom Filter)便是用了bitmap来实现的一个过滤算法。
+利用bitmap做简单的过滤 首先对url进行hash得到一个数值，然后查看bitmap中这个数值的位置是否为1，为1则说明已经抓取过这个url，不再重复抓取。
+这种情况容易出现的问题是即使把hashCode的范围设置的非常大，也会有较高的误判率，不同的url出现相同的hashCode导致一些url没能被抓取
+Bloom Filter Bloom Filter是引进多个hash函数，对每一个url计算出hashCode1，hashCode2，hashCode3，然后仅当这三个位置的bit都为1的时候才判断为重复，这样可以大大的降低重复率。
+存储系统中的Bloom Filter Bloom Filter还可以用于数据存储系统中，在查找数据之前，现在位图中判断数据是否存在，如果存在再去读取数据的值，可以大大减少查询的时间。
+插入数据 插入数据时将计算出来的hashCode位置的bit设为1即可
+查找数据 如果计算出来的hashCode位置的bit都为1，才进入查找流程，（即使因为重复的hashCode导致最终发现数据不存在，也是极少数情况）</description>
+    </item>
+    
+    <item>
+      <title>遗传算法(Genetic Algorithm)是怎么一回事</title>
+      <link>http://guoyc.com/posts/genetic-algorithm/</link>
+      <pubDate>Sat, 09 Sep 2017 23:02:41 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/genetic-algorithm/</guid>
+      <description>开始 生物上的遗传与进化  It is not the strongest of the species that survive, but the one most responsive to change. -Charles Darwin
+ 达尔文所说的这句“物竞天择，适者生存”，指的是一个种群的基因会经过环境的挑选，使得带有某些基因的个体能够更加适应环境从而存活下来，同时也提纯了这种基因，因为能够存活下来个体大多带有利于在环境中生存的基因。
+遗传算法就是基于这种思想，来一个种群中通过进化来找出我们想要的某个特定的算法。
+遗传算法 从第一代Generation0开始，根据每个体的fitness，一步步地演化，最终便得到符合我们要求的算法个体。
+如何演化 在种群的演化过程中，有如下两个要素：
+ 如何繁殖，如何产生下一代的个体 如何筛选，即物竞天择，用什么样的方式挑选出适应性(Fitness)最好的个体作为下一代  演化方式 演化有以下几种方式：
+ copy: 照搬上一个Generation中的部分个体 crossover: 交叉上一个Generation中的多个个体，形成新的个体 mutate: 对上一个Generation中的个体进行变异，形成新的个体  适应性 对于Fitness需要给出一个Fitness Function用来评判当前的个体在多大程度上满足我们的要求，例如：一个决策树分类算法能够对训练集中的多少输入给出正确的输出。
+然后根据Fitness Function提出一个filterFitness的方法来根据fitness筛选掉一批个体
+结合 根据上面的演化方式可以产生很多的个体，然后通过Fitness Function可以淘汰掉一部分糟糕的个体，从而产生Next Generation。
+用公式来表示的话就是：
+G[i+1] = filterFitness( # Filter individual with poor fitness copy(A%, G[i]) ∪ # Copy individuals from previous generation crossover(B%, G[i]) ∪ # Crossover individuals from previous generation mutate(C%, G[i]) # Mutate individuals from previous generation )  完整算法 def function fitness; def function filterFitness; G = [Init first ] do: G = filterFitness( copy(A%, G) ∪ crossover(B%, G) ∪ mutate(C%, G) ) until fitness(G)&amp;gt;Required Value;  算法的效率 上面演化的过程中我们有三个常数 A, B, C分别是复制的比例，杂交的比例和变异的比例，它们会影响算法得到最终结果的效率。</description>
+    </item>
+    
+    <item>
+      <title>念两句诗先</title>
+      <link>http://guoyc.com/posts/helloworld/</link>
+      <pubDate>Sat, 09 Sep 2017 00:48:51 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/posts/helloworld/</guid>
+      <description>苟利国家生死以，岂因祸福趋避之</description>
+    </item>
+    
+  </channel>
+</rss>

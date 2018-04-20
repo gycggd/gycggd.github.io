@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Leetcode Weekly Contest 79 - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="812. Largest Triangle Area 直接三层循环用海伦公式计算即可 from math import sqrt class Solution: def largestTriangleArea(self, points): dist = {} def d(p1, p2): return sqrt((p1[0]-p2[0])**2&#43;(p1[1]-p2[1])**2) N = len(points) for i in range(N): for j in range(i&#43;1, N): if i not in dist: dist[i] = {} dist[i][j] = d(points[i], points[j]) ret = 0 for i in range(N): for j in" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/leetcode_weekly_contest_79/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Leetcode Weekly Contest 79" />
+<meta property="og:description" content="812. Largest Triangle Area 直接三层循环用海伦公式计算即可 from math import sqrt class Solution: def largestTriangleArea(self, points): dist = {} def d(p1, p2): return sqrt((p1[0]-p2[0])**2&#43;(p1[1]-p2[1])**2) N = len(points) for i in range(N): for j in range(i&#43;1, N): if i not in dist: dist[i] = {} dist[i][j] = d(points[i], points[j]) ret = 0 for i in range(N): for j in" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/leetcode_weekly_contest_79/" />
+
+
+
+<meta property="article:published_time" content="2018-04-08T13:03:16&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-04-08T13:03:16&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Leetcode Weekly Contest 79">
+<meta itemprop="description" content="812. Largest Triangle Area 直接三层循环用海伦公式计算即可 from math import sqrt class Solution: def largestTriangleArea(self, points): dist = {} def d(p1, p2): return sqrt((p1[0]-p2[0])**2&#43;(p1[1]-p2[1])**2) N = len(points) for i in range(N): for j in range(i&#43;1, N): if i not in dist: dist[i] = {} dist[i][j] = d(points[i], points[j]) ret = 0 for i in range(N): for j in">
+
+
+<meta itemprop="datePublished" content="2018-04-08T13:03:16&#43;08:00" />
+<meta itemprop="dateModified" content="2018-04-08T13:03:16&#43;08:00" />
+<meta itemprop="wordCount" content="497">
+
+
+
+<meta itemprop="keywords" content="Dynamic Programming,DFS," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Leetcode Weekly Contest 79"/>
+<meta name="twitter:description" content="812. Largest Triangle Area 直接三层循环用海伦公式计算即可 from math import sqrt class Solution: def largestTriangleArea(self, points): dist = {} def d(p1, p2): return sqrt((p1[0]-p2[0])**2&#43;(p1[1]-p2[1])**2) N = len(points) for i in range(N): for j in range(i&#43;1, N): if i not in dist: dist[i] = {} dist[i][j] = d(points[i], points[j]) ret = 0 for i in range(N): for j in"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Leetcode Weekly Contest 79</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-08 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> LeetCode </a>
+            
+          </div>
+        <span class="more-meta"> 约 497 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#812-largest-triangle-area">812. Largest Triangle Area</a></li>
+<li><a href="#813-largest-sum-of-averages">813. Largest Sum of Averages</a></li>
+<li><a href="#814-binary-tree-pruning">814. Binary Tree Pruning</a></li>
+<li><a href="#815-bus-routes">815. Bus Routes</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="812-largest-triangle-area">812. Largest Triangle Area</h1>
+
+<p><img src="/images/leetcode/812_1.png" alt="desc" /></p>
+
+<p>直接三层循环用海伦公式计算即可</p>
+
+<pre><code>from math import sqrt
+class Solution:
+    def largestTriangleArea(self, points):
+        dist = {}
+        def d(p1, p2):
+            return sqrt((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)
+        N = len(points)
+        for i in range(N):
+            for j in range(i+1, N):
+                if i not in dist:
+                    dist[i] = {}
+                dist[i][j] = d(points[i], points[j])
+        ret = 0
+        for i in range(N):
+            for j in range(i+1, N):
+                for k in range(j+1, N):
+                    p1, p2, p3 = dist[i][j], dist[j][k], dist[i][k]
+                    p = (p1+p2+p3)/2
+                    ret = max(ret, sqrt(max(p*(p-p1)*(p-p2)*(p-p3), 0)))
+        return ret
+</code></pre>
+
+<h1 id="813-largest-sum-of-averages">813. Largest Sum of Averages</h1>
+
+<p><img src="/images/leetcode/813_1.png" alt="desc" /></p>
+
+<p>用dp解决，dp(i, k)表示<code>A[i:]</code>的K个划分的最大average sum</p>
+
+<p>初始状态：</p>
+
+<p><code>dp(i, 1) = avg(A[i:])</code></p>
+
+<p>递推公式：</p>
+
+<p><code>dp(i, k) = max(avg(A[i:j]), dp(j, k-1)) for j in range(i, len(A))</code></p>
+
+<p>返回：</p>
+
+<p><code>dp(0, k)</code></p>
+
+<pre><code>class Solution:
+    def largestSumOfAverages(self, A, K):
+        N = len(A)
+        ps = [0]*N
+        for i in range(N):
+            ps[i] = (ps[i-1] if i-1&gt;=0 else 0)+A[i]
+        def avg(i, j):
+            x = (ps[j]-(ps[i-1] if i-1&gt;=0 else 0))/(j-i+1)
+            return x
+        dic = {}
+        def dp(i, k):
+            if k==0: 
+                return 0 if i==len(A) else -sys.maxsize
+            if i+k&gt;len(A): return -sys.maxsize
+            if k==1: return avg(i, len(A)-1)
+            if (i, k) not in dic:
+                ret = -sys.maxsize
+                for j in range(i, len(A)):
+                    x = dp(j+1, k-1)
+                    ret = max(ret, x+avg(i, j))
+                dic[(i, k)] = ret
+            return dic[(i, k)]
+        return dp(0, K)
+</code></pre>
+
+<h1 id="814-binary-tree-pruning">814. Binary Tree Pruning</h1>
+
+<p><img src="/images/leetcode/814_1.png" alt="desc" /></p>
+
+<p>简单的dfs就可以了</p>
+
+<pre><code>class Solution:
+    def pruneTree(self, root):
+        def dfs(node):
+            if not node: return False
+            l, r = dfs(node.left), dfs(node.right)
+            if not l: node.left = None
+            if not r: node.right = None
+            return (node.val==1) or l or r
+        x = dfs(root)
+        if not x:
+            return None
+        return root
+</code></pre>
+
+<h1 id="815-bus-routes">815. Bus Routes</h1>
+
+<p><img src="/images/leetcode/815_1.png" alt="desc" /></p>
+
+<p>一开始用站台来做bfs，遇到Time和Memory超过限制，用Bidirectional BFS还是TLE，然后用公交线路来做BFS通过。</p>
+
+<pre><code>class Solution:
+    def numBusesToDestination(self, routes, S, T):
+        if S==T: return 0
+        nr = len(routes)
+        routes = [set(_) for _ in routes]
+        cross = [[False]*nr for _ in range(nr)]
+        for i in range(nr):
+            for j in range(i, nr):
+                if i==j:
+                    cross[i][j] = True
+                else:
+                    c = (len(routes[i]&amp;routes[j])&gt;0)
+                    cross[i][j] = cross[j][i] = c
+        dic = collections.defaultdict(set)
+        for r in range(len(routes)):
+            for i in routes[r]:
+                dic[i].add(r)
+        q = list(dic[S])
+        dest = dic[T]
+        visited = dic[S]
+        cnt = 0
+        while q:
+            cnt += 1
+            new_q = []
+            for idx in q:
+                if idx in dest:
+                    return cnt
+                for new_idx in range(nr):
+                    if cross[idx][new_idx] and new_idx not in visited:
+                        visited.add(new_idx)
+                        new_q.append(new_idx)
+            q = new_q
+        return -1
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/dynamic-programming/">Dynamic Programming</a>
+          
+          <a href="/tags/dfs/">DFS</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/max_product_subarray/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 152. Maximum Product Subarray</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/coin_change1/">
+            <span class="next-text nav-default">LeetCode 322. Coin Change</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

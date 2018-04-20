@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>LeetCode 494. Target Sum - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="Description You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols &#43; and -. For each integer, you should choose one from &#43; and - as its new symbol. Find out how many ways to assign symbols to make sum of integers equal to target S. Example 1: Input: nums is [1, 1, 1, 1, 1], S is 3." />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/target_sum/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="LeetCode 494. Target Sum" />
+<meta property="og:description" content="Description You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols &#43; and -. For each integer, you should choose one from &#43; and - as its new symbol. Find out how many ways to assign symbols to make sum of integers equal to target S. Example 1: Input: nums is [1, 1, 1, 1, 1], S is 3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/target_sum/" />
+
+
+
+<meta property="article:published_time" content="2018-04-17T14:36:05&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-04-17T14:36:05&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="LeetCode 494. Target Sum">
+<meta itemprop="description" content="Description You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols &#43; and -. For each integer, you should choose one from &#43; and - as its new symbol. Find out how many ways to assign symbols to make sum of integers equal to target S. Example 1: Input: nums is [1, 1, 1, 1, 1], S is 3.">
+
+
+<meta itemprop="datePublished" content="2018-04-17T14:36:05&#43;08:00" />
+<meta itemprop="dateModified" content="2018-04-17T14:36:05&#43;08:00" />
+<meta itemprop="wordCount" content="445">
+
+
+
+<meta itemprop="keywords" content="Dynamic Programming," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LeetCode 494. Target Sum"/>
+<meta name="twitter:description" content="Description You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols &#43; and -. For each integer, you should choose one from &#43; and - as its new symbol. Find out how many ways to assign symbols to make sum of integers equal to target S. Example 1: Input: nums is [1, 1, 1, 1, 1], S is 3."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">LeetCode 494. Target Sum</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-17 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> LeetCode </a>
+            
+          </div>
+        <span class="more-meta"> 约 445 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#description">Description</a></li>
+<li><a href="#solutions">Solutions</a>
+<ul>
+<li><a href="#plain-dp">Plain DP</a></li>
+<li><a href="#dp-with-a-trick">DP with a trick</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="description">Description</h1>
+
+<div class="question-description"><div><p>
+You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols <code>+</code> and <code>-</code>. For each integer, you should choose one from <code>+</code> and <code>-</code> as its new symbol.
+</p> 
+
+<p>Find out how many ways to assign symbols to make sum of integers equal to target S.  
+</p>
+
+<p><b>Example 1:</b><br>
+</p><pre><b>Input:</b> nums is [1, 1, 1, 1, 1], S is 3. 
+<b>Output:</b> 5
+<b>Explanation:</b> 
+
+-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+
+There are 5 ways to assign symbols to make the sum of nums be target 3.
+</pre>
+<p></p>
+
+<p><b>Note:</b><br>
+</p><ol>
+<li>The length of the given array is positive and will not exceed 20. </li>
+<li>The sum of elements in the given array will not exceed 1000.</li>
+<li>Your output answer is guaranteed to be fitted in a 32-bit integer.</li>
+</ol>
+<p></p></div></div>
+
+<h1 id="solutions">Solutions</h1>
+
+<h2 id="plain-dp">Plain DP</h2>
+
+<p>Python:</p>
+
+<pre><code>class Solution:
+    def findTargetSumWays(self, nums, S):
+        def dp(i, target):
+            if i==-1: return 1 if target==0 else 0
+            if (i, target) not in memo:
+                memo[(i, target)] = dp(i-1, target-nums[i])+dp(i-1, target+nums[i])
+            return memo[(i, target)]
+        return dp(len(nums)-1, S)
+</code></pre>
+
+<p>Java：</p>
+
+<pre><code>class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        return dp(nums, nums.length-1, S, new HashMap&lt;&gt;());
+    }
+    public int dp(int[] nums, int i, int target, Map&lt;String, Integer&gt; memo) {
+        if (i==-1) {
+            return target==0?1:0;
+        }
+        String key = String.valueOf(i)+','+String.valueOf(target);
+        if (!memo.containsKey(key)) {
+            memo.put(key, dp(nums, i-1, target+nums[i], memo)+dp(nums, i-1, target-nums[i], memo));
+        }
+        return memo.get(key);
+    }
+}
+</code></pre>
+
+<h2 id="dp-with-a-trick">DP with a trick</h2>
+
+<p>令plus为取+号元素之和，minus为取-号元素之和。</p>
+
+<p>则:</p>
+
+<pre><code>plus+minus = sum(nums)
+plus-minus = S
+</code></pre>
+
+<p>可以得到：<code>plus=(S+sum(nums))/2</code></p>
+
+<p>那么接下来就是一个背包问题了，nums中取若干个元素，和为plus</p>
+
+<p>Python:</p>
+
+<pre><code>class Solution:
+    def findTargetSumWays(self, nums, S):
+        total = sum(nums)
+        # total&lt;S 或者 奇偶性不同
+        if total&lt;S or (total^S)&amp;1: return 0
+        plus = (S+total)&gt;&gt;1
+        cnt = [0]*(plus+1)
+        cnt[0] = 1
+        for n in nums:
+            for i in range(plus, -1, -1):
+                if i-n&lt;0: break
+                cnt[i] += cnt[i-n]
+        return cnt[plus]
+</code></pre>
+
+<p>Java:</p>
+
+<pre><code>class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        int total = Arrays.stream(nums).sum();
+        if (total&lt;S || ((total^S)&amp;1)==1) {
+            return 0;
+        }
+        int plus = (total+S)&gt;&gt;1;
+        int cnt[] = new int[plus+1];
+        cnt[0] = 1;
+        for (int n:nums) {
+            for (int i=plus; i&gt;=n; i--) {
+                cnt[i] += cnt[i-n];
+            }
+        }
+        return cnt[plus];
+    }
+}
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/dynamic-programming/">Dynamic Programming</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/max_len_of_rep_subarray/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 718. Maximum Length of Repeated Subarray</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/can_i_win/">
+            <span class="next-text nav-default">LeetCode 464. Can I Win</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

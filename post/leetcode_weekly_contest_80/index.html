@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Leetcode Weekly Contest 80 - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="819. Most Common Word Description 
+Given a paragraph&amp;nbsp;and a list of banned words, return the most frequent word that is not in the list of banned words.&amp;nbsp; It is guaranteed there is at least one word that isn&#39;t banned, and that the answer is unique.
+Words in the list of banned words are given in lowercase, and free of punctuation.&amp;nbsp; Words in the paragraph are not case sensitive.&amp;nbsp; The answer is in lowercase." />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/leetcode_weekly_contest_80/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Leetcode Weekly Contest 80" />
+<meta property="og:description" content="819. Most Common Word Description 
+Given a paragraph&nbsp;and a list of banned words, return the most frequent word that is not in the list of banned words.&nbsp; It is guaranteed there is at least one word that isn&#39;t banned, and that the answer is unique.
+Words in the list of banned words are given in lowercase, and free of punctuation.&nbsp; Words in the paragraph are not case sensitive.&nbsp; The answer is in lowercase." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/leetcode_weekly_contest_80/" />
+
+
+
+<meta property="article:published_time" content="2018-04-15T10:43:24&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-04-15T10:43:24&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Leetcode Weekly Contest 80">
+<meta itemprop="description" content="819. Most Common Word Description 
+Given a paragraph&nbsp;and a list of banned words, return the most frequent word that is not in the list of banned words.&nbsp; It is guaranteed there is at least one word that isn&#39;t banned, and that the answer is unique.
+Words in the list of banned words are given in lowercase, and free of punctuation.&nbsp; Words in the paragraph are not case sensitive.&nbsp; The answer is in lowercase.">
+
+
+<meta itemprop="datePublished" content="2018-04-15T10:43:24&#43;08:00" />
+<meta itemprop="dateModified" content="2018-04-15T10:43:24&#43;08:00" />
+<meta itemprop="wordCount" content="1164">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Leetcode Weekly Contest 80"/>
+<meta name="twitter:description" content="819. Most Common Word Description 
+Given a paragraph&nbsp;and a list of banned words, return the most frequent word that is not in the list of banned words.&nbsp; It is guaranteed there is at least one word that isn&#39;t banned, and that the answer is unique.
+Words in the list of banned words are given in lowercase, and free of punctuation.&nbsp; Words in the paragraph are not case sensitive.&nbsp; The answer is in lowercase."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Leetcode Weekly Contest 80</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-15 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> LeetCode </a>
+            
+          </div>
+        <span class="more-meta"> 约 1164 字 </span>
+        <span class="more-meta"> 预计阅读 6 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#819-most-common-word">819. Most Common Word</a>
+<ul>
+<li><a href="#description">Description</a></li>
+<li><a href="#solution">Solution</a></li>
+</ul></li>
+<li><a href="#817-linked-list-components">817. Linked List Components</a>
+<ul>
+<li><a href="#description-1">Description</a></li>
+<li><a href="#solution-1">Solution</a></li>
+</ul></li>
+<li><a href="#818-race-car">818. Race Car</a>
+<ul>
+<li><a href="#description-2">Description</a></li>
+<li><a href="#solution-2">Solution</a></li>
+</ul></li>
+<li><a href="#816-ambiguous-coordinates">816. Ambiguous Coordinates</a>
+<ul>
+<li><a href="#description-3">Description</a></li>
+<li><a href="#solution-3">Solution</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="819-most-common-word">819. Most Common Word</h1>
+
+<h2 id="description">Description</h2>
+
+<div class="question-content">
+              <p></p><p>Given a paragraph&nbsp;and a list of banned words, return the most frequent word that is not in the list of banned words.&nbsp; It is guaranteed there is at least one word that isn't banned, and that the answer is unique.</p>
+
+<p>Words in the list of banned words are given in lowercase, and free of punctuation.&nbsp; Words in the paragraph are not case sensitive.&nbsp; The answer is in lowercase.</p>
+
+<pre><strong>Example:</strong>
+<strong>Input:</strong> 
+paragraph = "Bob hit a ball, the hit BALL flew far after it was hit."
+banned = ["hit"]
+<strong>Output:</strong> "ball"
+<strong>Explanation:</strong> 
+"hit" occurs 3 times, but it is a banned word.
+"ball" occurs twice (and no other word does), so it is the most frequent non-banned word in the paragraph. 
+Note that words in the paragraph are not case sensitive,
+that punctuation is ignored (even if adjacent to words, such as "ball,"), 
+and that "hit" isn't the answer even though it occurs more because it is banned.
+</pre>
+
+<p>&nbsp;</p>
+
+<p><strong>Note: </strong></p>
+
+<ul>
+    <li><code>1 &lt;= paragraph.length &lt;= 1000</code>.</li>
+    <li><code>1 &lt;= banned.length &lt;= 100</code>.</li>
+    <li><code>1 &lt;= banned[i].length &lt;= 10</code>.</li>
+    <li>The answer is unique, and written in lowercase (even if its occurrences in <code>paragraph</code>&nbsp;may have&nbsp;uppercase symbols, and even if it is a proper noun.)</li>
+    <li><code>paragraph</code> only consists of letters, spaces, or the punctuation symbols <code>!?',;.</code></li>
+    <li>Different words in&nbsp;<code>paragraph</code>&nbsp;are always separated by a space.</li>
+    <li>There are no hyphens or hyphenated words.</li>
+    <li>Words only consist of letters, never apostrophes or other punctuation symbols.</li>
+</ul>
+
+<p>&nbsp;</p>
+<p></p>
+</div>
+
+<h2 id="solution">Solution</h2>
+
+<p>Simple String processing</p>
+
+<pre><code>class Solution:
+    def mostCommonWord(self, para, banned):
+        banned = set(banned)
+        # Only preserve a-z and space
+        para = ''.join([_ if 'a'&lt;=_&lt;='z' or _==' ' else '' for _ in para.lower()])
+        words = para.split()
+        dic = collections.Counter(words)
+        cnt, ret = 0, None
+        for word in dic:
+            if word not in banned:
+                if dic[word]&gt;cnt:
+                    cnt = dic[word]
+                    ret = word
+        return ret
+</code></pre>
+
+<h1 id="817-linked-list-components">817. Linked List Components</h1>
+
+<h2 id="description-1">Description</h2>
+
+<div class="question-content">
+              <p></p><p>We are given&nbsp;<code>head</code>,&nbsp;the head node of a linked list containing&nbsp;<strong>unique integer values</strong>.</p>
+
+<p>We are also given the list&nbsp;<code>G</code>, a subset of the values in the linked list.</p>
+
+<p>Return the number of connected components in <code>G</code>, where two values are connected if they appear consecutively in the linked list.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><strong>Input:</strong> 
+head: 0-&gt;1-&gt;2-&gt;3
+G = [0, 1, 3]
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> 
+0 and 1 are connected, so [0, 1] and [3] are the two connected components.
+</pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><strong>Input:</strong> 
+head: 0-&gt;1-&gt;2-&gt;3-&gt;4
+G = [0, 3, 1, 4]
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> 
+0 and 1 are connected, 3 and 4 are connected, so [0, 1] and [3, 4] are the two connected components.
+</pre>
+
+<p><strong>Note: </strong></p>
+
+<ul>
+    <li>If&nbsp;<code>N</code>&nbsp;is the&nbsp;length of the linked list given by&nbsp;<code>head</code>,&nbsp;<code>1 &lt;= N &lt;= 10000</code>.</li>
+    <li>The value of each node in the linked list will be in the range<code> [0, N - 1]</code>.</li>
+    <li><code>1 &lt;= G.length &lt;= 10000</code>.</li>
+    <li><code>G</code> is a subset of all values in the linked list.</li>
+</ul>
+<p></p>
+</div>  
+
+<h2 id="solution-1">Solution</h2>
+
+<p>Just count continuous nodes</p>
+
+<pre><code>class Solution:
+    def numComponents(self, head, G):
+        G = set(G)
+        node = head
+        cnt = 0
+        while node:
+            # If match, continue until not match
+            if node.val in G:
+                cnt += 1
+                while node.next and node.next.val in G:
+                    node = node.next
+            node = node.next
+        return cnt
+</code></pre>
+
+<h1 id="818-race-car">818. Race Car</h1>
+
+<h2 id="description-2">Description</h2>
+
+<div class="question-content">
+              <p></p><p>Your car starts at position 0 and speed +1 on an infinite number line.&nbsp; (Your car can go into negative positions.)</p>
+
+<p>Your car drives automatically according to a sequence of instructions A (accelerate) and R (reverse).</p>
+
+<p>When you get an instruction "A", your car does the following:&nbsp;<code>position += speed, speed *= 2</code>.</p>
+
+<p>When you get an instruction "R", your car does the following: if your speed is positive then&nbsp;<code>speed = -1</code>&nbsp;, otherwise&nbsp;<code>speed = 1</code>.&nbsp; (Your position stays the same.)</p>
+
+<p>For example, after commands "AAR", your car goes to positions 0-&gt;1-&gt;3-&gt;3, and your speed goes to 1-&gt;2-&gt;4-&gt;-1.</p>
+
+<p>Now for some target position, say the <strong>length</strong> of the shortest sequence of instructions to get there.</p>
+
+<pre><strong>Example 1:</strong>
+<strong>Input:</strong> 
+target = 3
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> 
+The shortest instruction sequence is "AA".
+Your position goes from 0-&gt;1-&gt;3.
+</pre>
+
+<pre><strong>Example 2:</strong>
+<strong>Input:</strong> 
+target = 6
+<strong>Output:</strong> 5
+<strong>Explanation:</strong> 
+The shortest instruction sequence is "AAARA".
+Your position goes from 0-&gt;1-&gt;3-&gt;7-&gt;7-&gt;6.
+</pre>
+
+<p>&nbsp;</p>
+
+<p><strong>Note: </strong></p>
+
+<ul>
+    <li><code>1 &lt;= target &lt;= 10000</code>.</li>
+</ul>
+<p></p>
+</div>      
+
+<h2 id="solution-2">Solution</h2>
+
+<p>Simple BFS, use a trick to prevent Memory Limit Exceed, only remember (position, speed) pair in visited when speed==1 or speed ==-1 (After R operation).</p>
+
+<pre><code>class Solution:
+    def racecar(self, target):
+        if target==0:
+            return 0
+        q = [(0, 1)]
+        visited = set((0, 1))
+        cnt = 0
+        while q:
+            new_q = []
+            cnt += 1
+            for pos, sp in q:
+                p1, s1 = pos+sp, sp*2
+                if p1==target:
+                    return cnt
+                p2, s2 = pos, -1 if sp&gt;0 else 1
+                
+                # If we remember every position and speed pair, we get Memory Limit Exceed
+                # The most annoying part is continuous R, so only remember situations with speed 1 and -1
+                if (p1, s1) not in visited:
+                    if s1==1 or s1==-1:
+                        visited.add((p1, s1))
+                    new_q.append((p1, s1))
+                if (p2, s2) not in visited:
+                    visited.add((p2, s2))
+                    if s1==1 or s1==-1:
+                        visited.add((p1, s1))
+                    new_q.append((p2, s2))
+            q = new_q
+        return -1
+</code></pre>
+
+<h1 id="816-ambiguous-coordinates">816. Ambiguous Coordinates</h1>
+
+<h2 id="description-3">Description</h2>
+
+<div class="question-content">
+              <p></p><p>We had some 2-dimensional coordinates, like <code>"(1, 3)"</code> or <code>"(2, 0.5)"</code>.&nbsp; Then, we removed&nbsp;all commas, decimal points, and spaces, and ended up with the string&nbsp;<code>S</code>.&nbsp; Return a list of strings representing&nbsp;all possibilities for what our original coordinates could have been.</p>
+
+<p>Our original representation never had extraneous zeroes, so we never started with numbers like "00", "0.0", "0.00", "1.0", "001", "00.01", or any other number that can be represented with&nbsp;less digits.&nbsp; Also, a decimal point within a number never occurs without at least one digit occuring before it, so we never started with numbers like ".1".</p>
+
+<p>The final answer list can be returned in any order.&nbsp; Also note that all coordinates in the final answer&nbsp;have exactly one space between them (occurring after the comma.)</p>
+
+<pre><strong>Example 1:</strong>
+<strong>Input:</strong> "(123)"
+<strong>Output:</strong> ["(1, 23)", "(12, 3)", "(1.2, 3)", "(1, 2.3)"]
+</pre>
+
+<pre><strong>Example 2:</strong>
+<strong>Input:</strong> "(00011)"
+<strong>Output:</strong> &nbsp;["(0.001, 1)", "(0, 0.011)"]
+<strong>Explanation:</strong> 
+0.0, 00, 0001 or 00.01 are not allowed.
+</pre>
+
+<pre><strong>Example 3:</strong>
+<strong>Input:</strong> "(0123)"
+<strong>Output:</strong> ["(0, 123)", "(0, 12.3)", "(0, 1.23)", "(0.1, 23)", "(0.1, 2.3)", "(0.12, 3)"]
+</pre>
+
+<pre><strong>Example 4:</strong>
+<strong>Input:</strong> "(100)"
+<strong>Output:</strong> [(10, 0)]
+<strong>Explanation:</strong> 
+1.0 is not allowed.
+</pre>
+
+<p>&nbsp;</p>
+
+<p><strong>Note: </strong></p>
+
+<ul>
+    <li><code>4 &lt;= S.length &lt;= 12</code>.</li>
+    <li><code>S[0]</code> = "(", <code>S[S.length - 1]</code> = ")", and the other elements in <code>S</code> are digits.</li>
+</ul>
+
+<p>&nbsp;</p>
+<p></p>
+</div>
+
+<h2 id="solution-3">Solution</h2>
+
+<pre><code>class Solution:
+    def ambiguousCoordinates(self, S):
+        
+        def possible_val(S):
+            ret = set()
+            # S itself valid
+            if S[0]!='0' or len(S)==1:
+                ret.add(S)
+            for _ in range(1, len(S)):
+                left, right = S[:_], S[_:]
+                # left of . valid if first char is not '0' or its length is just 1
+                if len(left)==1 or not left[0]=='0':
+                    # right of . valid if last char is not '0'
+                    if right[-1]!='0':
+                        ret.add(left+'.'+right)
+            return ret
+        
+        # Remove parenthesis
+        S = S[1:-1]
+        ret = []
+        for i in range(1, len(S)):
+            # S1: String for first coord, S2: String for second coord
+            S1, S2 = S[:i], S[i:]
+            # Possible values for S1 and S2
+            s1, s2 = possible_val(S1), possible_val(S2)
+            if not s1 or not s2: continue
+            for c1 in s1:
+                for c2 in s2:
+                    ret.append('('+c1+', '+c2+')')
+        return ret
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/can_i_win/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 464. Can I Win</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/unique_path/">
+            <span class="next-text nav-default">LeetCode 62. Unique Paths</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

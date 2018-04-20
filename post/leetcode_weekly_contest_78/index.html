@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Leetcode Weekly Contest 78 - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="808. Soup Servings 这一题最重要的一点就是Notes里的一行提示：Answers within 10^-6 of the true value will be accepted as correct.。所以说审题很重要啊= =。 因为这行提示" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/leetcode_weekly_contest_78/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="Leetcode Weekly Contest 78" />
+<meta property="og:description" content="808. Soup Servings 这一题最重要的一点就是Notes里的一行提示：Answers within 10^-6 of the true value will be accepted as correct.。所以说审题很重要啊= =。 因为这行提示" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/leetcode_weekly_contest_78/" />
+
+
+
+<meta property="article:published_time" content="2018-04-01T12:15:33&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-04-01T12:15:33&#43;08:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Leetcode Weekly Contest 78">
+<meta itemprop="description" content="808. Soup Servings 这一题最重要的一点就是Notes里的一行提示：Answers within 10^-6 of the true value will be accepted as correct.。所以说审题很重要啊= =。 因为这行提示">
+
+
+<meta itemprop="datePublished" content="2018-04-01T12:15:33&#43;08:00" />
+<meta itemprop="dateModified" content="2018-04-01T12:15:33&#43;08:00" />
+<meta itemprop="wordCount" content="581">
+
+
+
+<meta itemprop="keywords" content="Dynamic Programming," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Leetcode Weekly Contest 78"/>
+<meta name="twitter:description" content="808. Soup Servings 这一题最重要的一点就是Notes里的一行提示：Answers within 10^-6 of the true value will be accepted as correct.。所以说审题很重要啊= =。 因为这行提示"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Leetcode Weekly Contest 78</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-01 </span>
+        <div class="post-category">
+            
+              <a href="/categories/leetcode/"> LeetCode </a>
+            
+          </div>
+        <span class="more-meta"> 约 581 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#808-soup-servings">808. Soup Servings</a></li>
+<li><a href="#809-expressive-words">809. Expressive Words</a></li>
+<li><a href="#810-chalkboard-xor-game">810. Chalkboard XOR Game</a></li>
+<li><a href="#811-subdomain-visit-count">811. Subdomain Visit Count</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="808-soup-servings">808. Soup Servings</h1>
+
+<p><img src="/images/leetcode/808_1.png" alt="desc" /></p>
+
+<p>这一题最重要的一点就是Notes里的一行提示：<code>Answers within 10^-6 of the true value will be accepted as correct.</code>。所以说审题很重要啊= =。</p>
+
+<p>因为这行提示，当N很大的时候，这个概率是离1非常近的，所以可以直接返回1。剩余部分用动态规划来解决，这里最小粒度是25，用<code>N=(N+24)//25</code>来简化问题。估计一个阈值500来处理当N很大的情况（直接返回1）。</p>
+
+<pre><code>class Solution:
+    def soupServings(self, N):
+        memo = {}
+        def dp(n1, n2):
+        	# 当其中有一个少于等于0时，可以直接返回
+            if n1&lt;=0 and n2&lt;=0: return 0.5
+            if n1&lt;=0: return 1
+            if n2&lt;=0: return 0
+            if (n1, n2) not in memo:
+            	# 4种情况
+                memo[(n1, n2)] = (dp(max(0, n1-4), n2)+dp(max(0, n1-3), max(0, n2-1))+dp(max(0, n1-2), max(0, n2-2))+dp(max(0, n1-1), max(0, n2-3)))*0.25
+            return memo[(n1, n2)]
+        N = (N+24)//25
+        if N&gt;500:
+            return 1
+        return dp(N, N)
+</code></pre>
+
+<h1 id="809-expressive-words">809. Expressive Words</h1>
+
+<p><img src="/images/leetcode/809_1.png" alt="desc" /></p>
+
+<p>这一题是普通的字符串处理题。</p>
+
+<pre><code>class Solution:
+    def expressiveWords(self, S, words):
+        def f(s1, s2):
+            i1, i2 = 0, 0
+            while i1&lt;len(s1) and i2&lt;len(s2):
+                c1, c2 = s1[i1], s2[i2]
+                cnt1, cnt2 = 1, 1
+                if c1!=c2:
+                    return False
+                while i1+1&lt;len(s1) and s1[i1+1]==c1:
+                    i1, cnt1 = i1+1, cnt1+1
+                while i2+1&lt;len(s2) and s2[i2+1]==c2:
+                    i2, cnt2 = i2+1, cnt2+1
+                if (cnt1&lt;3 and cnt1!=cnt2) or cnt1&lt;cnt2:
+                    return False
+                i1, i2 = i1+1, i2+1
+            return i1==len(s1) and i2==len(s2)
+        return sum(f(S, w) for w in words)
+</code></pre>
+
+<h1 id="810-chalkboard-xor-game">810. Chalkboard XOR Game</h1>
+
+<p><img src="/images/leetcode/810_1.png" alt="desc" /></p>
+
+<p>这一题contest进行的时候少了个条件：<code>Also, if any player starts their turn with the bitwise XOR of all the elements of the chalkboard equal to 0, then that player wins.</code></p>
+
+<p>问题可以转化为：</p>
+
+<p>把nums全部取异或得到一个xor，之后每个人轮流取一个数和xor进行异或，如果开始时xor为0则获胜。</p>
+
+<p>两种情况：</p>
+
+<ul>
+<li>xor==0，直接获胜</li>
+<li>xor!=0，
+
+<ul>
+<li>nums长度为偶数
+
+<ul>
+<li>这种情况所有数不可能都相等，所以至少有两个数不同（否则xor为0）。所以Alice只要取一个和xor不同的数即可保证异或值不为0，因此Alice不会输。</li>
+<li>这种情况Alice必胜</li>
+</ul></li>
+<li>nums长度为奇数
+
+<ul>
+<li>必输</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>代码如下：</p>
+
+<pre><code>def xorGame(self, nums):
+    xor = 0
+    for i in nums: xor ^= i
+    return xor == 0 or len(nums) % 2 == 0
+</code></pre>
+
+<h1 id="811-subdomain-visit-count">811. Subdomain Visit Count</h1>
+
+<p><img src="/images/leetcode/811_1.png" alt="desc" /></p>
+
+<p>这一题也是字符串处理加上一个map就可以解决的。</p>
+
+<pre><code>class Solution:
+    def subdomainVisits(self, cpdomains):
+        counter = collections.Counter()
+        for s in cpdomains:
+            items = s.split(' ')
+            cnt = int(items[0])
+            domains = items[1].split('.')[::-1]
+            for i in range(len(domains)):
+                counter['.'.join(domains[:i+1][::-1])] += cnt
+        return [str(counter[k])+' '+k for k in counter]
+</code></pre>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/dynamic-programming/">Dynamic Programming</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/predict_the_winner/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LeetCode 486. Predict the Winner</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/house_robber/">
+            <span class="next-text nav-default">LeetCode 198. House Robber</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

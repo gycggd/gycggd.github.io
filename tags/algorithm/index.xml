@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithm on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/algorithm/</link>
+    <description>Recent content in Algorithm on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Wed, 13 Sep 2017 22:34:07 +0000</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Uniform and Heuristic Search</title>
+      <link>http://guoyc.com/post/search/</link>
+      <pubDate>Wed, 13 Sep 2017 22:34:07 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/search/</guid>
+      <description>开始 搜索可以总结为从一个初始状态出发，找到一条路径能够到达目标点。其中每一条路径对应着状态的转移，同时每一条路径可能对应着一个状态值(Cos</description>
+    </item>
+    
+    <item>
+      <title>bitmap的用途</title>
+      <link>http://guoyc.com/post/bitmap/</link>
+      <pubDate>Sun, 10 Sep 2017 14:02:51 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/bitmap/</guid>
+      <description>什么是bitmap 一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功</description>
+    </item>
+    
+    <item>
+      <title>What is Genetic Algorithm</title>
+      <link>http://guoyc.com/post/genetic-algorithm/</link>
+      <pubDate>Sat, 09 Sep 2017 23:02:41 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/genetic-algorithm/</guid>
+      <description>开始 生物上的遗传与进化 It is not the strongest of the species that survive, but the one most responsive to change. -Charles Darwin 达尔文所说的这句“物竞天择，适者生存”，指的是一个种群的基因会经过环境的挑选，使</description>
+    </item>
+    
+  </channel>
+</rss>

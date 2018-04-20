@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>bitmap的用途 - 郭玉晨的博客</title>
+  <link rel="alternate" hreflang="zh-cn" href="http://guoyc.com/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Guo, Yuchen" />
+  <meta name="description" content="什么是bitmap 一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="http://guoyc.com/post/bitmap/" />
+
+  <link rel="shortcut icon" 
+  
+    href="http://guoyc.com/images/favicons/favicon-96x96.png" 
+  
+  type="image/x-icon">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">  
+
+
+
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<meta property="og:title" content="bitmap的用途" />
+<meta property="og:description" content="什么是bitmap 一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://guoyc.com/post/bitmap/" />
+
+
+
+<meta property="article:published_time" content="2017-09-10T14:02:51&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-09-10T14:02:51&#43;00:00"/>
+
+<meta property="og:site_name" content="郭玉晨的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="bitmap的用途">
+<meta itemprop="description" content="什么是bitmap 一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功">
+
+
+<meta itemprop="datePublished" content="2017-09-10T14:02:51&#43;00:00" />
+<meta itemprop="dateModified" content="2017-09-10T14:02:51&#43;00:00" />
+<meta itemprop="wordCount" content="1161">
+
+
+
+<meta itemprop="keywords" content="Algorithm," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="bitmap的用途"/>
+<meta name="twitter:description" content="什么是bitmap 一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-70463797-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">郭玉晨的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="http://guoyc.com/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="http://guoyc.com/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="http://guoyc.com/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="http://guoyc.com/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="http://guoyc.com/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+    <a href="/en/">
+        <li class="mobile-menu-item">English</li>
+      </a><a href="/zh-cn/">
+        <li class="mobile-menu-item">中文</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">郭玉晨的博客</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="http://guoyc.com/about/">About</a>
+      </li>
+    <li class="menu-item">
+        <a class="menu-item-link" href="/en/">English</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/zh-cn/">中文</a>
+      </li>
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">bitmap的用途</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-09-10 </span>
+        
+        <span class="more-meta"> 约 1161 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#什么是bitmap">什么是bitmap</a></li>
+<li><a href="#bitmap的用途">bitmap的用途</a>
+<ul>
+<li><a href="#查找">查找</a>
+<ul>
+<li><a href="#构建">构建</a></li>
+<li><a href="#例子">例子</a></li>
+</ul></li>
+<li><a href="#过滤">过滤</a>
+<ul>
+<li><a href="#利用bitmap做简单的过滤">利用bitmap做简单的过滤</a></li>
+<li><a href="#bloom-filter">Bloom Filter</a>
+<ul>
+<li><a href="#存储系统中的bloom-filter">存储系统中的Bloom Filter</a>
+<ul>
+<li><a href="#插入数据">插入数据</a></li>
+<li><a href="#查找数据">查找数据</a></li>
+<li><a href="#删除数据">删除数据</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="什么是bitmap">什么是bitmap</h1>
+
+<p>一个bit是数据存储的最小的单位，为0或1。bitmap是一组连续的bit，通过这些bit可以实现海量数据的查找、过滤等功能。</p>
+
+<h1 id="bitmap的用途">bitmap的用途</h1>
+
+<h2 id="查找">查找</h2>
+
+<p>设想一个场景，系统有很多很多的用户，同时系统有用户画像的功能，即给用户打上标签，如<code>IT狗</code>，<code>学生党</code>，<code>技术宅</code>等，如果用关系型数据库来存储这些信息的话，面对稀奇古怪的根据标签过滤的需求时，会产生非常丑陋的SQL语句。用bitmap的话则可以通过位运算符轻松的解决这些问题。</p>
+
+<h3 id="构建">构建</h3>
+
+<p>可以把bitmap看成一个数组,数组的下标是用户的id。比如上面的<code>IT狗</code>，<code>学生</code>，<code>美女</code>三个标签，我们可以用三个bitmap来表示。</p>
+
+<pre><code>itdog = bitmap[max]             
+student = bitmap[max]           
+beauty = bitmap[max]              
+
+user = bitmap[max]  # user[id] = 1 iff 编号为id的用户存在 (后面需要用到这个信息)
+
+</code></pre>
+
+<h3 id="例子">例子</h3>
+
+<ul>
+<li>为id=xx的用户加上<code>IT狗</code>标签：<code>itdog[xx] = 1</code></li>
+<li>查找所有带有<code>学生</code>标签的的用户ID：<code>filter(range(max), lambda id:student[id]==1)</code></li>
+<li>查找所有的<code>美女学生</code>ID：与运算即可，<code>filter(range(max), lambda id:(student &amp; beauty)[id]==1)</code></li>
+<li>查找所有的<code>学生</code>或<code>IT狗</code>：或运算即可，<code>filter(range(max), lambda id:(student | itdog)[id]==1)</code></li>
+<li>查找所有<code>非学生</code>用户：要用user，因为值为0的id也可能不存在。<code>filter(range(max), lambda id:(student ^ user)[id]==1)</code></li>
+</ul>
+
+<h2 id="过滤">过滤</h2>
+
+<p>很多爬虫由于要爬取海量的数据，如何避免爬取重复的url是一个很重要的问题，如果用，著名的布隆过滤器(Bloom Filter)便是用了bitmap来实现的一个过滤算法。</p>
+
+<h3 id="利用bitmap做简单的过滤">利用bitmap做简单的过滤</h3>
+
+<p>首先对url进行hash得到一个数值，然后查看bitmap中这个数值的位置是否为1，为1则说明已经抓取过这个url，不再重复抓取。</p>
+
+<p>这种情况容易出现的问题是即使把hashCode的范围设置的非常大，也会有较高的误判率，不同的url出现相同的hashCode导致一些url没能被抓取</p>
+
+<h3 id="bloom-filter">Bloom Filter</h3>
+
+<p>Bloom Filter是引进多个hash函数，对每一个url计算出hashCode1，hashCode2，hashCode3，然后仅当这三个位置的bit都为1的时候才判断为重复，这样可以大大的降低重复率。</p>
+
+<h4 id="存储系统中的bloom-filter">存储系统中的Bloom Filter</h4>
+
+<p>Bloom Filter还可以用于数据存储系统中，在查找数据之前，现在位图中判断数据是否存在，如果存在再去读取数据的值，可以大大减少查询的时间。</p>
+
+<h5 id="插入数据">插入数据</h5>
+
+<p>插入数据时将计算出来的hashCode位置的bit设为1即可</p>
+
+<h5 id="查找数据">查找数据</h5>
+
+<p>如果计算出来的hashCode位置的bit都为1，才进入查找流程，（即使因为重复的hashCode导致最终发现数据不存在，也是极少数情况）</p>
+
+<h5 id="删除数据">删除数据</h5>
+
+<p>删除数据时，会导致bitmap结构被破坏，因为不能因为有一条数据被删除就把其hashCode对应位数都置为0（可能还有其他数据有相同hashCode）。如果要避免破坏数据，需要将一个bit增加到多个bit，这样才能有计数功能。</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/algorithm/">Algorithm</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/search/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Uniform and Heuristic Search</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/genetic-algorithm/">
+            <span class="next-text nav-default">What is Genetic Algorithm</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      显示 Disqus 评论
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'guoyc';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="gycggd@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.linkedin.com/in/%E7%8E%89%E6%99%A8-%E9%83%AD-1a7985b7/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://github.com/gycggd" class="iconfont icon-github" title="github"></a>
+  
+    <a href="https://leetcode.com/luckypants/" class="iconfont icon-leetcode" title="LeetCode"></a>
+  
+  <a href="http://guoyc.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Guo, Yuchen</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script><script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?432e1075a79fa3c7c842e6f5206f3c97";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning on 郭玉晨的博客</title>
+    <link>http://guoyc.com/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on 郭玉晨的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>gycggd@gmail.com (Guo, Yuchen)</managingEditor>
+    <webMaster>gycggd@gmail.com (Guo, Yuchen)</webMaster>
+    <lastBuildDate>Sat, 09 Sep 2017 23:02:41 +0000</lastBuildDate>
+    
+	<atom:link href="http://guoyc.com/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What is Genetic Algorithm</title>
+      <link>http://guoyc.com/post/genetic-algorithm/</link>
+      <pubDate>Sat, 09 Sep 2017 23:02:41 +0000</pubDate>
+      <author>gycggd@gmail.com (Guo, Yuchen)</author>
+      <guid>http://guoyc.com/post/genetic-algorithm/</guid>
+      <description>开始 生物上的遗传与进化 It is not the strongest of the species that survive, but the one most responsive to change. -Charles Darwin 达尔文所说的这句“物竞天择，适者生存”，指的是一个种群的基因会经过环境的挑选，使</description>
+    </item>
+    
+  </channel>
+</rss>
